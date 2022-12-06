@@ -1,24 +1,40 @@
-# README
+# GiveLike
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## サイト概要
+### サイトテーマ
+自身の欲しい物や好きな物を掲示したり、実際に貰った物を匿名/非匿名で評価できるレビューサイト
 
-Things you may want to cover:
+### テーマを選んだ理由
+サプライズでプレゼントする時、何を贈れば良いのか毎回悩みます。
+逆に貰っても困るプレゼントをされたこともあります。
+そこで相手の欲しい物が分かるサービスがあれば便利になると思い、制作に着手しました。
 
-* Ruby version
+最近はAmazonの欲しいものリストなどを公開している方もいます。
+しかし、直接商品を指定することに抵抗を感じる方も多いのではないでしょうか。
+欲しい物を直接明記せずとも、レビューする事によって自分の好きな物はアピールできると思います。
+例えば、特定のブランド商品にばかり高評価する人を見れば、「このブランドが好きなんだな」と思うでしょう。
+レビューの内容に「花柄が好きなので購入しました」とあれば、それを参考にプレゼントを選べます。
 
-* System dependencies
+プレゼントは気持ちが大事ですが、贈るにしても貰うにしても「苦手な物よりは好みの物を贈りたい・貰いたい」と思うのが普通だと思います。
+相手の事を考えるからこそプレゼントに悩む……そんな人達の助けとなれば嬉しいです。
 
-* Configuration
+### ターゲットユーザ
+贈り物をする機会、または贈り物を貰う機会がある人
 
-* Database creation
 
-* Database initialization
+### 主な利用シーン
+誰かに贈り物をしたい時
 
-* How to run the test suite
+## 設計書
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+## 開発環境
+- OS：Linux(CentOS)
+- 言語：HTML,CSS,JavaScript,Ruby,SQL
+- フレームワーク：Ruby on Rails
+- JSライブラリ：jQuery
+- IDE：Cloud9
 
-* ...
+## 使用素材
+- 外部サービスの画像素材・音声素材を使用した場合は、必ずサービス名とURLを明記してください。
+- 使用しない場合は、使用素材の項目をREADMEから削除してください。
