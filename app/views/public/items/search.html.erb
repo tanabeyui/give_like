@@ -5,7 +5,7 @@
     <%= image_tag (item['smallImageUrls'][0]) %>
     <%= item.name %><br>
     <%= number_with_delimiter(item.price) %>円
-    <%= link_to item_path(item, name: item.name, code: item.code, price: item.price, image: item.medium_image_urls) do%>
+    <%= link_to item_path(item, name: item.name, code: item.code, price: item.price, image: item.medium_image_urls, url: item.url) do %>
       詳細ページを見る
     <% end %>
     <hr>
