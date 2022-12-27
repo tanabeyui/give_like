@@ -6,6 +6,7 @@
     <%= image_tag (item['smallImageUrls'][0]) %>
   <% end %>
   <%= item.name %><br>
+  <%= item.genre.name %><br>
   <%= number_with_delimiter(item.price) %>円
   <hr>
 <% end %>

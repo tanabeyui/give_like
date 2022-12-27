@@ -1,9 +1,9 @@
 <p><%= image_tag (params[:image][0]), size: '200x200' %></p>
 <p><%= params[:name] %></p>
-<p>ショップ名：<%= params[:shop] %></p>
 <p><%= params[:price] %>円</p>
- <%= link_to "楽天ページ", params[:url] %>
-
+<p>カテゴリー：<%= @category %>
+</p>
+<%= link_to "楽天ページ", params[:url] %>
 
 <div>
 欲しい物に追加

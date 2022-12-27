@@ -10,6 +10,11 @@ class Public::ItemsController < ApplicationController
   end
 
   def show
+    genre = params[:genre]
+    @root = RakutenWebService::Ichiba::Genre[genre]
+    @root.parents.each do |parent|
+      @category = parent.name
+    end
   end
 
   def search
@@ -17,4 +22,5 @@ class Public::ItemsController < ApplicationController
       @items = RakutenWebService::Ichiba::Item.search(keyword: params[:keyword])
     end
   end
+
 end
