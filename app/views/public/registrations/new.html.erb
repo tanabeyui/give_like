@@ -26,6 +26,21 @@
   </div>
 
   <div class="field">
+    <div class="form-check">
+      <%= f.radio_button :gender, EndUser.genders.key(0), id: "male" %>
+      <%= f.label :gender, EndUser.genders_i18n[:male], for: "male" %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :gender, EndUser.genders.key(1), id: "female" %>
+      <%= f.label :gender, EndUser.genders_i18n[:female], for: "female" %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :gender, EndUser.genders.key(2), id: "not_selected" %>
+      <%= f.label :gender, EndUser.genders_i18n[:not_selected], for: "not_selected" %>
+    </div>
+  </div>
+
+  <div class="field">
     <%= f.label :"生年月日" %><br />
     <%= f.date_select :birthday, class: 'form-control' %>
   </div>

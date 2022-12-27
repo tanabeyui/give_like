@@ -1,0 +1,13 @@
+ja:
+  enums:
+    end_user:
+      gender:
+        male: "男性"
+        female: "女性"
+        not_selected: "非選択"
+
+  date:
+    order:
+    - :year
+    - :month
+    - :day
