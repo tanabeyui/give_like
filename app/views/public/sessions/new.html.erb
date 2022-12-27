@@ -1,9 +1,10 @@
 <h2>Log in</h2>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+<%= form_with model: @end_users, url: end_user_session_path, method: :post do |f| %>
+
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.label :"ID" %><br />
+    <%= f.email_field :screen_name, autofocus: true %>
   </div>
 
   <div class="field">
@@ -22,5 +23,3 @@
     <%= f.submit "Log in" %>
   </div>
 <% end %>
-
-<%= render "public/shared/links" %>
