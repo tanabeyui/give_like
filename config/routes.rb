@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get '/items/search' => 'public/items#search'
+
   scope module: :public do
     resources :items, only: [:index, :show]
   end

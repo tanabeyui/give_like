@@ -11,6 +11,14 @@
   </head>
 
   <body>
+    <div>
+      <%= form_with url: items_search_path, method: :get, local: true do |f| %>
+        <div class="form-group">
+          <%= f.text_field :keyword, value: params[:keyword], class: "form-control" %>
+          <%= f.submit '製品名を検索', class: "form-control btn btn-success" %>
+        </div>
+      <% end %>
+    </div>
     <%= yield %>
   </body>
 </html>
