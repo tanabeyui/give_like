@@ -1,11 +1,20 @@
 <h2>Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "publics/shared/error_messages", resource: resource %>
+<%= form_with model: @end_users, url: end_user_registration_path, method: :post do |f| %>
+  <div class="field">
+    <%= f.label :"ID" %><br />
+    <%= f.text_field :screen_name, autofocus: true %>
+    <p>マイプロフィールのURLになります</p>
+  </div>
+
+  <div class="field">
+    <%= f.label :"名前" %><br />
+    <%= f.text_field :name, autocomplete: "name" %>
+  </div>
 
   <div class="field">
     <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.email_field :email, autocomplete: "email" %>
   </div>
 
   <div class="field">
@@ -17,13 +26,11 @@
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    <%= f.label :"生年月日" %><br />
+    <%= f.date_select :birthday, class: 'form-control' %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "新規登録" %>
   </div>
 <% end %>
-
-<%= render "public/shared/links" %>
