@@ -1,2 +1,11 @@
-<h1>Public::Items#index</h1>
-<p>Find me in app/views/public/items/index.html.erb</p>
+<h1>楽天プレゼントランキング</h1>
+
+<% @items.each_with_index do |item, i| %>
+  <%= i + 1 %><br>
+  <%= link_to item_path(item, name: item.name, code: item.code, price: item.price, shop: item.shop.name, image: item.medium_image_urls) do%>
+    <%= image_tag (item['smallImageUrls'][0]) %>
+  <% end %>
+  <%= item.name %><br>
+  <%= number_with_delimiter(item.price) %>円
+  <hr>
+<% end %>
