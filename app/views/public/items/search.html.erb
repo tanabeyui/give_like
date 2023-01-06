@@ -1,15 +1,13 @@
 <% if @items.present? %>
-  <p>検索結果</p>
-  
+  <h1>検索結果</h1>
 
   <% @items.first(10).each do |item| %>
-    <%= image_tag (item['smallImageUrls'][0]) %>
+    <%= link_to item_path(item, name: item.name, code: item.code, genre: item.genre.id, price: item.price, image: item.medium_image_urls, url: item.url) do %>
+      <%= image_tag (item['smallImageUrls'][0]) %>
+    <% end %>
     <%= item.name %><br>
     <%= number_with_delimiter(item.price) %>円
-    <%= link_to item_path(item, name: item.name, code: item.code, genre: item.genre.id, price: item.price, image: item.medium_image_urls, url: item.url) do %>
-      詳細ページを見る
-    <% end %>
-    <hr>
+  <hr>
   <% end %>
 
 <% end %>
