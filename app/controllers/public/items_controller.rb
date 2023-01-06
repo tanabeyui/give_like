@@ -10,6 +10,7 @@ class Public::ItemsController < ApplicationController
   end
 
   def show
+    @favorite = Favorite.new
     genre = params[:genre]
     @root = RakutenWebService::Ichiba::Genre[genre]
     @root.parents.each do |parent|

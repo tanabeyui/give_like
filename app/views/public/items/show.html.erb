@@ -6,7 +6,27 @@
 <%= link_to "楽天ページ", params[:url] %>
 
 <div>
-欲しい物に追加
-好きな物に追加
+  <%= form_with model: @favorite, url: favorites_path, method: :post do |f| %>
+    <%= f.hidden_field :end_user_id, :value => "0" %>
+    <%= f.hidden_field :code, :value => params[:code] %>
+    <%= f.hidden_field :name, :value => params[:name] %>
+    <%= f.hidden_field :url, :value => params[:url] %>
+    <%= f.hidden_field :category, :value => @category %>
+    <%= f.hidden_field :price, :value => params[:price] %>
+    <%= f.hidden_field :image, :value => params[:image] %>
+    <%= f.submit '好きな物に追加' %>
+  <% end %>
+
+  <%= form_with model: @want_item, url: want_items_path, method: :post do |f| %>
+    <%= f.hidden_field :end_user_id, :value => "0" %>
+    <%= f.hidden_field :code, :value => params[:code] %>
+    <%= f.hidden_field :name, :value => params[:name] %>
+    <%= f.hidden_field :url, :value => params[:url] %>
+    <%= f.hidden_field :category, :value => @category %>
+    <%= f.hidden_field :price, :value => params[:price] %>
+    <%= f.hidden_field :image, :value => params[:image] %>
+    <%= f.submit '欲しい物に追加' %>
+  <% end %>
+
 レビューを書く
 </div>

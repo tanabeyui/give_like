@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   scope module: :public do
     resources :items, only: [:index, :show]
+    resource :favorites, only: [:create, :update, :destroy]
+    resource :want_items, only: [:create, :update, :destroy]
   end
 
   devise_for :end_users, skip: [:passwords], controllers: {

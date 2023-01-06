@@ -4,6 +4,9 @@ class EndUser < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :favorites, dependent: :destroy
+  has_many :want_items, dependent: :destroy
+
   enum gender: { male: 0, female: 1, not_selected: 2 }
 
 end
