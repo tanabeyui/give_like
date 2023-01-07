@@ -34,8 +34,8 @@ class DeviseCreateEndUsers < ActiveRecord::Migration[6.1]
 
       t.string :screen_name,              null: false, default: ""
       t.string :name,                     null: false, default: ""
-      t.integer :birthday,                null: false, default: ""
-      t.integer :gender,                  null: false, default: ""
+      t.date :birth_day,                   null: false
+      t.integer :gender,                  null: false, default: "0"
       t.string :favorites_introduction,   default: ""
       t.string :want_items_introduction,  default: ""
       t.boolean :is_deleted,              null: false, default: "false"

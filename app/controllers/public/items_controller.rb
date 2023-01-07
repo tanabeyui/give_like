@@ -1,5 +1,6 @@
 class Public::ItemsController < ApplicationController
   def index
+    @end_users = EndUser.all
     @rankingSearchItems = RakutenWebService::Ichiba::Item.search(keyword: 'プレゼント', sort: '-reviewCount')
     @items = []
     @items.concat(@rankingSearchItems.page(1).to_a)

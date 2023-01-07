@@ -1,6 +1,6 @@
 <h2>Sign up</h2>
 
-<%= form_with model: @end_users, url: end_user_registration_path, method: :post do |f| %>
+<%= form_with model: @end_user, url: end_user_registration_path, method: :post do |f| %>
   <div class="field">
     <%= f.label :"ID" %><br />
     <%= f.text_field :screen_name, autofocus: true %>
@@ -18,10 +18,7 @@
   </div>
 
   <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
+    <%= f.label :password %><br />
     <%= f.password_field :password, autocomplete: "new-password" %>
   </div>
 
@@ -42,19 +39,11 @@
 
   <div class="field">
     <%= f.label :"生年月日" %><br />
-    <%= raw sprintf(
-            f.date_select(
-              :birthday,
-              use_month_numbers: true,
-              start_year: 1930,
-              end_year: (Time.now.year - 10),
-              default: Date.new(1989, 1, 1),
-              date_separator: '%s'),
-            '年 ', '月 ') + '日'
-    %>
+    <%= f.date_select :birth_day, use_month_numbers: true, start_year: 1950, end_year: (Time.now.year - 10), default: Date.new(1990, 1, 1) %>
   </div>
 
   <div class="actions">
+    <%= f.hidden_field :internet_protocol_address, :value => request.remote_ip %>
     <%= f.submit "新規登録" %>
   </div>
 <% end %>

@@ -32,8 +32,8 @@ ActiveRecord::Schema.define(version: 2023_01_06_084138) do
     t.datetime "remember_created_at"
     t.string "screen_name", default: "", null: false
     t.string "name", default: "", null: false
-    t.integer "birthday", null: false
-    t.integer "gender", null: false
+    t.date "birth_day", null: false
+    t.integer "gender", default: 0, null: false
     t.string "favorites_introduction", default: ""
     t.string "want_items_introduction", default: ""
     t.boolean "is_deleted", default: false, null: false
