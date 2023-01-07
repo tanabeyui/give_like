@@ -1,9 +1,4 @@
 <h1>楽天プレゼントランキング</h1>
-<% @end_users.each do |end_user| %>
-  <%= end_user.id %>
-  <%= end_user.email %>
-<% end %>
-
 <% @items.each_with_index do |item, i| %>
   <%= i + 1 %><br>
   <%= link_to item_path(item, name: item.name, code: item.code, genre: item.genre.id, price: item.price, image: item.medium_image_urls, url: item.url) do %>

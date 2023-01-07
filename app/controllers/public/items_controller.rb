@@ -1,6 +1,5 @@
 class Public::ItemsController < ApplicationController
   def index
-    @end_users = EndUser.all
     @rankingSearchItems = RakutenWebService::Ichiba::Item.search(keyword: 'プレゼント', sort: '-reviewCount')
     @items = []
     @items.concat(@rankingSearchItems.page(1).to_a)
@@ -12,8 +11,8 @@ class Public::ItemsController < ApplicationController
 
   def show
     @favorite = Favorite.new
-    genre = params[:genre]
-    @root = RakutenWebService::Ichiba::Genre[genre]
+    current_genre = params[:genre]
+    @root = RakutenWebService::Ichiba::Genre[current_genre]
     @root.parents.each do |parent|
       @category = parent.name
     end

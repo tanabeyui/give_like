@@ -7,7 +7,6 @@
 
 <div>
   <%= form_with model: @favorite, url: favorites_path, method: :post do |f| %>
-    <%= f.hidden_field :end_user_id, :value => "0" %>
     <%= f.hidden_field :code, :value => params[:code] %>
     <%= f.hidden_field :name, :value => params[:name] %>
     <%= f.hidden_field :url, :value => params[:url] %>
@@ -18,7 +17,6 @@
   <% end %>
 
   <%= form_with model: @want_item, url: want_items_path, method: :post do |f| %>
-    <%= f.hidden_field :end_user_id, :value => "0" %>
     <%= f.hidden_field :code, :value => params[:code] %>
     <%= f.hidden_field :name, :value => params[:name] %>
     <%= f.hidden_field :url, :value => params[:url] %>

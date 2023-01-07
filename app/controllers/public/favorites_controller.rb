@@ -1,7 +1,8 @@
 class Public::FavoritesController < ApplicationController
-  
+
   def create
     @favorite = Favorite.new(favorite_params)
+    @favorite.end_user_id = current_end_user.id
     @favorite.save
     redirect_to items_path
   end
@@ -12,13 +13,13 @@ class Public::FavoritesController < ApplicationController
     favorite.destroy
     redirect_to post_image_path(post_image)
   end
-  
-  
-  
+
+
+
   private
 
   def favorite_params
-    params.require(:favorite).permit(:end_user_id, :name, :image, :code, :price)
+    params.require(:favorite).permit(:end_user_id, :name, :image, :code, :price, :url, :category)
   end
-  
+
 end

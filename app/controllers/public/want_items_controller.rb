@@ -2,6 +2,7 @@ class Public::WantItemsController < ApplicationController
 
   def create
     @want_item = WantItem.new(want_item_params)
+    @want_item.end_user_id = current_end_user.id
     @want_item.save
     redirect_to items_path
   end
@@ -18,7 +19,7 @@ class Public::WantItemsController < ApplicationController
   private
 
   def want_item_params
-    params.require(:want_item).permit(:end_user_id, :name, :image, :code, :price)
+    params.require(:want_item).permit(:end_user_id, :name, :image, :code, :price, :url, :category)
   end
 
 end
