@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_06_084138) do
+ActiveRecord::Schema.define(version: 2023_01_07_124528) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -52,6 +52,27 @@ ActiveRecord::Schema.define(version: 2023_01_06_084138) do
     t.string "category", default: "", null: false
     t.integer "price", null: false
     t.string "url", default: "", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer "end_user_id", null: false
+    t.string "code", null: false
+    t.string "image", null: false
+    t.string "name", null: false
+    t.string "category", null: false
+    t.integer "price", null: false
+    t.string "url", null: false
+    t.text "body", null: false
+    t.float "evaluation", null: false
+    t.integer "getting_method", default: 0, null: false
+    t.integer "giver", default: 0, null: false
+    t.integer "gifted_event", default: 0, null: false
+    t.boolean "is_anonymous", default: false, null: false
+    t.boolean "is_displayed", default: true, null: false
+    t.boolean "is_checked", default: false, null: false
+    t.boolean "is_disclose", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

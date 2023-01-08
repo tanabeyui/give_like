@@ -6,6 +6,41 @@ ja:
         female: "女性"
         not_selected: "非選択"
 
+    review:
+      getting_method:
+        self_purchase: "自分で購入"
+        gift: "人から貰った"
+
+      giver:
+        friend: "友人"
+        lover: "恋人"
+        parents: "親/祖父母"
+        my_child: "息子/娘/孫"
+        sibling: "兄弟姉妹"
+        relatives: "親戚"
+        boss: "上司"
+        subordinate: "部下"
+        coworker: "同僚"
+        business_people: "仕事関係者"
+        acquaintance: "知人"
+        other_people: "その他"
+
+      gifted_event:
+        birthday: "誕生日"
+        christmas: "クリスマス"
+        father_day: "父の日"
+        mother_day: "母の日"
+        anniversary: "結婚記念日"
+        valentine: "バレンタイン"
+        white_day: "ホワイトデー"
+        birthday_20th: "成人祝い"
+        celebrate_job: "就職祝い"
+        wedding_gift: "結婚祝い"
+        baby_gift: "出産祝い"
+        housewarming: "新築/引越し祝い"
+        birthday_60th: "還暦祝い"
+        other_day: "その他"
+
   date:
     order:
     - :year

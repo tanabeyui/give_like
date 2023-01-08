@@ -26,5 +26,6 @@
     <%= f.submit '欲しい物に追加' %>
   <% end %>
 
-レビューを書く
+  <%= link_to "レビューを書く", new_reviews_path(name: params[:name], code: params[:code], image: params[:image], price: params[:price], category: @category, url: params[:url] ) %>
+
 </div>

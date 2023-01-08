@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
 
+  namespace :public do
+    get 'reviews/new'
+    get 'reviews/edit'
+  end
   get '/items/search' => 'public/items#search'
 
   scope module: :public do
     resources :items, only: [:index, :show]
+    resource :reviews, only: [:new, :create, :edit, :update, :destroy]
     resource :favorites, only: [:create, :update, :destroy]
     resource :want_items, only: [:create, :update, :destroy]
   end
