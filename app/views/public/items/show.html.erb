@@ -63,7 +63,7 @@
 
   <% if @item_reviews.present? %>
     <% @item_reviews.each do |item_review| %>
-      <%= item_review.created_at.strftime('%Y/%m/%d') %> :: <%= item_review.body %> :: <%= item_review.end_user.name %><br>
-
+      <%= item_review.created_at.strftime('%Y/%m/%d') %> :: <%= item_review.body %><br>
+      <%= item_review.end_user.name %>　<%= item_review.end_user.era %>　 <%= review.end_user.gender_i18n %>
     <% end %>
   <% end %>

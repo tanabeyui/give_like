@@ -2,6 +2,6 @@
     <% @reviews.each do |review| %>
       <%= review.name %><br>
       <%= review.body %><br>
-      <%= review.end_user.name%><%= review.end_user.gender_i18n %><br>
+      <%= review.end_user.name%> <%= review.end_user.era %> <%= review.end_user.gender_i18n %><br>
       <hr>
     <% end %>
