@@ -29,3 +29,41 @@
   <%= link_to "レビューを書く", new_reviews_path(name: params[:name], code: params[:code], image: params[:image], price: params[:price], category: @category, url: params[:url] ) %>
 
 </div>
+
+
+<h3>▼レビュー</h3>
+<div class="search-bar">
+  <%= search_form_for @q, url: reviews_search_path do |f| %>
+    <div class="nav-title">詳細検索</div>
+    <%= f.search_field :body_cont, placeholder: 'キーワードから探す', class:'input-box' %>
+    <%= f.text_field :code_eq, :value => params[:code] %>
+
+    <%= text_field_tag :search_min_age %>
+    <%= text_field_tag :search_max_age %>
+
+    <%= f.label :end_user_gender_eq, '性別' %>
+    <%= f.radio_button :end_user_gender_eq, '0', id: "male" %>
+      <%= f.label EndUser.genders_i18n[:male], for: "male" %>
+    <%= f.radio_button :end_user_gender_eq, '1', id: "female" %>
+      <%= f.label EndUser.genders_i18n[:female], for: "female" %>
+    <%= f.radio_button :end_user_gender_eq, '1', id: "not_selected" %>
+      <%= f.label EndUser.genders_i18n[:not_selected], for: "not_selected" %>
+
+      <%= f.submit '検索する' %>
+      </ul>
+    <% end %>
+  </div>
+    <hr>
+    <% if @q.body_cont != nil %>
+      <% @reviews.each do |review| %>
+        <%= review.body %><br>
+        <hr>
+      <% end %>
+    <% end %>
+
+  <% if @item_reviews.present? %>
+    <% @item_reviews.each do |item_review| %>
+      <%= item_review.created_at.strftime('%Y/%m/%d') %> :: <%= item_review.body %> :: <%= item_review.end_user.name %><br>
+
+    <% end %>
+  <% end %>

@@ -9,4 +9,5 @@ class EndUser < ApplicationRecord
   has_many :want_items, dependent: :destroy
 
   enum gender: { male: 0, female: 1, not_selected: 2 }
+
 end

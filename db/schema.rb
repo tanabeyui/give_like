@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 2023_01_07_124528) do
     t.integer "price", null: false
     t.string "url", null: false
     t.text "body", null: false
-    t.float "evaluation", null: false
+    t.float "evaluation"
     t.integer "getting_method", default: 0, null: false
     t.integer "giver", default: 0, null: false
     t.integer "gifted_event", default: 0, null: false

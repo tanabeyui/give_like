@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get 'reviews/edit'
   end
   get '/items/search' => 'public/items#search'
+  get '/reviews/search' => 'public/reviews#search'
 
   scope module: :public do
     resources :items, only: [:index, :show]

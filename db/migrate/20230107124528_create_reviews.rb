@@ -10,7 +10,7 @@ class CreateReviews < ActiveRecord::Migration[6.1]
       t.string :url,               null: false
 
       t.text :body,                null: false
-      t.float :evaluation,         null: false
+      t.float :evaluation         
       t.integer :getting_method,   null: false, default: "0"
       t.integer :giver,            null: false, default: "0"
       t.integer :gifted_event,     null: false, default: "0"

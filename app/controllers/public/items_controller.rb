@@ -1,4 +1,6 @@
 class Public::ItemsController < ApplicationController
+  before_action :set_search
+
   def index
     @rankingSearchItems = RakutenWebService::Ichiba::Item.search(keyword: 'プレゼント', sort: '-reviewCount')
     @items = []
@@ -10,7 +12,12 @@ class Public::ItemsController < ApplicationController
   end
 
   def show
+    require "date"
+    @item_reviews = Review.where(code: params[:code]).all
+    @today = Date.today.strftime("%Y%m%d").to_i
+    
     @favorite = Favorite.new
+    @want_item = WantItem.new
     current_genre = params[:genre]
     @root = RakutenWebService::Ichiba::Genre[current_genre]
     @root.parents.each do |parent|
@@ -22,6 +29,15 @@ class Public::ItemsController < ApplicationController
     if params[:keyword]
       @items = RakutenWebService::Ichiba::Item.search(keyword: params[:keyword])
     end
+  end
+
+
+
+  private
+
+  def set_search
+    @q = Review.ransack(params[:q])
+    @reviews = @q.result(distinct: true)
   end
 
 end
