@@ -36,11 +36,22 @@
   <%= search_form_for @q, url: reviews_search_path do |f| %>
     <div class="nav-title">詳細検索</div>
     <%= f.search_field :body_cont, placeholder: 'キーワードから探す', class:'input-box' %>
-    <%= f.text_field :code_eq, :value => params[:code] %>
+    <%= f.hidden_field :code_eq, :value => params[:code] %><br>
 
-    <%= text_field_tag :search_min_age %>
-    <%= text_field_tag :search_max_age %>
+    <%= f.label :end_user_gender_eq_any, '性別' %>
+    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 0, '' %>
+      <%= f.label EndUser.genders_i18n[:male] %>
+    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 1, '' %>
+      <%= f.label EndUser.genders_i18n[:female] %>
+    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 2, '' %>
+      <%= f.label EndUser.genders_i18n[:not_selected] %>
 
+    <br>
+    <%= f.label :end_user_birth_day_to_age, '年代' %>
+    <%= f.search_field :end_user_birth_day_to_age_gteq %>
+    <%= f.radio_button :end_user_birth_day_to_age_lteq, '40' %>40歳
+
+    <br>
     <%= f.label :end_user_gender_eq, '性別' %>
     <%= f.radio_button :end_user_gender_eq, '0', id: "male" %>
       <%= f.label EndUser.genders_i18n[:male], for: "male" %>
@@ -48,7 +59,7 @@
       <%= f.label EndUser.genders_i18n[:female], for: "female" %>
     <%= f.radio_button :end_user_gender_eq, '1', id: "not_selected" %>
       <%= f.label EndUser.genders_i18n[:not_selected], for: "not_selected" %>
-
+    <br>
       <%= f.submit '検索する' %>
       </ul>
     <% end %>
@@ -64,6 +75,6 @@
   <% if @item_reviews.present? %>
     <% @item_reviews.each do |item_review| %>
       <%= item_review.created_at.strftime('%Y/%m/%d') %> :: <%= item_review.body %><br>
-      <%= item_review.end_user.name %>　<%= item_review.end_user.era %>　 <%= review.end_user.gender_i18n %>
+      <%= item_review.end_user.name %>　<%= item_review.end_user.era %>　 <%= item_review.end_user.gender_i18n %>
     <% end %>
   <% end %>

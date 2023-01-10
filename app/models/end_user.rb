@@ -16,18 +16,18 @@ class EndUser < ApplicationRecord
     age = (Date.today.strftime("%Y%m%d").to_i - self.birth_day.strftime('%Y%m%d').to_i)
     if age < 199999
       p "10代"
-    else age = 200000 < 299999
-      p "20代"
-    elsif age = 300000 < 399999
-      p "30代"
-    elsif age = 400000 < 499999
-      p "40代"
-    elsif age = 500000 < 599999
-      p "50代"
-    elsif age = 600000 < 699999
+    elsif age >= 700000
+      p "70代以上"
+    elsif age >= 600000
       p "60代"
-    else age > 700000
-      p "70代"
+    elsif age >= 500000
+      p "50代"
+    elsif age >= 400000
+      p "50代"
+    elsif age >= 300000
+      p "30代"
+    else age >= 200000
+      p "20代"
     end
   end
 end
