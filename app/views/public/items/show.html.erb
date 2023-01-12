@@ -47,18 +47,10 @@
       <%= f.label EndUser.genders_i18n[:not_selected] %>
 
     <br>
-    <%= f.label :end_user_birth_day_to_age, '年代' %>
-    <%= f.search_field :end_user_birth_day_to_age_gteq %>
-    <%= f.radio_button :end_user_birth_day_to_age_lteq, '40' %>40歳
+    <%= f.label :end_user_birth_day_to_age, '年齢' %>
+    <%= f.select :end_user_birth_day_to_age_gteq, *[10..100] , { include_blank: "" }, { class: "form-control" } %>歳以上～
+    <%= f.select :end_user_birth_day_to_age_lteq, *[10..100] , { include_blank: "" }, { class: "form-control" } %>歳以下
 
-    <br>
-    <%= f.label :end_user_gender_eq, '性別' %>
-    <%= f.radio_button :end_user_gender_eq, '0', id: "male" %>
-      <%= f.label EndUser.genders_i18n[:male], for: "male" %>
-    <%= f.radio_button :end_user_gender_eq, '1', id: "female" %>
-      <%= f.label EndUser.genders_i18n[:female], for: "female" %>
-    <%= f.radio_button :end_user_gender_eq, '1', id: "not_selected" %>
-      <%= f.label EndUser.genders_i18n[:not_selected], for: "not_selected" %>
     <br>
       <%= f.submit '検索する' %>
       </ul>

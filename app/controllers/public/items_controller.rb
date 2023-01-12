@@ -12,17 +12,14 @@ class Public::ItemsController < ApplicationController
   end
 
   def show
-    require "date"
-    @item_reviews = Review.where(code: params[:code]).all
-    @today = Date.today.strftime("%Y%m%d").to_i
-    
-    @favorite = Favorite.new
-    @want_item = WantItem.new
     current_genre = params[:genre]
     @root = RakutenWebService::Ichiba::Genre[current_genre]
     @root.parents.each do |parent|
       @category = parent.name
     end
+    @item_reviews = Review.where(code: params[:code]).all
+    @favorite = Favorite.new
+    @want_item = WantItem.new
   end
 
   def search

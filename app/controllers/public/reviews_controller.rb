@@ -18,7 +18,12 @@ class Public::ReviewsController < ApplicationController
 
   def search
     @q = Review.ransack(params[:q])
-    @reviews = @q.result(distinct: true)
+    if params[:q][:end_user_birth_day_to_age_gteq] != "" && params[:q][:end_user_birth_day_to_age_lteq] != "" &&
+                              (params[:q][:end_user_birth_day_to_age_gteq] > params[:q][:end_user_birth_day_to_age_lteq])
+      redirect_to items_path
+    else
+      @reviews = @q.result(distinct: true)
+    end
   end
 
 
