@@ -12,7 +12,7 @@ class Public::ItemsController < ApplicationController
   end
 
   def show
-    current_genre = params[:genre]
+    current_genre = params[:genre] || params[:q][:genre]
     @root = RakutenWebService::Ichiba::Genre[current_genre]
     @root.parents.each do |parent|
       @category = parent.name
@@ -20,6 +20,7 @@ class Public::ItemsController < ApplicationController
     @item_reviews = Review.where(code: params[:code]).all
     @favorite = Favorite.new
     @want_item = WantItem.new
+    @item_params = params[:q] || params 
   end
 
   def search
