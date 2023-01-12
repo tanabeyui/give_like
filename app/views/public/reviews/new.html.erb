@@ -8,7 +8,7 @@
   <%= f.hidden_field :url, :value => params[:url] %>
   <%= f.hidden_field :category, :value => @category %>
   <%= f.hidden_field :price, :value => params[:price] %>
-  <%= f.hidden_field :image, :value => params[:image] %>
+  <%= f.hidden_field :image, :value => params[:image][0] %>
 
       <div class="form-group row">
         <%= f.label :"入手方法", class: "col-md-3 col-form-label" %>

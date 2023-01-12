@@ -1,0 +1,32 @@
+<%= image_tag @end_user.get_profile_image(200,200) %><br>
+<%= @end_user.name %> :: @<%= @end_user.screen_name %><br>
+<%= @end_user.era %><%= @end_user.gender_i18n %>
+
+<h3><%= @end_user.name %>さんの欲しい物</h3>
+<% @favorites.each do |favorite| %>
+  <%= image_tag (favorite.image) %>
+  <%= favorite.name %>
+  <%= favorite.price %><br>
+  <%= link_to favorites_path(id: favorite.id), method: :delete do %>
+    削除
+  <% end %>
+  <hr>
+<% end %>
+
+<h3><%= @end_user.name %>さんの好きな物</h3>
+<% @want_items.each do |want_item| %>
+  <%= image_tag (want_item.image) %>
+  <%= want_item.name %>
+  <%= want_item.price %>
+  <hr>
+<% end %>
+
+<h3><%= @end_user.name %>さんのレビュー</h3>
+<% @reviews.each do |review| %>
+  <%= image_tag (review.image) %>
+  <%= review.name %>
+  <%= review.price %>
+  <%= review.body %>
+  <%= review.created_at.strftime('%Y/%m/%d') %>
+  <hr>
+<% end %>

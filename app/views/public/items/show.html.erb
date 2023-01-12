@@ -12,7 +12,7 @@
     <%= f.hidden_field :url, :value => params[:url] %>
     <%= f.hidden_field :category, :value => @category %>
     <%= f.hidden_field :price, :value => params[:price] %>
-    <%= f.hidden_field :image, :value => params[:image] %>
+    <%= f.hidden_field :image, :value => params[:image][0] %>
     <%= f.submit '好きな物に追加' %>
   <% end %>
 
@@ -22,11 +22,11 @@
     <%= f.hidden_field :url, :value => params[:url] %>
     <%= f.hidden_field :category, :value => @category %>
     <%= f.hidden_field :price, :value => params[:price] %>
-    <%= f.hidden_field :image, :value => params[:image] %>
+    <%= f.hidden_field :image, :value => params[:image][0] %>
     <%= f.submit '欲しい物に追加' %>
   <% end %>
 
-  <%= link_to "レビューを書く", new_reviews_path(name: params[:name], code: params[:code], image: params[:image], price: params[:price], category: @category, url: params[:url] ) %>
+  <%= link_to "レビューを書く", new_review_path(name: params[:name], code: params[:code], image: params[:image], price: params[:price], category: @category, url: params[:url] ) %>
 
 </div>
 
