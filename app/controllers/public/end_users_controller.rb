@@ -5,7 +5,7 @@ class Public::EndUsersController < ApplicationController
     @want_items = @end_user.want_items.order(created_at: :desc).limit(5)
     @reviews = @end_user.reviews.order(created_at: :desc).limit(5)
     
-    @categorys = Review.all.map(&:category)
+    @categorys = Review.all.map(&:category).uniq
   end
 
   def edit

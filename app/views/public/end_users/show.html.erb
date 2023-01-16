@@ -1,11 +1,15 @@
 <%= image_tag @end_user.get_profile_image(200,200) %><br>
 <%= @end_user.name %> :: @<%= @end_user.screen_name %><br>
 <%= @end_user.era %><%= @end_user.gender_i18n %>
-
-
-  <%= @categorys %>
-
 <hr>
+
+<%= @categorys %>
+  <% @categorys.each do |category| %>
+    <%= category %>
+    <%= @count = Review.where(category: category ).count %>件
+  <% end %>
+
+
 
 <div style="position:relative;width:250px;height:250px;">
   <canvas id="myChart"></canvas>
@@ -23,7 +27,7 @@
       datasets: [{
         data: [
             <% @categorys.each do |category| %>
-              <%= @count = Review.where(category: @category ).count.to_i %>,
+              <%= Review.where(category: category ).count.to_i %>,
             <% end %>
           ],
         borderWidth: 1
@@ -39,7 +43,7 @@
   });
 </script>
 
-
+<hr>
 <h3><%= @end_user.name %>さんの欲しい物</h3>
 <% @favorites.each do |favorite| %>
   <%= image_tag (favorite.image) %>
