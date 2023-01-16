@@ -20,7 +20,7 @@ class Public::ItemsController < ApplicationController
     @item_reviews = Review.where(code: params[:code]).all
     @favorite = Favorite.new
     @want_item = WantItem.new
-    @item_params = params[:q] || params 
+    @item_params = params[:q] || params
   end
 
   def search

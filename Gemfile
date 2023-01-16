@@ -61,3 +61,5 @@ gem "enum_help"
 
 gem 'rakuten_web_service'
 gem 'ransack'
+
+gem 'chartkick', '4.0.4'

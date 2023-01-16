@@ -2,6 +2,44 @@
 <%= @end_user.name %> :: @<%= @end_user.screen_name %><br>
 <%= @end_user.era %><%= @end_user.gender_i18n %>
 
+
+  <%= @categorys %>
+
+<hr>
+
+<div style="position:relative;width:250px;height:250px;">
+  <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        data: [
+            <% @categorys.each do |category| %>
+              <%= @count = Review.where(category: @category ).count.to_i %>,
+            <% end %>
+          ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
+
 <h3><%= @end_user.name %>さんの欲しい物</h3>
 <% @favorites.each do |favorite| %>
   <%= image_tag (favorite.image) %>

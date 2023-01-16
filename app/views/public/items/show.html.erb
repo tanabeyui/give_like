@@ -16,7 +16,6 @@
     <%= f.hidden_field :genre, :value => @item_params[:genre] %>
     <%= f.submit '好きな物に追加' %>
   <% end %>
-
   <%= form_with model: @want_item, url: want_items_path, method: :post do |f| %>
     <%= f.hidden_field :code, :value => @item_params[:code] %>
     <%= f.hidden_field :name, :value => @item_params[:name] %>
@@ -27,8 +26,7 @@
     <%= f.hidden_field :genre, :value => @item_params[:genre] %>
     <%= f.submit '欲しい物に追加' %>
   <% end %>
-
-  <%= link_to "レビューを書く", new_review_path(name: @item_params[:name], code: @item_params[:code], image: @item_params[:image], price: @item_params[:price], category: @category, url: @item_params[:url] ) %>
+  <%= link_to "レビューを書く", new_review_path(name: @item_params[:name], code: @item_params[:code], image: @item_params[:image], price: @item_params[:price], genre: @item_params[:genre], category: @category, url: @item_params[:url] ) %>
 
 </div>
 
@@ -43,7 +41,7 @@
     <%= f.hidden_field :url, :value => @item_params[:url] %>
     <%= f.hidden_field :price, :value => @item_params[:price] %>
     <%= f.hidden_field :image, :value => @item_params[:image] %>
-    
+
     <%= f.search_field :body_cont, placeholder: 'キーワードから探す', class:'input-box' %>
     <%= f.hidden_field :code_eq, :value => @item_params[:code] %><br>
 
@@ -73,10 +71,10 @@
       <hr>
       <% end %>
     <% end %>
-
   <% if @item_reviews.present? %>
     <% @item_reviews.each do |item_review| %>
       <%= item_review.created_at.strftime('%Y/%m/%d') %> :: <%= item_review.body %><br>
       <%= item_review.end_user.name %>　<%= item_review.end_user.era %>　 <%= item_review.end_user.gender_i18n %>
+      <hr>
     <% end %>
   <% end %>

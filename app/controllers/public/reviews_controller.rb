@@ -7,7 +7,7 @@ class Public::ReviewsController < ApplicationController
     @review = Review.new(review_params)
     @review.end_user_id = current_end_user.id
     if @review.save
-      redirect_to items_path
+      redirect_to item_path(params[:review][:code], name: params[:review][:name], code: params[:review][:code], genre: params[:review][:genre], price: params[:review][:price], image: params[:review][:image], url: params[:review][:url])
     else
       render :new
     end
