@@ -1,2 +1,47 @@
-<h1>Public::EndUsers#edit</h1>
-<p>Find me in app/views/public/end_users/edit.html.erb</p>
+<%= form_with model: @end_user, url: end_users_information_path, method: :patch do |f| %>
+  <div class="field">
+    <%= f.label :"ID" %><br />
+    <%= f.text_field :screen_name, autofocus: true %>
+    <p>マイプロフィールのURLになります</p>
+  </div>
+
+  <div class="field">
+    <%= f.label :"名前" %><br />
+    <%= f.text_field :name, autocomplete: "name" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+    <div class="form-check">
+      <%= f.radio_button :gender, EndUser.genders.key(0), id: "male" %>
+      <%= f.label :gender, EndUser.genders_i18n[:male], for: "male" %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :gender, EndUser.genders.key(1), id: "female" %>
+      <%= f.label :gender, EndUser.genders_i18n[:female], for: "female" %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :gender, EndUser.genders.key(2), id: "not_selected" %>
+      <%= f.label :gender, EndUser.genders_i18n[:not_selected], for: "not_selected" %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :"生年月日" %><br />
+    <%= f.date_select :birth_day, use_month_numbers: true, start_year: 1950, end_year: (Time.now.year - 10), default: Date.new(1990, 1, 1) %>
+  </div>
+
+
+      <div class="actions row justify-content-center pt-4">
+        <div class="col-md-4">
+          <%= f.submit "編集内容を保存", class: "btn btn-light bg-gold btn-block" %>
+        </div>
+        <div class="col-md-4">
+          <%= link_to "退会する", end_users_confirm_path, class: "btn btn-danger btn-block" %>
+        </div>
+      </div>
+<% end %>
