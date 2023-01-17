@@ -17,7 +17,7 @@ class Public::ItemsController < ApplicationController
     @root.parents.each do |parent|
       @category = parent.name
     end
-    @item_reviews = Review.where(code: params[:code]).all
+    @reviews = Review.where(code: params[:code]).all
     @favorite = Favorite.new
     @want_item = WantItem.new
     @item_params = params[:q] || params
@@ -35,7 +35,7 @@ class Public::ItemsController < ApplicationController
 
   def set_search
     @q = Review.ransack(params[:q])
-    @reviews = @q.result(distinct: true)
+    @search_reviews = @q.result(distinct: true)
   end
 
 end

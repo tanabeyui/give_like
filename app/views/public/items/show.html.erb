@@ -65,16 +65,15 @@
   </div>
     <hr>
     <% if @q.code_eq || @q.body_cont != nil %>
-      <% @reviews.each do |review| %>
-        <%= review.body %><br>
-        <%= review.end_user.name%> <%= review.end_user.era %> <%= review.end_user.gender_i18n %><br>
+      <% @search_reviews.each do |search_review| %>
+        <%= search_review.body %><br>
+        <%= search_review.end_user.name%> <%= search_review.end_user.era %> <%= search_review.end_user.gender_i18n %><br>
       <hr>
       <% end %>
-    <% end %>
-  <% if @item_reviews.present? %>
-    <% @item_reviews.each do |item_review| %>
-      <%= item_review.created_at.strftime('%Y/%m/%d') %> :: <%= item_review.body %><br>
-      <%= item_review.end_user.name %>　<%= item_review.end_user.era %>　 <%= item_review.end_user.gender_i18n %>
+    <% else %>
+      <% @reviews.each do |review| %>
+        <%= review.created_at.strftime('%Y/%m/%d') %> :: <%= review.body %><br>
+        <%= review.end_user.name %>　<%= review.end_user.era %>　 <%= review.end_user.gender_i18n %>
       <hr>
     <% end %>
   <% end %>

@@ -1,4 +1,12 @@
 class Public::ReviewsController < ApplicationController
+  before_action :set_search
+  
+  def index
+    @end_user = EndUser.find_by(screen_name: params[:screen_name])
+    @reviews = @end_user.reviews.all
+    @categorys = Review.all.map(&:category).uniq
+  end
+  
   def new
     @review = Review.new
   end
@@ -16,6 +24,12 @@ class Public::ReviewsController < ApplicationController
   def edit
   end
 
+  def destroy
+    review = Review.find(params[:id])
+    review.destroy
+    redirect_to items_path
+  end
+
   def search
     @q = Review.ransack(params[:q])
     if params[:q][:end_user_birth_day_to_age_gteq] != "" && params[:q][:end_user_birth_day_to_age_lteq] != "" &&
@@ -29,6 +43,11 @@ class Public::ReviewsController < ApplicationController
 
 
   private
+  
+  def set_search
+    @q = Review.ransack(params[:q])
+    @search_reviews = @q.result(distinct: true)
+  end
 
   def review_params
     params.require(:review).permit(:name, :image, :code, :price, :url, :category,
