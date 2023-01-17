@@ -1,0 +1,45 @@
+<h3><%= @end_user.name %>さん好きなもの一覧</h3>
+
+<%= @end_user.favorites_introduction %>
+
+<div class="search-bar">
+  <%= search_form_for @q, url: end_user_favorites_path do |f| %>
+    <div class="nav-title">詳細検索</div>
+    <%= f.hidden_field :end_user_id_eq, :value => @end_user.id %>
+    <%= f.search_field :name_cont, placeholder: 'キーワードから探す', class:'input-box' %>
+    <br>
+    <%= f.label :price, '価格' %>
+      <%= f.number_field :price_gteq %>円以上～
+      <%= f.number_field :price_lteq %>円以下
+    <br>
+    <%= f.label :category_eq_any, 'カテゴリー' %>
+    <%= f.select :category_eq_any, @categorys, { include_blank: "指定なし" }%>
+    <% @categorys.each do |category| %>
+      <%= f.check_box :category_eq_any, { multiple: true, include_hidden: false }, 'category', '' %>
+      <%= category %>
+    <% end %>
+    <br>
+    <%= f.date_field :created_at_gteq, include_blank: true, class: 'form-control'%> ～
+    <%= f.date_field :created_at_lteq_end_of_day, include_blank: true, class: 'form-control'%>
+    <%= f.submit '検索する' %>
+    <% end %>
+  </div>
+
+    <% if @q.price_gteq || @q.price_lteq || @q.category_eq_any || @q.created_at_gteq || @q.created_at_lteq_end_of_day != nil %>
+      <% @search_items.each do |search_item| %>
+        <%= image_tag (search_item.image) %>
+        <%= search_item.name %>
+        <%= search_item.price %><br>
+      <hr>
+      <% end %>
+    <% else %>
+      <% @favorites.each do |favorite| %>
+        <%= image_tag (favorite.image) %>
+        <%= favorite.name %>
+        <%= favorite.price %><br>
+        <%= link_to favorites_path(id: favorite.id), method: :delete do %>
+          削除
+        <% end %>
+        <hr>
+      <% end %>
+    <% end %>

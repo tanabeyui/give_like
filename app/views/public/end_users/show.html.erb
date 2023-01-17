@@ -45,18 +45,27 @@
 </script>
 
 <hr>
-<h3><%= @end_user.name %>さんの欲しい物</h3>
+<h2>
+  <%= @end_user.name %>さんの欲しい物
+  <%= link_to end_user_favorites_path(@end_user.screen_name) do %>
+    一覧
+  <% end %>
+</h2>
+<%= @end_user.favorites_introduction %>
 <% @favorites.each do |favorite| %>
   <%= image_tag (favorite.image) %>
   <%= favorite.name %>
   <%= favorite.price %><br>
-  <%= link_to favorites_path(id: favorite.id), method: :delete do %>
-    削除
-  <% end %>
   <hr>
 <% end %>
 
-<h3><%= @end_user.name %>さんの好きな物</h3>
+<h2>
+  <%= @end_user.name %>さんの好きな物
+  <%= link_to end_user_want_items_path(@end_user.screen_name) do %>
+    一覧
+  <% end %>
+</h2>
+<%= @end_user.want_items_introduction %>
 <% @want_items.each do |want_item| %>
   <%= image_tag (want_item.image) %>
   <%= want_item.name %>
@@ -64,8 +73,13 @@
   <hr>
 <% end %>
 
-<h3><%= @end_user.name %>さんのレビュー</h3>
-<% @reviews.each do |review| %>
+<h2>
+  <%= @end_user.name %>さんのレビュー
+  <%= link_to end_user_reviews_path(@end_user.screen_name) do %>
+    一覧
+  <% end %>
+</h2>
+<% @reviews.first(1).each do |review| %>
   <%= image_tag (review.image) %>
   <%= review.name %>
   <%= review.price %>

@@ -1,10 +1,10 @@
 <h3><%= @end_user.name %>さんのレビュー一覧</h3>
 
 <div class="search-bar">
-  <%= search_form_for @q, url: end_user_review_path do |f| %>
+  <%= search_form_for @q, url: end_user_reviews_path do |f| %>
     <div class="nav-title">詳細検索</div>
     <%= f.hidden_field :end_user_id_eq, :value => @end_user.id %>
-    <%= f.search_field :body_cont, placeholder: 'キーワードから探す', class:'input-box' %>
+    <%= f.search_field :name_or_body_cont, placeholder: 'キーワードから探す', class:'input-box' %>
     <br>
     <%= f.label :price, '価格' %>
       <%= f.number_field :price_gteq %>円以上～
@@ -23,7 +23,7 @@
     <% end %>
   </div>
 
-    <% if @q.body_cont || @q.price_gteq || @q.price_lteq || @q.category_eq_any || @q.created_at_gteq || @q.created_at_lteq_end_of_day != nil %>
+    <% if @q.name_or_body_cont || @q.price_gteq || @q.price_lteq || @q.category_eq_any || @q.created_at_gteq || @q.created_at_lteq_end_of_day != nil %>
       <% @search_reviews.each do |search_review| %>
         <%= image_tag (search_review.image) %>
         <%= search_review.name %>
@@ -42,7 +42,7 @@
         <br>
         <%= link_to edit_review_path(review) do %>
           編集
-        <% end %>　
+        <% end %>
         <%= link_to review_path(review), method: :delete do %>
           削除
         <% end %>

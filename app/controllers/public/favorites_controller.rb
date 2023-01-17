@@ -1,4 +1,11 @@
 class Public::FavoritesController < ApplicationController
+  before_action :set_search
+
+  def index
+    @end_user = EndUser.find_by(screen_name: params[:screen_name])
+    @favorites = @end_user.favorites.all
+    @categorys = Favorite.all.map(&:category).uniq
+  end
 
   def create
     @favorite = Favorite.new(favorite_params)
@@ -8,14 +15,19 @@ class Public::FavoritesController < ApplicationController
   end
 
   def destroy
-    favorite = current_end_user.favorites.find(params[:id])
+    favorite = Favorite.find(params[:id])
     favorite.destroy
-    redirect_to items_path
+    redirect_to end_user_favorites_path(favorite.end_user.screen_name)
   end
 
 
 
   private
+  
+  def set_search
+    @q = Favorite.ransack(params[:q])
+    @search_items = @q.result(distinct: true)
+  end
 
   def favorite_params
     params.require(:favorite).permit(:end_user_id, :name, :image, :code, :price, :url, :category)
