@@ -40,6 +40,9 @@
         <%= review.body %>
         <%= review.created_at.strftime('%Y/%m/%d') %>
         <br>
+        <%= link_to edit_review_path(review) do %>
+          編集
+        <% end %>　
         <%= link_to review_path(review), method: :delete do %>
           削除
         <% end %>
