@@ -11,45 +11,49 @@
   </head>
 
   <body>
-    <div>
-      <%= form_with url: items_search_path, method: :get, local: true do |f| %>
-        <div class="form-group">
-          <%= f.text_field :keyword, value: params[:keyword], class: "form-control" %>
-          <%= f.submit '製品名を検索', class: "form-control btn btn-success" %>
-        </div>
-      <% end %>
-      <% if end_user_signed_in? %>
-                      <li class="nav-item pl-3">
-                        <%= link_to end_user_path(current_end_user.screen_name), class: "nav-link btn-light border-right border-left" do%>
-                          <i class="fa-solid fa-user"></i> Mypage
-                        <% end %>
-                      </li>
-                      <li class="nav-item pl-3">
-                        <%= link_to destroy_end_user_session_path, method: :delete, class: "nav-link btn-light border-right border-left" do%>
-                          <i class="fas fa-sign-out-alt"></i> Log out
-                        <% end %>
-                      </li>
+    <%= link_to items_path, class: "nav-link btn-light border-right border-left" do%>
+      <i class="fa-solid fa-user"></i> ランキング
+    <% end %>
+    <%= form_with url: items_search_path, method: :get, local: true do |f| %>
+      <div class="form-group">
+        <%= f.text_field :keyword, value: params[:keyword], class: "form-control" %>
+        <%= f.submit '製品名を検索', class: "form-control btn btn-success" %>
+      </div>
+    <% end %>
+                        
+    <% if end_user_signed_in? %>
+      <li class="nav-item pl-3">
+        <%= link_to end_user_path(current_end_user.screen_name), class: "nav-link btn-light border-right border-left" do%>
+          <i class="fa-solid fa-user"></i> Mypage
+        <% end %>
+      </li>
+      <li class="nav-item pl-3">
+        <%= link_to destroy_end_user_session_path, method: :delete, class: "nav-link btn-light border-right border-left" do%>
+          <i class="fas fa-sign-out-alt"></i> Log out
+        <% end %>
+      </li>
 
-                    <% elsif admin_signed_in? %>
-                      <li class="nav-item pl-3">
-                        <%= link_to destroy_admin_session_path, method: :delete, class: "nav-link btn-light border-right border-left" do%>
-                          ログアウト
-                        <% end %>
-                      </li>
+    <% elsif admin_signed_in? %>
+      <li class="nav-item pl-3">
+        <%= link_to destroy_admin_session_path, method: :delete, class: "nav-link btn-light border-right border-left" do%>
+          ログアウト
+        <% end %>
+      </li>
 
-                    <% else %>
-                      <li class="nav-item pl-3">
-                        <%= link_to new_end_user_registration_path, class: "nav-link btn-light border-right border-left" do %>
-                          <i class="fas fa-user-plus"></i> Sign up
-                        <% end %>
-                      </li>
-                      <li class="nav-item pl-3">
-                        <%= link_to new_end_user_session_path, class: "nav-link btn-light border-right border-left" do %>
-                          <i class="fa-solid fa-right-to-bracket"></i> Log in
-                        <% end %>
-                      </li>
-                    <% end %>
-    </div>
+    <% else %>
+      <li class="nav-item pl-3">
+        <%= link_to new_end_user_registration_path, class: "nav-link btn-light border-right border-left" do %>
+          <i class="fas fa-user-plus"></i> Sign up
+        <% end %>
+      </li>
+      <li class="nav-item pl-3">
+        <%= link_to new_end_user_session_path, class: "nav-link btn-light border-right border-left" do %>
+          <i class="fa-solid fa-right-to-bracket"></i> Log in
+        <% end %>
+      </li>
+    <% end %>
+
+    
     <%= yield %>
   </body>
 </html>

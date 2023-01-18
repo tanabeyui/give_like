@@ -35,6 +35,15 @@
     <%= f.date_select :birth_day, use_month_numbers: true, start_year: 1950, end_year: (Time.now.year - 10), default: Date.new(1990, 1, 1) %>
   </div>
 
+  <div class="field">
+    <%= f.label :"好きな物" %><br />
+    <%= f.text_area :favorites_introduction, autofocus: true %>
+  </div>
+  <div class="field">
+    <%= f.label :"欲しい物" %><br />
+    <%= f.text_area :want_items_introduction, autofocus: true %>
+  </div>
+
 
       <div class="actions row justify-content-center pt-4">
         <div class="col-md-4">

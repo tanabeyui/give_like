@@ -4,6 +4,8 @@ class EndUser < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  validates :screen_name, presence: true, uniqueness: true
+
   has_many :reviews, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :want_items, dependent: :destroy
@@ -21,21 +23,21 @@ class EndUser < ApplicationRecord
   end
 
   def era
-    age = (Date.today.strftime("%Y%m%d").to_i - self.birth_day.strftime('%Y%m%d').to_i)
-    if age < 199999
-      p "10代"
-    elsif age >= 700000
+    age = (Date.today.strftime("%Y%m%d").to_i - self.birth_day.strftime('%Y%m%d').to_i) / 10000
+    if age >= 70
       p "70代以上"
-    elsif age >= 600000
+    elsif age >= 60
       p "60代"
-    elsif age >= 500000
+    elsif age >= 50
       p "50代"
-    elsif age >= 400000
+    elsif age >= 40
       p "50代"
-    elsif age >= 300000
+    elsif age >= 30
       p "30代"
-    else age >= 200000
+    elsif age >= 20
       p "20代"
+    else
+      p "10代"
     end
   end
 end

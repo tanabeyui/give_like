@@ -5,7 +5,7 @@ class Public::EndUsersController < ApplicationController
     @want_items = @end_user.want_items.order(created_at: :desc).limit(5)
     @reviews = @end_user.reviews.order(created_at: :desc).limit(5)
 
-    @categorys = Review.all.map(&:category).uniq
+    @categorys = @end_user.reviews.map(&:category).uniq
   end
 
   def edit
@@ -28,6 +28,6 @@ class Public::EndUsersController < ApplicationController
   private
 
   def end_user_params
-    params.require(:end_user).permit(:screen_name, :name, :email, :gender, :birth_day)
+    params.require(:end_user).permit(:screen_name, :name, :email, :gender, :birth_day, :favorites_introduction, :want_items_introduction)
   end
 end

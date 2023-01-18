@@ -5,9 +5,6 @@ class Public::RegistrationsController < Devise::RegistrationsController
     items_path
   end
 
-  def after_sign_in_path_for(resource)
-    items_path
-  end
 
 
   protected
