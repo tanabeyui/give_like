@@ -11,8 +11,7 @@ Rails.application.routes.draw do
 
   get '/end_users/information/edit' => 'public/end_users#edit', as: 'end_user_edit'
   patch '/end_users/information/' => 'public/end_users#update', as: 'end_users'
-
-  get '/end_users/confirm' => 'public/end_users#confirm'
+  get '/end_users/unsubscribe/confirm' => 'public/end_users#confirm', as: 'end_user_confirm'
   patch '/end_users' => 'public/end_users#unsubscribe', as: 'end_users_unsubscribe'
 
   scope module: :public do

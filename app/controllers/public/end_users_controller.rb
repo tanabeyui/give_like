@@ -22,12 +22,21 @@ class Public::EndUsersController < ApplicationController
   end
 
   def confirm
+    @end_user = current_end_user
+  end
+
+  def unsubscribe
+    @end_user = current_end_user
+    @end_user.update(is_deleted: true)
+    reset_session
+    flash[:notice] = "退会処理を実行いたしました"
+    redirect_to root_path
   end
 
 
   private
 
   def end_user_params
-    params.require(:end_user).permit(:screen_name, :name, :email, :gender, :birth_day, :favorites_introduction, :want_items_introduction)
+    params.require(:end_user).permit(:screen_name, :name, :email, :gender, :birth_day, :favorites_introduction, :want_items_introduction, :is_deleted)
   end
 end
