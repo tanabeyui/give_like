@@ -70,6 +70,10 @@
   <%= image_tag (want_item.image) %>
   <%= want_item.name %>
   <%= want_item.price %>
+  
+  <%= link_to want_items_path(id: want_item.id), method: :delete do %>
+    削除
+  <% end %>
   <hr>
 <% end %>
 

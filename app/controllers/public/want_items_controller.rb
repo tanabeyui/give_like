@@ -1,22 +1,32 @@
 class Public::WantItemsController < ApplicationController
+  before_action :set_search
 
+  def index
+    @end_user = EndUser.find_by(screen_name: params[:screen_name])
+    @want_items = @end_user.want_items.all
+    @categorys = WantItem.all.map(&:category).uniq
+  end
   def create
     @want_item = WantItem.new(want_item_params)
     @want_item.end_user_id = current_end_user.id
     @want_item.save
-    redirect_to item_path(params[:favorite][:code], name: params[:favorite][:name], code: params[:favorite][:code], genre: params[:favorite][:genre], price: params[:favorite][:price], image: params[:favorite][:image], url: params[:favorite][:url])
+    redirect_to item_path(params[:want_item][:code], name: params[:want_item][:name], code: params[:want_item][:code], genre: params[:want_item][:genre], price: params[:want_item][:price], image: params[:want_item][:image], url: params[:want_item][:url])
   end
 
   def destroy
-    post_image = PostImage.find(params[:post_image_id])
-    favorite = current_user.favorites.find_by(post_image_id: post_image.id)
-    favorite.destroy
-    redirect_to post_image_path(post_image)
+    want_item = WantItem.find(params[:id])
+    want_item.destroy
+    redirect_to items_path
   end
 
 
 
   private
+
+  def set_search
+    @q = WantItem.ransack(params[:q])
+    @search_items = @q.result(distinct: true)
+  end
 
   def want_item_params
     params.require(:want_item).permit(:end_user_id, :name, :image, :code, :price, :url, :category)
