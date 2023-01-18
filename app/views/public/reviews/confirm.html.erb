@@ -1,0 +1,43 @@
+<p><%= image_tag (@review.image), size: '200x200' %></p>
+<p><%= @review.name %></p>
+<p><%= @review.category %></p>
+<p><%= @review.price %></p>
+<hr>
+<p><%= @review.getting_method_i18n %></p>
+<p><%= @review.body %></p>
+
+<% if @review.getting_method == "gift" %>
+  <p><%= @review.giver_i18n %></p>
+  <p><%= @review.gifted_event_i18n %></p>
+  <% if @review.is_displayed == "display" %>
+    <span class="text-success">マイページに表示する</span>
+  <% else %>
+    <span class="text-black-50">マイページに表示しない</span>
+  <% end %>
+  <br>
+  <% if @review.is_anonymous == "anonymous" %>
+    <span class="text-success">匿名でレビューする</span>
+  <% else %>
+    <span class="text-black-50">ニックネームでレビューする</span>
+  <% end %>
+<% end %>
+
+
+<%= form_with model: @review, url: reviews_path, method: :post do |f| %>
+  <%= f.hidden_field :code %>
+  <%= f.hidden_field :name %>
+  <%= f.hidden_field :url %>
+  <%= f.hidden_field :genre, :value => params[:review][:genre] %>
+  <%= f.hidden_field :category %>
+  <%= f.hidden_field :price %>
+  <%= f.hidden_field :image %>
+  <%= f.hidden_field :getting_method %>
+  <%= f.hidden_field :body %>
+  <%= f.hidden_field :is_displayed %>
+  <%= f.hidden_field :is_anonymous %>
+  <%= f.hidden_field :giver %>
+  <%= f.hidden_field :gifted_event %>
+      <div class="actions pt-3">
+        <%= f.submit '新規登録', class:"btn btn-light bg-gold btn-block" %>
+      </div>
+    <% end %>

@@ -12,6 +12,7 @@ ja:
         gift: "人から貰った"
 
       giver:
+        no_giver: "なし"
         friend: "友人"
         lover: "恋人"
         parents: "親/祖父母"
@@ -26,6 +27,7 @@ ja:
         other_people: "その他"
 
       gifted_event:
+        no_date: "なし"
         birthday: "誕生日"
         christmas: "クリスマス"
         father_day: "父の日"
@@ -40,6 +42,7 @@ ja:
         housewarming: "新築/引越し祝い"
         birthday_60th: "還暦祝い"
         other_day: "その他"
+
 
   date:
     order:

@@ -1,14 +1,27 @@
 class Public::ReviewsController < ApplicationController
   before_action :set_search
-  
+
   def index
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
     @reviews = @end_user.reviews.all
     @categorys = Review.all.map(&:category).uniq
   end
-  
+
   def new
     @review = Review.new
+  end
+
+  def add_post
+    @review = Review.new(review_params)
+    @end_user = current_end_user
+    if params[:review][:getting_method] == "self_purchase"
+      render :confirm
+    end
+  end
+
+  def confirm
+    @review = Review.new(review_params)
+    @end_user = current_end_user
   end
 
   def create
@@ -44,7 +57,7 @@ class Public::ReviewsController < ApplicationController
 
 
   private
-  
+
   def set_search
     @q = Review.ransack(params[:q])
     @search_reviews = @q.result(distinct: true)
