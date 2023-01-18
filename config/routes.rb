@@ -4,14 +4,14 @@ Rails.application.routes.draw do
   get '/reviews/search' => 'public/reviews#search'
 
   get '/end_users/:screen_name', to: 'public/end_users#show', as: 'end_user'
-  
+
   get '/end_users/:screen_name/reviews', to: 'public/reviews#index', as: 'end_user_reviews'
   get '/end_users/:screen_name/favorites', to: 'public/favorites#index', as: 'end_user_favorites'
   get '/end_users/:screen_name/want_items', to: 'public/want_items#index', as: 'end_user_want_items'
-  
+
   get '/end_users/information/edit' => 'public/end_users#edit', as: 'end_user_edit'
   patch '/end_users/information/' => 'public/end_users#update', as: 'end_users'
-  
+
   get '/end_users/confirm' => 'public/end_users#confirm'
   patch '/end_users' => 'public/end_users#unsubscribe', as: 'end_users_unsubscribe'
 
@@ -26,8 +26,8 @@ Rails.application.routes.draw do
     path: '',
     path_names: {
       sign_up: '',
-      sign_in: 'log_in',
-      sign_out: 'log_out',
+      sign_in: 'sign_in',
+      sign_out: 'sign_out',
       registration: "sign_up",
     },
     controllers: {
