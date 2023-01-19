@@ -11,8 +11,15 @@ class Public::WantItemsController < ApplicationController
   def create
     @want_item = WantItem.new(want_item_params)
     @want_item.end_user_id = current_end_user.id
-    @want_item.save
-    redirect_to item_path(params[:want_item][:code], name: params[:want_item][:name], code: params[:want_item][:code], genre: params[:want_item][:genre], price: params[:want_item][:price], image: params[:want_item][:image], url: params[:want_item][:url])
+    wanted_item = current_end_user.want_items.find_by(code: @want_item.code)
+    if wanted_item != nil
+      wanted_item.destroy
+      @want_item.save
+      redirect_to item_path(params[:want_item][:code], name: params[:want_item][:name], code: params[:want_item][:code], genre: params[:want_item][:genre], price: params[:want_item][:price], image: params[:want_item][:image], url: params[:want_item][:url])
+    elsif favorited == nil
+      @favorite.save
+      redirect_to item_path(params[:want_item][:code], name: params[:want_item][:name], code: params[:want_item][:code], genre: params[:want_item][:genre], price: params[:want_item][:price], image: params[:want_item][:image], url: params[:want_item][:url])
+    end
   end
 
   def destroy
