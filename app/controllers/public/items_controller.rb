@@ -14,7 +14,7 @@ class Public::ItemsController < ApplicationController
   def show
     current_genre = params[:genre] || params[:q][:genre]
     @root = RakutenWebService::Ichiba::Genre[current_genre]
-    @root.parents.each do |parent|
+    @root.parents.first(1).each do |parent|
       @category = parent.name
     end
     @reviews = Review.where(code: params[:code]).all

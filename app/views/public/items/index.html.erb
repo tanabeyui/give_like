@@ -6,7 +6,12 @@
     <%= image_tag (item['smallImageUrls'][0]) %>
   <% end %>
   <%= item.name %><br>
-  <%= item.genre.name %><br>
+  <% @current_genre = item.genre.id %>
+  <% @root = RakutenWebService::Ichiba::Genre[@current_genre] %>
+    <% @root.parents.first(1).each do |parent| %>
+      <%= parent.level %>::<%= parent.name %>
+    <% end %>
+  <br>
   <%= number_with_delimiter(item.price) %>円
   <hr>
 <% end %>
