@@ -2,6 +2,41 @@
 
 <%= @end_user.favorites_introduction %>
 
+<div style="position:relative; width:250px; height:250px;">
+    <canvas id="MyFavoriteChart"></canvas>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const ctx = document.getElementById('MyFavoriteChart');
+
+    new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: <%= @chartlabels %>,
+        datasets: [{
+          data: [
+            <% @categorys.each do |category| %>
+              <%= Favorite.where(category: category, end_user_id: @end_user.id ).count.to_i %>,
+            <% end %>
+            ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: {
+            legend: false
+        },
+      }
+    });
+  </script>
+  <% @categorys.each do |category| %>
+    <%= category %>
+    <%= @count = Favorite.where(category: category, end_user_id: @end_user.id ).count %>件
+    <br>
+  <% end %>
+
+  <hr>
+
 <div class="search-bar">
   <%= search_form_for @q, url: end_user_favorites_path do |f| %>
     <div class="nav-title">詳細検索</div>

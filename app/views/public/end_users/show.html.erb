@@ -8,41 +8,39 @@
 
 <% if @reviews.present? %>
 
-  <%= @categorys %>
-  <% @categorys.each do |category| %>
-    <%= category %>
-    <%= @count = Review.where(category: category ).count %>件
-  <% end %>
-
-  <div style="position:relative;width:250px;height:250px;">
-    <canvas id="myChart"></canvas>
+  <div style="position:relative; width:250px; height:250px;">
+    <canvas id="MyReviewChart"></canvas>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    const ctx = document.getElementById('myChart');
+    const ctx = document.getElementById('MyReviewChart');
 
     new Chart(ctx, {
       type: 'pie',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: <%= @chartlabels %>,
         datasets: [{
           data: [
             <% @categorys.each do |category| %>
-              <%= Review.where(category: category ).count.to_i %>,
+              <%= Review.where(category: category, end_user_id: @end_user.id ).count.to_i %>,
             <% end %>
             ],
           borderWidth: 1
         }]
       },
       options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
+        plugins: {
+            legend: false
+        },
+    }
     });
   </script>
+
+  <% @categorys.each do |category| %>
+    <%= category %>
+    <%= @count = Review.where(category: category, end_user_id: @end_user.id ).count %>件
+    <br>
+  <% end %>
   <hr>
 <% else %>
   <div>

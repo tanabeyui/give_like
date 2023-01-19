@@ -4,8 +4,10 @@ class Public::WantItemsController < ApplicationController
   def index
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
     @want_items = @end_user.want_items.all
-    @categorys = WantItem.all.map(&:category).uniq
+    @categorys = @end_user.want_items.map(&:category).uniq
+    @chartlabels = @end_user.want_items.map(&:category).uniq.to_json.html_safe
   end
+
   def create
     @want_item = WantItem.new(want_item_params)
     @want_item.end_user_id = current_end_user.id

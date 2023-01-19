@@ -62,4 +62,4 @@ gem "enum_help"
 gem 'rakuten_web_service'
 gem 'ransack'
 
-gem 'chartkick', '4.0.4'
+gem 'chart-js-rails', '~> 0.1.4'

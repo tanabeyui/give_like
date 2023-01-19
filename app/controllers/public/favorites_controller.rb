@@ -4,7 +4,8 @@ class Public::FavoritesController < ApplicationController
   def index
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
     @favorites = @end_user.favorites.all
-    @categorys = Favorite.all.map(&:category).uniq
+    @categorys = @end_user.favorites.map(&:category).uniq
+    @chartlabels = @end_user.favorites.map(&:category).uniq.to_json.html_safe
   end
 
   def create
@@ -23,7 +24,7 @@ class Public::FavoritesController < ApplicationController
 
 
   private
-  
+
   def set_search
     @q = Favorite.ransack(params[:q])
     @search_items = @q.result(distinct: true)

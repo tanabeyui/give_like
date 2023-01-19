@@ -3,6 +3,7 @@
   <head>
     <title>GiveLike</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -20,7 +21,7 @@
         <%= f.submit '製品名を検索', class: "form-control btn btn-success" %>
       </div>
     <% end %>
-                        
+
     <% if end_user_signed_in? %>
       <li class="nav-item pl-3">
         <%= link_to end_user_path(current_end_user.screen_name), class: "nav-link btn-light border-right border-left" do%>
@@ -53,7 +54,7 @@
       </li>
     <% end %>
 
-    
+
     <%= yield %>
   </body>
 </html>

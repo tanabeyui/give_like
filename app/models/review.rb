@@ -12,4 +12,5 @@ class Review < ApplicationRecord
 
   enum is_checked: { confirmed: true, unconfirmed: false }
   enum is_disclose: { disclosed: true, closed: false }
+
 end

@@ -6,6 +6,7 @@ class Public::EndUsersController < ApplicationController
     @reviews = @end_user.reviews.order(created_at: :desc).limit(5)
 
     @categorys = @end_user.reviews.map(&:category).uniq
+    @chartlabels = @end_user.reviews.map(&:category).uniq.to_json.html_safe
   end
 
   def edit
