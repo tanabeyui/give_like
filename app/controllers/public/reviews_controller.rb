@@ -4,7 +4,8 @@ class Public::ReviewsController < ApplicationController
   def index
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
     @reviews = @end_user.reviews.all
-    @categorys = Review.all.map(&:category).uniq
+    @categorys = @end_user.reviews.map(&:category).uniq
+    @chartlabels = @end_user.reviews.map(&:category).uniq.to_json.html_safe
   end
 
   def new
