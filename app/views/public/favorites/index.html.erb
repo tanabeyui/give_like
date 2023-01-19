@@ -25,10 +25,11 @@
       options: {
         plugins: {
             legend: false
-        },
+        }
       }
     });
   </script>
+
   <% @categorys.each do |category| %>
     <%= category %>
     <%= @count = Favorite.where(category: category, end_user_id: @end_user.id ).count %>件
@@ -47,10 +48,8 @@
       <%= f.number_field :price_gteq %>円以上～
       <%= f.number_field :price_lteq %>円以下
     <br>
-    <%= f.label :category_eq_any, 'カテゴリー' %>
-    <%= f.select :category_eq_any, @categorys, { include_blank: "指定なし" }%>
     <% @categorys.each do |category| %>
-      <%= f.check_box :category_eq_any, { multiple: true, include_hidden: false }, 'category', '' %>
+      <%= f.check_box :category_eq_any, { multiple: true, include_hidden: false }, category, '' %>
       <%= category %>
     <% end %>
     <br>
