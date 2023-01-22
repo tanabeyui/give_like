@@ -49,13 +49,25 @@
       <%= category %>
     <% end %>
     <br>
+    <%= f.label :evaluation, '評価' %>
+    <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false }, 1, '' %>
+      ★☆☆☆☆以上
+    <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false }, 2, '' %>
+      ★★☆☆☆以上
+    <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false }, 3, '' %>
+      ★★★☆☆以上
+    <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false }, 4, '' %>
+      ★★★★☆以上
+    <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false }, 5, '' %>
+      ★★★★★
+    <br>
     <%= f.date_field :created_at_gteq, include_blank: true, class: 'form-control'%> ～
     <%= f.date_field :created_at_lteq_end_of_day, include_blank: true, class: 'form-control'%>
     <%= f.submit '検索する' %>
     <% end %>
   </div>
 
-    <% if @q.name_or_body_cont || @q.price_gteq || @q.price_lteq || @q.category_eq_any || @q.created_at_gteq || @q.created_at_lteq_end_of_day != nil %>
+    <% if @q.end_user_id_eq != nil %>
       <% @search_reviews.each do |search_review| %>
         <%= image_tag (search_review.image) %>
         <%= search_review.name %>
