@@ -9,8 +9,16 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
 require("chart.js")
+window.$ = window.jQuery = require('jquery');
 
+import Raty from "./raty.js"
+window.raty = function(elem,opt){
+    var raty =  new Raty(elem,opt)
+    raty.init();
+    return raty;
+}
 
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
