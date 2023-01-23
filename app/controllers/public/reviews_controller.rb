@@ -1,6 +1,10 @@
 class Public::ReviewsController < ApplicationController
   before_action :set_search
 
+  def ranking
+    @reviews = Review.group(:code).order("avg(evaluation) desc")
+  end
+
   def index
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
     @reviews = @end_user.reviews.order(evaluation: "DESC")

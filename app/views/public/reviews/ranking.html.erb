@@ -1,0 +1,23 @@
+<h1>レビューランキング</h1>
+
+<% @reviews.each_with_index do |review, i| %>
+  <%= i + 1 %><br>
+    <%= image_tag (review.image) %>
+  <%= review.name %><br>
+  評価：<%=  (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %><br>
+  <%= number_with_delimiter(review.price) %>円
+  <div id="star-rate<%= review.id %>"></div>
+        <script>
+        var elem = document.getElementById('star-rate<%= review.id %>');
+        var opt = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        starHalf: "<%= asset_path('star-half.png') %>",
+        half: true,
+        readOnly: true,
+        score: <%= (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %>,
+          };
+          raty(elem,opt);
+  </script>
+  <hr>
+<% end %>

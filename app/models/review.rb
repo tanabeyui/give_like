@@ -1,4 +1,5 @@
 class Review < ApplicationRecord
+  
   belongs_to :end_user
 
   enum getting_method: { self_purchase: 0, gift: 1 }

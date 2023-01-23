@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   get '/items/search' => 'public/items#search'
+  get '/reviews/ranking' => 'public/reviews#ranking'
   get '/reviews/search' => 'public/reviews#search'
   post '/reviews/add_post' => 'public/reviews#add_post'
   post '/reviews/confirm' => 'public/reviews#confirm'
