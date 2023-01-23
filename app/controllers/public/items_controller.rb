@@ -18,6 +18,16 @@ class Public::ItemsController < ApplicationController
       @category = parent.name
     end
     @reviews = Review.where(code: params[:code]).all
+
+    if params[:keyword] == "new"
+      @sort_reviews = @reviews.order(created_at: "DESC")
+    elsif params[:keyword] == "old"
+      @sort_reviews = @reviews.order(created_at: "ASC")
+    elsif params[:keyword] == "high_rated"
+      @sort_reviews = @reviews.order(evaluation: "DESC")
+    elsif params[:keyword] == "low_rated"
+      @sort_reviews = @reviews.order(evaluation: "ASC")
+    end
     @favorite = Favorite.new
     @want_item = WantItem.new
     @item_params = params[:q] || params

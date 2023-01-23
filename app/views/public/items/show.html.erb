@@ -65,7 +65,7 @@
     <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false }, 4, '' %>
       ★★★★☆以上
     <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false }, 5, '' %>
-      ★★★★★☆☆
+      ★★★★★
 
     <br>
     <%= f.label :end_user_birth_day_to_age, '年齢' %>
@@ -77,6 +77,20 @@
       </ul>
     <% end %>
   </div>
+
+   <%= form_with model: @review, url: item_path, method: :get do |f| %>
+   <%= f.hidden_field :code, :value => @item_params[:code] %>
+    <%= f.hidden_field :genre, :value => @item_params[:genre] %>
+    <%= f.hidden_field :name, :value => @item_params[:name] %>
+    <%= f.hidden_field :url, :value => @item_params[:url] %>
+    <%= f.hidden_field :price, :value => @item_params[:price] %>
+    <%= f.hidden_field :image, :value => @item_params[:image] %>
+    <%= f.hidden_field :code, :value => @item_params[:code] %>
+
+   <%= f.select :keyword, [ ['投稿が新しい順', 'new'], ['投稿が古い順', 'old'], ['評価が高い順', 'high_rated'], ['評価が低い順', 'low_rated']], {}, { class: "user_class" } %>
+   <%= f.submit %>
+  <% end %>
+
     <hr>
     <% if @q.code_eq != nil %>
       <% @search_reviews.each do |search_review| %>
@@ -84,8 +98,17 @@
         <%= search_review.end_user.name%> <%= search_review.end_user.era %> <%= search_review.end_user.gender_i18n %><br>
       <hr>
       <% end %>
+     <% elsif params[:keyword] != nil %>
+      <% @sort_reviews.each do |sort_review| %>
+        <%= image_tag (sort_review.image) %>
+        <%= sort_review.name %>
+        <%= sort_review.price %>
+        <%= sort_review.body %><br>
+        <%= sort_review.end_user.name %>　<%= sort_review.end_user.era %>　 <%= sort_review.end_user.gender_i18n %>
+      <hr>
+      <% end %>
     <% else %>
-      <% @reviews.each do |review| %>
+      <% @reviews.order(created_at: "DESC").each do |review| %>
         <div id="star-rate<%= review.id %>"></div>
         <script>
         var elem = document.getElementById('star-rate<%= review.id %>');
