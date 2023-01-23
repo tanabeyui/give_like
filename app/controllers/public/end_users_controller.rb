@@ -3,7 +3,8 @@ class Public::EndUsersController < ApplicationController
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
     @favorites = @end_user.favorites.order(created_at: :desc).limit(5)
     @want_items = @end_user.want_items.order(created_at: :desc).limit(5)
-    @reviews = @end_user.reviews.order(created_at: :desc).limit(5)
+    @reviews = @end_user.reviews.order(created_at: :desc).limit(1)
+    @high_reviews = @end_user.reviews.order(evaluation: "DESC")
 
     @categorys = @end_user.reviews.map(&:category).uniq
     @chartlabels = @end_user.reviews.map(&:category).uniq.to_json.html_safe

@@ -109,8 +109,29 @@
 
 <% if @reviews.present? %>
 <h2 style="background-color:#cccccc"><%= @end_user.name %>さんのレビュー</h2>
-  <% @reviews.first(1).each do |review| %>
+ <% @high_reviews.each_with_index.each do |high_review, i| %>
+    <%= i + 1 %><br>
+    <%= image_tag (high_review.image) %>
+    <%= high_review.name %>
+    <hr>
+  <% end %>
+
+  <% @reviews.each do |review| %>
+  <h3>最新レビュー</h3>
     <%= image_tag (review.image) %>
+    <div id="star-rate<%= review.id %>"></div>
+        <script>
+        var elem = document.getElementById('star-rate<%= review.id %>');
+        var opt = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        starHalf: "<%= asset_path('star-half.png') %>",
+        half: true,
+        readOnly: true,
+        score: <%= review.evaluation %>,
+          };
+          raty(elem,opt);
+    </script>
     <%= review.name %>
     <%= review.price %>
     <%= review.body %>
