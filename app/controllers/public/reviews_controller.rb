@@ -3,9 +3,18 @@ class Public::ReviewsController < ApplicationController
 
   def index
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
-    @reviews = @end_user.reviews.all
+    @reviews = @end_user.reviews.order(evaluation: "DESC")
     @categorys = @end_user.reviews.map(&:category).uniq
     @chartlabels = @end_user.reviews.map(&:category).uniq.to_json.html_safe
+    if params[:keyword] == "new"
+      @sort_reviews = @end_user.reviews.order(created_at: "DESC")
+    elsif params[:keyword] == "old"
+      @sort_reviews = @end_user.reviews.order(created_at: "ASC")
+    elsif params[:keyword] == "high_rated"
+      @sort_reviews = @end_user.reviews.order(evaluation: "DESC")
+    elsif params[:keyword] == "low_rated"
+      @sort_reviews = @end_user.reviews.order(evaluation: "ASC")
+    end
   end
 
   def new
@@ -43,16 +52,6 @@ class Public::ReviewsController < ApplicationController
     review = Review.find(params[:id])
     review.destroy
     redirect_to items_path
-  end
-
-  def search
-    @q = Review.ransack(params[:q])
-    if params[:q][:end_user_birth_day_to_age_gteq] != "" && params[:q][:end_user_birth_day_to_age_lteq] != "" &&
-                              (params[:q][:end_user_birth_day_to_age_gteq] > params[:q][:end_user_birth_day_to_age_lteq])
-      redirect_to items_path
-    else
-      @reviews = @q.result(distinct: true)
-    end
   end
 
 

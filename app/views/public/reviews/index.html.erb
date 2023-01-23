@@ -66,6 +66,11 @@
     <%= f.submit '検索する' %>
     <% end %>
   </div>
+  <hr>
+   <%= form_with model: @review, url: end_user_reviews_path, method: :get do |f| %>
+   <%= f.select :keyword, [ ['投稿が新しい順', 'new'], ['投稿が古い順', 'old'], ['評価が高い順', 'high_rated'], ['評価が低い順', 'low_rated']], { selected: 'high_rated' }, { class: "user_class" } %>
+   <%= f.submit %>
+  <% end %>
 
     <% if @q.end_user_id_eq != nil %>
       <% @search_reviews.each do |search_review| %>
@@ -75,9 +80,30 @@
         <%= search_review.body %><br>
       <hr>
       <% end %>
+    <% elsif params[:keyword] != nil %>
+      <% @sort_reviews.each do |sort_review| %>
+        <%= image_tag (sort_review.image) %>
+        <%= sort_review.name %>
+        <%= sort_review.price %>
+        <%= sort_review.body %><br>
+      <hr>
+      <% end %>
     <% else %>
       <% @reviews.each do |review| %>
         <%= image_tag (review.image) %>
+        <div id="star-rate<%= review.id %>"></div>
+        <script>
+        var elem = document.getElementById('star-rate<%= review.id %>');
+        var opt = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        starHalf: "<%= asset_path('star-half.png') %>",
+        half: true,
+        readOnly: true,
+        score: <%= review.evaluation %>,
+          };
+          raty(elem,opt);
+        </script>
         <%= review.name %>
         <br>
         <%= review.price %>円
