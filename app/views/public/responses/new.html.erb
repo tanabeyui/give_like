@@ -16,10 +16,10 @@
       <%= f.label :gender, Response.genders_i18n[:not_selected], for: "not_selected" %>
     </div>
   </div>
-
+  <hr>
   <div class="field">
     <div class="form-check">
-      <%= f.radio_button :age, Response.ages.key(1), id: "male" %>
+      <%= f.radio_button :age, Response.ages.key(1), id: "male", checked: "checked" %>
       <%= f.label :age, Response.ages_i18n[:teens], for: "male" %>
     </div>
     <div class="form-check">
@@ -47,7 +47,7 @@
       <%= f.label :age, Response.ages_i18n[:seventies], for: "not_selected" %>
     </div>
   </div>
-
+  <hr>
   <div class="form-group row">
         <%= f.label :"プレゼント", class: "col-md-3 col-form-label" %>
           <%= f.radio_button :present_genre, Response.present_genres.key(0), id: "item_on_sale", checked: "checked" %>
@@ -116,7 +116,7 @@
           <%= f.radio_button :present_genre, Response.present_genres.key(21), id: "item_on_sale" %>
           <%= f.label :present_genre, Response.present_genres_i18n[:other_present], for: "item_on_sale"  %>
         </div>
-
+  <hr>
   <div class="form-group row">
         <%= f.label :"プレゼント主", class: "col-md-3 col-form-label" %>
           <%= f.radio_button :giver, Response.givers.key(0), id: "item_on_sale", checked: "checked" %>
@@ -159,7 +159,7 @@
           <%= f.label :giver, Response.givers_i18n[:other_people], for: "item_on_sale"  %>
         </div>
       </div>
-
+    <hr>
        <div class="form-group row">
         <%= f.label :"イベント", class: "col-md-3 col-form-label" %>
           <%= f.radio_button :gifted_event, Response.gifted_events.key(0), id: "item_on_sale", checked: "checked" %>

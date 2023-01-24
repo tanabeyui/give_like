@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get '/responses/confirm' => 'public/responses#confirm'
   get '/items/search' => 'public/items#search'
   get '/reviews/ranking' => 'public/reviews#ranking'
   post '/reviews/add_post' => 'public/reviews#add_post'
