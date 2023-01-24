@@ -14,10 +14,12 @@
   <body>
     <%= link_to items_path, class: "nav-link btn-light border-right border-left" do%>
       <i class="fa-solid fa-user"></i> 楽天ランキング
-    <% end %> ||
+    <% end %>　||
     <%= link_to reviews_ranking_path, class: "nav-link btn-light border-right border-left" do%>
       <i class="fa-solid fa-user"></i> レビューランキング
-    <% end %>
+    <% end %>　||
+    <%= link_to "アンケート", responses_path, class: "btn btn-light bg-gold px-5" %>
+
     <%= form_with url: items_search_path, method: :get, local: true do |f| %>
       <div class="form-group">
         <%= f.text_field :keyword, value: params[:keyword], class: "form-control" %>
