@@ -1,0 +1,219 @@
+<h2>アンケート</h2>
+
+<%= form_with model: @response, url: responses_path, method: :post do |f| %>
+  <%= f.hidden_field :internet_protocol_address, :value => request.remote_ip %>
+  <div class="field">
+    <div class="form-check">
+      <%= f.radio_button :gender, Response.genders.key(0), id: "male" %>
+      <%= f.label :gender, Response.genders_i18n[:male], for: "male" %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :gender, Response.genders.key(1), id: "female" %>
+      <%= f.label :gender, Response.genders_i18n[:female], for: "female" %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :gender, Response.genders.key(2), id: "not_selected" %>
+      <%= f.label :gender, Response.genders_i18n[:not_selected], for: "not_selected" %>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="form-check">
+      <%= f.radio_button :age, Response.ages.key(1), id: "male" %>
+      <%= f.label :age, Response.ages_i18n[:teens], for: "male" %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :age, Response.ages.key(2), id: "female" %>
+      <%= f.label :age, Response.ages_i18n[:twenties], for: "female" %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :age, Response.ages.key(3), id: "not_selected" %>
+      <%= f.label :age, Response.ages_i18n[:thirties], for: "not_selected" %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :age, Response.ages.key(4), id: "female" %>
+      <%= f.label :age, Response.ages_i18n[:forties], for: "female" %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :age, Response.ages.key(5), id: "not_selected" %>
+      <%= f.label :age, Response.ages_i18n[:fifties], for: "not_selected" %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :age, Response.ages.key(6), id: "female" %>
+      <%= f.label :age, Response.ages_i18n[:sixties], for: "female" %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :age, Response.ages.key(7), id: "not_selected" %>
+      <%= f.label :age, Response.ages_i18n[:seventies], for: "not_selected" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+        <%= f.label :"プレゼント", class: "col-md-3 col-form-label" %>
+          <%= f.radio_button :present_genre, Response.present_genres.key(0), id: "item_on_sale", checked: "checked" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:flower], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(1), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:letter], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(2), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:jewelry], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(3), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:cosmetic], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(4), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:branded_goods], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(5), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:fashion], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(6), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:large_appliance], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(7), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:small_appliance], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(8), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:tablet], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(9), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:foods], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(10), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:sweets], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(11), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:alcohol], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(12), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:interior], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(13), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:necessities], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(14), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:hobby], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(15), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:baby_supplies], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(16), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:pet_supplies], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(17), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:vehicle], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(18), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:house], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(19), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:catalog_gift], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(20), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:travel], for: "item_on_sale"  %>
+
+          <%= f.radio_button :present_genre, Response.present_genres.key(21), id: "item_on_sale" %>
+          <%= f.label :present_genre, Response.present_genres_i18n[:other_present], for: "item_on_sale"  %>
+        </div>
+
+  <div class="form-group row">
+        <%= f.label :"プレゼント主", class: "col-md-3 col-form-label" %>
+          <%= f.radio_button :giver, Response.givers.key(0), id: "item_on_sale", checked: "checked" %>
+          <%= f.label :giver, Response.givers_i18n[:forgot_giver], for: "item_on_sale"  %>
+
+          <%= f.radio_button :giver, Response.givers.key(1), id: "item_on_sale" %>
+          <%= f.label :giver, Response.givers_i18n[:friend], for: "item_on_sale"  %>
+
+          <%= f.radio_button :giver, Response.givers.key(2), id: "item_on_sale" %>
+          <%= f.label :giver, Response.givers_i18n[:lover], for: "item_on_sale"  %>
+
+          <%= f.radio_button :giver, Response.givers.key(3), id: "item_on_sale" %>
+          <%= f.label :giver, Response.givers_i18n[:parents], for: "item_on_sale"  %>
+
+          <%= f.radio_button :giver, Response.givers.key(4), id: "item_on_sale" %>
+          <%= f.label :giver, Response.givers_i18n[:my_child], for: "item_on_sale"  %>
+
+          <%= f.radio_button :giver, Response.givers.key(5), id: "item_on_sale" %>
+          <%= f.label :giver, Response.givers_i18n[:sibling], for: "item_on_sale"  %>
+
+          <%= f.radio_button :giver, Response.givers.key(6), id: "item_on_sale" %>
+          <%= f.label :giver, Response.givers_i18n[:relatives], for: "item_on_sale"  %>
+
+          <%= f.radio_button :giver, Response.givers.key(7), id: "item_on_sale" %>
+          <%= f.label :giver, Response.givers_i18n[:boss], for: "item_on_sale"  %>
+
+          <%= f.radio_button :giver, Response.givers.key(8), id: "item_on_sale" %>
+          <%= f.label :giver, Response.givers_i18n[:subordinate], for: "item_on_sale"  %>
+
+          <%= f.radio_button :giver, Response.givers.key(9), id: "item_on_sale" %>
+          <%= f.label :giver, Response.givers_i18n[:coworker], for: "item_on_sale"  %>
+
+          <%= f.radio_button :giver, Response.givers.key(10), id: "item_on_sale" %>
+          <%= f.label :giver, Response.givers_i18n[:business_people], for: "item_on_sale"  %>
+
+          <%= f.radio_button :giver, Response.givers.key(11), id: "item_on_sale" %>
+          <%= f.label :giver, Response.givers_i18n[:acquaintance], for: "item_on_sale"  %>
+
+          <%= f.radio_button :giver, Response.givers.key(12), id: "item_on_sale" %>
+          <%= f.label :giver, Response.givers_i18n[:other_people], for: "item_on_sale"  %>
+        </div>
+      </div>
+
+       <div class="form-group row">
+        <%= f.label :"イベント", class: "col-md-3 col-form-label" %>
+          <%= f.radio_button :gifted_event, Response.gifted_events.key(0), id: "item_on_sale", checked: "checked" %>
+          <%= f.label :gifted_event, Response.gifted_events_i18n[:forgot_date], for: "item_on_sale"  %>
+
+          <%= f.radio_button :gifted_event, Response.gifted_events.key(1), id: "item_on_sale" %>
+          <%= f.label :gifted_event, Response.gifted_events_i18n[:birthday], for: "item_on_sale"  %>
+
+          <%= f.radio_button :gifted_event, Response.gifted_events.key(2), id: "item_on_sale" %>
+          <%= f.label :gifted_event, Response.gifted_events_i18n[:christmas], for: "item_on_sale"  %>
+
+          <%= f.radio_button :gifted_event, Response.gifted_events.key(3), id: "item_on_sale" %>
+          <%= f.label :gifted_event, Response.gifted_events_i18n[:father_day], for: "item_on_sale"  %>
+
+          <%= f.radio_button :gifted_event, Response.gifted_events.key(4), id: "item_on_sale" %>
+          <%= f.label :gifted_event, Response.gifted_events_i18n[:mother_day], for: "item_on_sale"  %>
+
+          <%= f.radio_button :gifted_event, Response.gifted_events.key(5), id: "item_on_sale" %>
+          <%= f.label :gifted_event, Response.gifted_events_i18n[:anniversary], for: "item_on_sale"  %>
+
+          <%= f.radio_button :gifted_event, Response.gifted_events.key(6), id: "item_on_sale" %>
+          <%= f.label :gifted_event, Response.gifted_events_i18n[:valentine], for: "item_on_sale"  %>
+
+          <%= f.radio_button :gifted_event, Response.gifted_events.key(7), id: "item_on_sale" %>
+          <%= f.label :gifted_event, Response.gifted_events_i18n[:white_day], for: "item_on_sale"  %>
+
+          <%= f.radio_button :gifted_event, Response.gifted_events.key(8), id: "item_on_sale" %>
+          <%= f.label :gifted_event, Response.gifted_events_i18n[:birthday_20th], for: "item_on_sale"  %>
+
+          <%= f.radio_button :gifted_event, Response.gifted_events.key(9), id: "item_on_sale" %>
+          <%= f.label :gifted_event, Response.gifted_events_i18n[:celebrate_job], for: "item_on_sale"  %>
+
+          <%= f.radio_button :gifted_event, Response.gifted_events.key(10), id: "item_on_sale" %>
+          <%= f.label :gifted_event, Response.gifted_events_i18n[:wedding_gift], for: "item_on_sale"  %>
+
+          <%= f.radio_button :gifted_event, Response.gifted_events.key(11), id: "item_on_sale" %>
+          <%= f.label :gifted_event, Response.gifted_events_i18n[:baby_gift], for: "item_on_sale"  %>
+
+          <%= f.radio_button :gifted_event, Response.gifted_events.key(12), id: "item_on_sale" %>
+          <%= f.label :gifted_event, Response.gifted_events_i18n[:housewarming], for: "item_on_sale"  %>
+
+          <%= f.radio_button :gifted_event, Response.gifted_events.key(13), id: "item_on_sale" %>
+          <%= f.label :gifted_event, Response.gifted_events_i18n[:birthday_60th], for: "item_on_sale"  %>
+
+          <%= f.radio_button :gifted_event, Response.gifted_events.key(14), id: "item_on_sale" %>
+          <%= f.label :gifted_event, Response.gifted_events_i18n[:other_day], for: "item_on_sale"  %>
+        </div>
+
+
+  <div class="actions">
+    <%= f.submit "新規登録" %>
+  </div>
+<% end %>
+
+<%# @root.children.each do |child| %>
+    <%#= "[#{child.level}] #{child.name}" %>
+<%# end %>

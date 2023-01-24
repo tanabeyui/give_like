@@ -43,6 +43,77 @@ ja:
         birthday_60th: "還暦祝い"
         other_day: "その他"
 
+    response:
+      gender:
+        male: "男性"
+        female: "女性"
+        not_selected: "非選択"
+
+      age:
+        kid: "10歳未満"
+        teens: "10代"
+        twenties: "20代"
+        thirties: "30代"
+        forties: "40代"
+        fifties: "50代"
+        sixties: "60代"
+        seventies: "70代以上"
+
+      giver:
+        forgot_giver: "覚えていない"
+        friend: "友人"
+        lover: "恋人"
+        parents: "親/祖父母"
+        my_child: "息子/娘/孫"
+        sibling: "兄弟姉妹"
+        relatives: "親戚"
+        boss: "上司"
+        subordinate: "部下"
+        coworker: "同僚"
+        business_people: "仕事関係者"
+        acquaintance: "知人"
+        other_people: "その他"
+
+      gifted_event:
+        forgot_date: "覚えていない"
+        birthday: "誕生日"
+        christmas: "クリスマス"
+        father_day: "父の日"
+        mother_day: "母の日"
+        anniversary: "結婚記念日"
+        valentine: "バレンタイン"
+        white_day: "ホワイトデー"
+        birthday_20th: "成人祝い"
+        celebrate_job: "就職祝い"
+        wedding_gift: "結婚祝い"
+        baby_gift: "出産祝い"
+        housewarming: "新築/引越し祝い"
+        birthday_60th: "還暦祝い"
+        other_day: "その他"
+        
+      present_genre:
+        flower: "花"
+        letter: "手紙・メッセージカード・ビデオレター"
+        jewelry: "ジュエリー・アクセサリー"
+        cosmetic: "化粧品・美容・香水"
+        branded_goods: "バッグ・腕時計・ブランド雑貨"
+        fashion: "ファッション・靴"
+        large_appliance: "大型家電（TV・冷蔵庫・洗濯機）"
+        small_appliance: "小型家電（パソコン・カメラ・電子レンジ）"
+        tablet: "スマートフォン・タブレット"
+        foods: "食品（肉・カニ・野菜）"
+        sweets: "スイーツ・お菓子"
+        alcohol: "ビール・洋酒・日本酒"
+        interior: "家具・インテリア・絵画"
+        necessities: "日用品・消耗品・生活雑貨"
+        hobby: "趣味・嗜好品（スポーツ・アウトドア・本・ゲーム・楽器・バイク用品）"
+        baby_supplies: "キッズ・ベビー・マタニティ用品"
+        pet_supplies: "ペット・ペットグッズ"
+        vehicle: "車・バイク"
+        house: "住宅・不動産"
+        catalog_gift: "カタログギフト・チケット"
+        travel: "旅行・家族サービス"
+        other_present: "その他"
 
   date:
     order:

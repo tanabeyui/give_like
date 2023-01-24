@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   patch '/end_users' => 'public/end_users#unsubscribe', as: 'end_users_unsubscribe'
 
   scope module: :public do
+    resources :responses, only: [:index, :new, :create, :destroy]
     resources :reviews, only: [:new, :create, :edit, :update, :destroy]
     resources :items, only: [:index, :show]
     resource :favorites, only: [:create, :update, :destroy]
