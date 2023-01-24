@@ -1,2 +1,49 @@
-<h1>Public::Responses#index</h1>
-<p>Find me in app/views/public/responses/index.html.erb</p>
+  <div style="position:relative; width:700px;">
+    <canvas id="responsesChart"></canvas>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const ctx = document.getElementById('responsesChart');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels:[
+          <% @responses.each do |response| %>
+              "<%= response.present_genre_i18n %>",
+            <% end %>
+            ],
+        datasets: [{
+          data: [
+            <% @responses.each do |response| %>
+              <%= Response.where(present_genre: response.present_genre ).count.to_i %>,
+            <% end %>
+            ],
+            barPercentage: 0.7
+        }]
+      },
+      options: {
+          indexAxis: 'y',
+          maintainAspectRatio: false,
+          plugins: {
+            legend: false
+          },
+          scales: {
+                x: {
+                    grid: {
+                        display: false,
+                    },
+                    ticks: {
+                        display: false
+                    },
+                    border: {
+                        display: false
+                    }
+                }
+            }
+      }
+    });
+  </script>
+
+  <hr>
+  <%= link_to "アンケートに参加する(全５問)", new_response_path, class: "btn btn-light bg-gold px-5" %>
+  <hr>

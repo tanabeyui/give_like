@@ -1,12 +1,12 @@
 class Public::ResponsesController < ApplicationController
+
   def index
+    @responses = Response.select(:present_genre).distinct
   end
 
   def new
     @response = Response.new
-    @root = RakutenWebService::Ichiba::Genre.root # root genre
-
-
+    @root = RakutenWebService::Ichiba::Genre.root
   end
 
   def create
@@ -29,9 +29,8 @@ class Public::ResponsesController < ApplicationController
   private
 
   def set_search
-    @q = Review.ransack(params[:q])
-    @search_reviews = @q.result(distinct: true)
-    @ranking_searchs = @q.result(distinct: true).group(:code).order("avg(evaluation) desc")
+    @q = Response.ransack(params[:q])
+    @search_responses = @q.result(distinct: true).select(:present_genre).distinct
   end
 
   def response_params
