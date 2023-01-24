@@ -1,12 +1,56 @@
 <h1>レビューランキング</h1>
+<%= search_form_for @q, url: reviews_ranking_path do |f| %>
+    <div class="nav-title">詳細検索</div>
 
-<% @reviews.each_with_index do |review, i| %>
-  <%= i + 1 %><br>
-    <%= image_tag (review.image) %>
-  <%= review.name %><br>
-  評価：<%=  (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %><br>
-  <%= number_with_delimiter(review.price) %>円
-  <div id="star-rate<%= review.id %>"></div>
+    <%= f.search_field :name_cont, placeholder: 'キーワードから探す', class:'input-box' %>
+    <br>
+
+    <%= f.label :end_user_gender_eq_any, '性別' %>
+    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 0, '' %>
+      <%= f.label EndUser.genders_i18n[:male] %>
+    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 1, '' %>
+      <%= f.label EndUser.genders_i18n[:female] %>
+    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 2, '' %>
+      <%= f.label EndUser.genders_i18n[:not_selected] %>
+
+    <br>
+    <%= f.label :end_user_birth_day_to_age, '年齢' %>
+    <%= f.select :end_user_birth_day_to_age_gteq, *[10..100] , { include_blank: "" }, { class: "form-control" } %>歳以上～
+    <%= f.select :end_user_birth_day_to_age_lteq, *[10..100] , { include_blank: "" }, { class: "form-control" } %>歳以下
+
+    <br>
+      <%= f.submit '検索する' %>
+      </ul>
+    <% end %>
+
+    <% if params[:q] != nil %>
+      <% @ranking_searchs.each do |ranking_search| %>
+        <%= image_tag (ranking_search.image) %>
+        <%= ranking_search.name %><br>
+        <div id="star-rate<%= ranking_search.id %>"></div>
+        <script>
+        var elem = document.getElementById('star-rate<%= ranking_search.id %>');
+        var opt = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        starHalf: "<%= asset_path('star-half.png') %>",
+        half: true,
+        readOnly: true,
+        score: <%= (@search_reviews.where(code: ranking_search.code).sum  {|ranking_search| ranking_search.evaluation} / @search_reviews.where(code: ranking_search.code).length).round(1) %>,
+          };
+          raty(elem,opt);
+        </script>
+        評価：<%= (@search_reviews.where(code: ranking_search.code).sum  {|ranking_search| ranking_search.evaluation} / @search_reviews.where(code: ranking_search.code).length).round(1) %><br>
+      <hr>
+      <% end %>
+    <% else %>
+    <% @reviews.each_with_index do |review, i| %>
+      <%= i + 1 %><br>
+      <%= image_tag (review.image) %>
+      <%= review.name %><br>
+      評価：<%=  (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %><br>
+      <%= number_with_delimiter(review.price) %>円
+      <div id="star-rate<%= review.id %>"></div>
         <script>
         var elem = document.getElementById('star-rate<%= review.id %>');
         var opt = {
@@ -18,6 +62,7 @@
         score: <%= (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %>,
           };
           raty(elem,opt);
-  </script>
-  <hr>
+        </script>
+      <hr>
+    <% end %>
 <% end %>

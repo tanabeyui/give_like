@@ -3,6 +3,15 @@ class Public::ReviewsController < ApplicationController
 
   def ranking
     @reviews = Review.group(:code).order("avg(evaluation) desc")
+    if params[:keyword] == "new"
+      @sort_reviews = @end_user.reviews.order(created_at: "DESC")
+    elsif params[:keyword] == "old"
+      @sort_reviews = @end_user.reviews.order(created_at: "ASC")
+    elsif params[:keyword] == "high_rated"
+      @sort_reviews = @end_user.reviews.order(evaluation: "DESC")
+    elsif params[:keyword] == "low_rated"
+      @sort_reviews = @end_user.reviews.order(evaluation: "ASC")
+    end
   end
 
   def index
@@ -65,6 +74,7 @@ class Public::ReviewsController < ApplicationController
   def set_search
     @q = Review.ransack(params[:q])
     @search_reviews = @q.result(distinct: true)
+    @ranking_searchs = @q.result(distinct: true).group(:code).order("avg(evaluation) desc")
   end
 
   def review_params
