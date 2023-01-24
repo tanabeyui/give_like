@@ -13,7 +13,10 @@
 
   <body>
     <%= link_to items_path, class: "nav-link btn-light border-right border-left" do%>
-      <i class="fa-solid fa-user"></i> ランキング
+      <i class="fa-solid fa-user"></i> 楽天ランキング
+    <% end %> ||
+    <%= link_to reviews_ranking_path, class: "nav-link btn-light border-right border-left" do%>
+      <i class="fa-solid fa-user"></i> レビューランキング
     <% end %>
     <%= form_with url: items_search_path, method: :get, local: true do |f| %>
       <div class="form-group">
