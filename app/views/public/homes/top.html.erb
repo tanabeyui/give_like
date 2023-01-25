@@ -1,3 +1,27 @@
+<%= search_form_for @q, url: reviews_ranking_path do |f| %>
+    <div class="nav-title">詳細検索</div>
+
+    <%= f.search_field :name_cont, placeholder: 'キーワードから探す', class:'input-box' %>
+    <br>
+
+    <%= f.label :end_user_gender_eq_any, '性別' %>
+    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 0, '' %>
+      <%= f.label EndUser.genders_i18n[:male] %>
+    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 1, '' %>
+      <%= f.label EndUser.genders_i18n[:female] %>
+    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 2, '' %>
+      <%= f.label EndUser.genders_i18n[:not_selected] %>
+
+    <br>
+    <%= f.label :end_user_birth_day_to_age, '年齢' %>
+    <%= f.select :end_user_birth_day_to_age_gteq, *[10..100] , { include_blank: "" }, { class: "form-control" } %>歳以上～
+    <%= f.select :end_user_birth_day_to_age_lteq, *[10..100] , { include_blank: "" }, { class: "form-control" } %>歳以下
+
+    <br>
+      <%= f.submit '検索する' %>
+      </ul>
+    <% end %>
+    
 <h2 style="background-color:#cccccc">貰って嬉しかった物アンケート <%= link_to "アンケートに参加する(全５問)", new_response_path, class: "btn btn-light bg-gold px-5" %></h2>
 
 <div style="position:relative; width:950px; height:250px;">
@@ -46,7 +70,6 @@
       }
     });
   </script>
-
   <hr>
   <%= link_to "アンケート結果をもっと見る", responses_path, class: "btn btn-light bg-gold px-5" %>
   <hr>
