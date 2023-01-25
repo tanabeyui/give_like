@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  root to: 'public/homes#top'
+  
   get '/responses/confirm' => 'public/responses#confirm'
   get '/items/search' => 'public/items#search'
   get '/reviews/ranking' => 'public/reviews#ranking'
@@ -7,7 +9,6 @@ Rails.application.routes.draw do
   post '/reviews/confirm' => 'public/reviews#confirm'
 
   get '/end_users/:screen_name', to: 'public/end_users#show', as: 'end_user'
-
   get '/end_users/:screen_name/reviews', to: 'public/reviews#index', as: 'end_user_reviews'
   get '/end_users/:screen_name/favorites', to: 'public/favorites#index', as: 'end_user_favorites'
   get '/end_users/:screen_name/want_items', to: 'public/want_items#index', as: 'end_user_want_items'

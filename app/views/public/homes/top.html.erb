@@ -1,0 +1,86 @@
+<h2 style="background-color:#cccccc">貰って嬉しかった物アンケート <%= link_to "アンケートに参加する(全５問)", new_response_path, class: "btn btn-light bg-gold px-5" %></h2>
+
+<div style="position:relative; width:950px; height:250px;">
+    <canvas id="responsesChart"></canvas>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const ctx = document.getElementById('responsesChart');
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels:[
+          <% @responses.each do |response| %>
+              "<%= response.present_genre_i18n %>",
+            <% end %>
+            ],
+        datasets: [{
+          data: [
+            <% @responses.each do |response| %>
+              <%= Response.where(present_genre: response.present_genre ).count.to_i %>,
+            <% end %>
+            ],
+            barPercentgifted_event: 0.7
+        }]
+      },
+      options: {
+          indexAxis: 'y',
+          maintainAspectRatio: false,
+          plugins: {
+            legend: false
+          },
+          scales: {
+                x: {
+                    grid: {
+                        display: false,
+                    },
+                    ticks: {
+                        display: false
+                    },
+                    border: {
+                        display: false
+                    }
+                }
+            }
+      }
+    });
+  </script>
+
+  <hr>
+  <%= link_to "アンケート結果をもっと見る", responses_path, class: "btn btn-light bg-gold px-5" %>
+  <hr>
+
+  <h2 style="background-color:#cccccc">楽天プレゼントランキング <%= link_to "もっと見る", items_path, class: "btn btn-light bg-gold px-5" %></h2>
+  <% @items.each_with_index do |item, i| %>
+    <%= i + 1 %><br>
+    <%= link_to item_path(item.code, name: item.name, code: item.code, genre: item.genre.id, price: item.price, image: item.medium_image_urls[0], url: item.url) do %>
+      <%= image_tag (item['smallImageUrls'][0]) %>
+    <% end %>
+    <%= item.name %><br>
+    <%= number_with_delimiter(item.price) %>円
+    <hr>
+  <% end %>
+
+  <h2 style="background-color:#cccccc">GiveLikeレビューランキング <%= link_to "もっと見る", reviews_ranking_path, class: "btn btn-light bg-gold px-5" %></h2>
+  <% @reviews.each_with_index do |review, i| %>
+      <%= i + 1 %><br>
+      <%= image_tag (review.image) %>
+      <%= review.name %><br>
+      評価：<%=  (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %><br>
+      <%= number_with_delimiter(review.price) %>円
+      <div id="star-rate<%= review.id %>"></div>
+        <script>
+        var elem = document.getElementById('star-rate<%= review.id %>');
+        var opt = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        starHalf: "<%= asset_path('star-half.png') %>",
+        half: true,
+        readOnly: true,
+        score: <%= (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %>,
+          };
+          raty(elem,opt);
+        </script>
+      <hr>
+    <% end %>
