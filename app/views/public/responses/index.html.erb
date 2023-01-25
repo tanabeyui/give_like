@@ -4,7 +4,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     const ctx = document.getElementById('responsesChart');
-    
+
     new Chart(ctx, {
       type: 'bar',
       data: {
@@ -19,7 +19,7 @@
               <%= Response.where(present_genre: response.present_genre ).count.to_i %>,
             <% end %>
             ],
-            barPercentage: 0.7
+            barPercentgifted_event: 0.7
         }]
       },
       options: {
@@ -54,11 +54,83 @@
 
     <%= f.label :gender_eq_any, '性別' %>
     <%= f.check_box :gender_eq_any, { multiple: true, include_hidden: false }, 0, '' %>
-      <%= f.label EndUser.genders_i18n[:male] %>
+      <%= f.label Response.genders_i18n[:male] %>
     <%= f.check_box :gender_eq_any, { multiple: true, include_hidden: false }, 1, '' %>
-      <%= f.label EndUser.genders_i18n[:female] %>
+      <%= f.label Response.genders_i18n[:female] %>
     <%= f.check_box :gender_eq_any, { multiple: true, include_hidden: false }, 2, '' %>
-      <%= f.label EndUser.genders_i18n[:not_selected] %>
+      <%= f.label Response.genders_i18n[:not_selected] %>
+    <br>
+    <%= f.label :age_eq_any, '年齢' %>
+    <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false }, 1, '' %>
+      <%= f.label Response.ages_i18n[:teens] %>
+    <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false }, 2, '' %>
+      <%= f.label Response.ages_i18n[:twenties] %>
+    <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false }, 3, '' %>
+      <%= f.label Response.ages_i18n[:thirties] %>
+    <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false }, 4, '' %>
+      <%= f.label Response.ages_i18n[:forties] %>
+    <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false }, 5, '' %>
+      <%= f.label Response.ages_i18n[:fifties] %>
+    <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false }, 6, '' %>
+      <%= f.label Response.ages_i18n[:sixties] %>
+    <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false }, 7, '' %>
+      <%= f.label Response.ages_i18n[:seventies] %>
+    <br>
+    <%= f.label :giver_eq_any, '贈り主' %>
+    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 1, '' %>
+      <%= f.label Response.givers_i18n[:friend] %>
+    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 2, '' %>
+      <%= f.label Response.givers_i18n[:lover] %>
+    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 3, '' %>
+      <%= f.label Response.givers_i18n[:parents] %>
+    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 4, '' %>
+      <%= f.label Response.givers_i18n[:my_child] %>
+    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 5, '' %>
+      <%= f.label Response.givers_i18n[:sibling] %>
+    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 6, '' %>
+      <%= f.label Response.givers_i18n[:relatives] %>
+    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 7, '' %>
+      <%= f.label Response.givers_i18n[:boss] %>
+    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 8, '' %>
+      <%= f.label Response.givers_i18n[:subordinate] %>
+    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 9, '' %>
+      <%= f.label Response.givers_i18n[:coworker] %>
+    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 10, '' %>
+      <%= f.label Response.givers_i18n[:business_people] %>
+    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 11, '' %>
+      <%= f.label Response.givers_i18n[:acquaintance] %>
+    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 12, '' %>
+      <%= f.label Response.givers_i18n[:other_people] %>
+    <br>
+    <%= f.label :gifted_event_eq_any, 'イベント' %>
+    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 1, '' %>
+      <%= f.label Response.gifted_events_i18n[:birthday] %>
+    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 2, '' %>
+      <%= f.label Response.gifted_events_i18n[:christmas] %>
+    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 3, '' %>
+      <%= f.label Response.gifted_events_i18n[:father_day] %>
+    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 4, '' %>
+      <%= f.label Response.gifted_events_i18n[:mother_day] %>
+    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 5, '' %>
+      <%= f.label Response.gifted_events_i18n[:anniversary] %>
+    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 6, '' %>
+      <%= f.label Response.gifted_events_i18n[:valentine] %>
+    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 7, '' %>
+      <%= f.label Response.gifted_events_i18n[:white_day] %>
+    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 8, '' %>
+      <%= f.label Response.gifted_events_i18n[:birthday_20th] %>
+    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 9, '' %>
+      <%= f.label Response.gifted_events_i18n[:celebrate_job] %>
+    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 10, '' %>
+      <%= f.label Response.gifted_events_i18n[:wedding_gift] %>
+    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 11, '' %>
+      <%= f.label Response.gifted_events_i18n[:baby_gift] %>
+    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 12, '' %>
+      <%= f.label Response.gifted_events_i18n[:housewarming] %>
+    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 13, '' %>
+      <%= f.label Response.gifted_events_i18n[:birthday_60th] %>
+    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 14, '' %>
+      <%= f.label Response.gifted_events_i18n[:other_day] %>
 
     <br>
       <%= f.submit '検索する' %>
@@ -84,7 +156,7 @@
                   <%= @responses_count.where(present_genre: search_response.present_genre ).count.to_i %>,
               <% end %>
               ],
-              barPercentage: 0.7
+              barPercentgifted_event: 0.7
           }]
         },
         options: {
@@ -109,4 +181,4 @@
         }
       });
     </script>
-  
+
