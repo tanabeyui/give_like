@@ -1,4 +1,5 @@
 class Public::ResponsesController < ApplicationController
+  before_action :set_search
 
   def index
     @responses = Response.select(:present_genre).distinct
@@ -29,8 +30,16 @@ class Public::ResponsesController < ApplicationController
   private
 
   def set_search
-    @q = Response.ransack(params[:q])
-    @search_responses = @q.result(distinct: true).select(:present_genre).distinct
+    if params[:q].present?
+			@q = Response.ransack(params[:q])
+      @responses_count = @q.result(distinct: true)
+      @search_responses = @q.result(distinct: true).select(:present_genre)
+		else
+			@default = (params[:q] = {"gender_eq_any"=>["1"]})
+			@q = Response.ransack(@default)
+      @responses_count = @q.result(distinct: true)
+      @search_responses = @q.result(distinct: true).select(:present_genre)
+		end
   end
 
   def response_params

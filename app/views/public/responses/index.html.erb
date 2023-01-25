@@ -4,6 +4,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     const ctx = document.getElementById('responsesChart');
+    
     new Chart(ctx, {
       type: 'bar',
       data: {
@@ -47,3 +48,65 @@
   <hr>
   <%= link_to "アンケートに参加する(全５問)", new_response_path, class: "btn btn-light bg-gold px-5" %>
   <hr>
+
+  <%= search_form_for @q, url: responses_path do |f| %>
+    <div class="nav-title">詳細検索</div>
+
+    <%= f.label :gender_eq_any, '性別' %>
+    <%= f.check_box :gender_eq_any, { multiple: true, include_hidden: false }, 0, '' %>
+      <%= f.label EndUser.genders_i18n[:male] %>
+    <%= f.check_box :gender_eq_any, { multiple: true, include_hidden: false }, 1, '' %>
+      <%= f.label EndUser.genders_i18n[:female] %>
+    <%= f.check_box :gender_eq_any, { multiple: true, include_hidden: false }, 2, '' %>
+      <%= f.label EndUser.genders_i18n[:not_selected] %>
+
+    <br>
+      <%= f.submit '検索する' %>
+      </ul>
+    <% end %>
+
+     <div style="position:relative; width:700px;">
+    <canvas id="responsesSearchChart"></canvas>
+    </div>
+    <script>
+      const ctx1 = document.getElementById('responsesSearchChart');
+      new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels:[
+              <% @search_responses.each do |search_response| %>
+                  "<%= search_response.present_genre_i18n %>",
+              <% end %>
+              ],
+          datasets: [{
+            data: [
+              <% @search_responses.each do |search_response| %>
+                  <%= @responses_count.where(present_genre: search_response.present_genre ).count.to_i %>,
+              <% end %>
+              ],
+              barPercentage: 0.7
+          }]
+        },
+        options: {
+            indexAxis: 'y',
+            maintainAspectRatio: false,
+            plugins: {
+              legend: false
+            },
+            scales: {
+                  x: {
+                      grid: {
+                          display: false,
+                      },
+                      ticks: {
+                          display: false
+                      },
+                      border: {
+                          display: false
+                      }
+                  }
+              }
+        }
+      });
+    </script>
+  
