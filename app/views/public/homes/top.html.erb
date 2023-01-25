@@ -21,7 +21,7 @@
       <%= f.submit '検索する' %>
       </ul>
     <% end %>
-    
+
 <h2 style="background-color:#cccccc">貰って嬉しかった物アンケート <%= link_to "アンケートに参加する(全５問)", new_response_path, class: "btn btn-light bg-gold px-5" %></h2>
 
 <div style="position:relative; width:950px; height:250px;">
@@ -70,6 +70,50 @@
       }
     });
   </script>
+
+  <h4>年齢別集計結果</h4>
+  <% @teens_responses.each do |teens_response| %>
+    [<%= teens_response.age_i18n %>]<%= teens_response.present_genre_i18n %>
+    <%=  Response.where(present_genre: teens_response.present_genre, age: teens_response.age).count %><br>
+  <% end %>
+  <% @twenties_responses.each do |twenties_response| %>
+    [<%= twenties_response.age_i18n %>]<%= twenties_response.present_genre_i18n %>
+    <%=  Response.where(present_genre: twenties_response.present_genre, age: twenties_response.age).count %><br>
+  <% end %>
+  <% @thirties_responses.each do |thirties_response| %>
+    [<%= thirties_response.age_i18n %>]<%= thirties_response.present_genre_i18n %>
+    <%=  Response.where(present_genre: thirties_response.present_genre, age: thirties_response.age).count %><br>
+  <% end %>
+  <% @forties_responses.each do |forties_response| %>
+    [<%= forties_response.age_i18n %>]<%= forties_response.present_genre_i18n %>
+    <%=  Response.where(present_genre: forties_response.present_genre, age: forties_response.age).count %><br>
+  <% end %>
+  <% @fifties_responses.each do |fifties_response| %>
+    [<%= fifties_response.age_i18n %>]<%= fifties_response.present_genre_i18n %>
+    <%=  Response.where(present_genre: fifties_response.present_genre, age: fifties_response.age).count %><br>
+  <% end %>
+  <% @sixties_responses.each do |sixties_response| %>
+    [<%= sixties_response.age_i18n %>]<%= sixties_response.present_genre_i18n %>
+    <%=  Response.where(present_genre: sixties_response.present_genre, age: sixties_response.age).count %><br>
+  <% end %>
+  <% @seventies_responses.each do |seventies_response| %>
+    [<%= seventies_response.age_i18n %>]<%= seventies_response.present_genre_i18n %>
+    <%=  Response.where(present_genre: seventies_response.present_genre, age: seventies_response.age).count %><br>
+  <% end %>
+
+  <h4>男女別集計結果</h4>
+  <% @male_responses.each_with_index do |male_response, i| %>
+    <%= i + 1 %>位::
+    <%= male_response.present_genre_i18n %>
+    （<%=  Response.where(present_genre: male_response.present_genre, gender: male_response.gender).count %>）<br>
+  <% end %>
+  <br>
+  <% @female_responses.each_with_index do |female_response, i| %>
+    <%= i + 1 %>位::
+    <%= female_response.present_genre_i18n %>
+    （<%=  Response.where(present_genre: female_response.present_genre, gender: female_response.gender).count %>）<br>
+  <% end %>
+
   <hr>
   <%= link_to "アンケート結果をもっと見る", responses_path, class: "btn btn-light bg-gold px-5" %>
   <hr>
