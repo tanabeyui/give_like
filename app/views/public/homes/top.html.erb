@@ -21,9 +21,20 @@
       <%= f.submit '検索する' %>
       </ul>
     <% end %>
-    
-    
-    
+  <h2 style="background-color:#cccccc">楽天売れ筋ランキング</h2>
+    <%= link_to items_ranking_path(sex: 0, title: "男性" ) do %>男性ランキング<% end %>
+    <%= link_to items_ranking_path(sex: 1, title: "女性" ) do %>女性ランキング<% end %><br>
+    <%= link_to items_ranking_path(age: 10, title: "10代" ) do %>10代ランキング<% end %>
+    <%= link_to items_ranking_path(age: 20, title: "20代" ) do %>20代ランキング<% end %>
+    <%= link_to items_ranking_path(age: 30, title: "30代" ) do %>30代ランキング<% end %>
+    <%= link_to items_ranking_path(age: 40, title: "40代" ) do %>40代ランキング<% end %>
+    <%= link_to items_ranking_path(age: 50, title: "50代" ) do %>50代ランキング<% end %><br>
+    <%= link_to items_ranking_path(genre: 100371, title: "レディースファッション" ) do %>レディースファッションランキング<% end %>
+    <%= link_to items_ranking_path(genre: 551177, title: "メンズファッション" ) do %>メンズファッションランキング<% end %>
+    <%= link_to items_ranking_path(genre: 216129, title: "ジュエリー・アクセサリー" ) do %>ジュエリー・アクセサリーランキング<% end %>
+    <%= link_to items_ranking_path(genre: 216131, title: "バッグ・小物・ブランド雑貨" ) do %>バッグ・小物・ブランド雑貨ランキング<% end %>
+    <%= link_to items_ranking_path(genre: 558885, title: "靴" ) do %>靴ランキング<% end %>
+    <%= link_to items_ranking_path(genre: 558929, title: "腕時計" ) do %>腕時計ランキング<% end %>
 
 <h2 style="background-color:#cccccc">貰って嬉しかった物アンケート <%= link_to "アンケートに参加する(全５問)", new_response_path, class: "btn btn-light bg-gold px-5" %></h2>
 
