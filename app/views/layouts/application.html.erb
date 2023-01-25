@@ -10,8 +10,11 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
+root
   <body>
+    <%= link_to root_path, class: "nav-link btn-light border-right border-left" do%>
+      <i class="fa-solid fa-user"></i> GiveLike
+    <% end %>　||
     <%= link_to items_path, class: "nav-link btn-light border-right border-left" do%>
       <i class="fa-solid fa-user"></i> 楽天ランキング
     <% end %>　||
