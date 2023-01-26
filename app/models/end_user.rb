@@ -11,6 +11,7 @@ class EndUser < ApplicationRecord
   has_many :want_items, dependent: :destroy
 
   enum gender: { male: 0, female: 1, not_selected: 2 }
+  enum is_deleted: { unsubscribe: true, member: false }
 
   has_one_attached :profile_image
 

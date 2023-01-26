@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   patch '/admin/reviews/closed' => 'admin/reviews#closed', as: 'review_closed'
 
   namespace :admin do
+    resources :end_users, only: [:index, :show]
     resources :reviews, only: [:index]
   end
 

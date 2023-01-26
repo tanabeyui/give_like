@@ -189,6 +189,10 @@ ja:
         female: "女性"
         not_selected: "非選択"
 
+      is_deleted:
+          unsubscribe: "退会"
+          member: "会員"
+
     review:
       getting_method:
         self_purchase: "自分で購入"
