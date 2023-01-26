@@ -1,2 +1,19 @@
-<h1>Admin::Homes#top</h1>
-<p>Find me in app/views/admin/homes/top.html.erb</p>
+<h2>新着レビュー</h2>
+<% @reviews.each do |review| %>
+  <div style="background-color:#cccccc">
+    <%= review.created_at.strftime('%Y/%m/%d') %><br>
+    ユーザー名：<%= image_tag review.end_user.get_profile_image(30,30) %>
+    <%= review.end_user.name %>[@<%= review.end_user.screen_name %>]<br>
+    レビュー商品名：<%= review.name %>
+  </div>
+  <%= review.body %>
+  <br>
+  <%#= link_to "確認する", customers_unsubscribe_path, method: :patch, class: "btn btn-danger btn-block", "data-confirm" => "本当に退会しますか？" %>
+  <%= link_to edit_review_path(review) do %>
+    編集
+  <% end %>
+  <%= link_to review_path(review), method: :delete do %>
+    削除
+  <% end %>
+  <hr>
+<% end %>

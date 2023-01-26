@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get '/reviews/ranking' => 'public/reviews#ranking'
   post '/reviews/add_post' => 'public/reviews#add_post'
   post '/reviews/confirm' => 'public/reviews#confirm'
-
+  
   get '/end_users/:screen_name', to: 'public/end_users#show', as: 'end_user'
   get '/end_users/:screen_name/reviews', to: 'public/reviews#index', as: 'end_user_reviews'
   get '/end_users/:screen_name/favorites', to: 'public/favorites#index', as: 'end_user_favorites'
