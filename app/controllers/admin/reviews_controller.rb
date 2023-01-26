@@ -7,7 +7,7 @@ class Admin::ReviewsController < ApplicationController
   def confirmed
     @review = Review.find(params[:id])
     @review.update(is_checked: true)
-    redirect_to admin_path
+    redirect_back(fallback_location: root_path)
   end
 
   def confirmed_all
@@ -15,12 +15,18 @@ class Admin::ReviewsController < ApplicationController
     @reviews.each do |review|
       review.update(is_checked: true)
     end
-    redirect_to admin_path
+    redirect_back(fallback_location: root_path)
   end
 
+  def disclosed
+    @review = Review.find(params[:id])
+    @review.update(is_checked: true, is_disclose: true)
+    redirect_back(fallback_location: root_path)
+  end
+  
   def closed
     @review = Review.find(params[:id])
     @review.update(is_checked: true, is_disclose: false)
-    redirect_to admin_path
+    redirect_back(fallback_location: root_path)
   end
 end

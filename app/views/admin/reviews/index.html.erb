@@ -1,2 +1,19 @@
-<h1>Admin::Reviews#index</h1>
-<p>Find me in app/views/admin/reviews/index.html.erb</p>
+<h2>レビュー一覧</h2>
+<% @reviews.each do |review| %>
+  <div style="background-color:#cccccc">
+    <%= review.created_at.strftime('%Y/%m/%d') %><br>
+    ユーザー名：<%= image_tag review.end_user.get_profile_image(30,30) %>
+    <%= review.end_user.name %>[@<%= review.end_user.screen_name %>]<br>
+    レビュー商品名：<%= review.name %>
+  </div>
+  <%= review.body %>
+  <br>
+  <%= review.is_checked_i18n %> || <%= review.is_disclose_i18n %>
+  <br>
+  <% if review.is_disclose == "disclosed" %>
+    <%= link_to "非公開にする", review_closed_path(id: review.id), method: :patch, class: "btn btn-danger btn-block", style: "background-color:red" %>
+  <% else %>
+    <%= link_to "公開にする", review_disclosed_path(id: review.id), method: :patch, class: "btn btn-danger btn-block", style: "background-color:green" %>
+  <% end %>
+  <hr>
+<% end %>

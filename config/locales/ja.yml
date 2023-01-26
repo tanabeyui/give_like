@@ -226,6 +226,14 @@ ja:
         birthday_60th: "還暦祝い"
         other_day: "その他"
 
+      is_checked:
+        confirmed: "確認済み"
+        unconfirmed: "未確認"
+
+      is_disclose:
+        disclosed: "公開"
+        closed: "非公開"
+
     response:
       gender:
         male: "男性"

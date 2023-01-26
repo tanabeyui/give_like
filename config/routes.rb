@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get '/admin' => 'admin/homes#top', as: 'admin'
   patch '/admin/reviews/confirmed' => 'admin/reviews#confirmed', as: 'review_confirmed'
   patch '/admin/reviews/confirmed_all' => 'admin/reviews#confirmed_all', as: 'reviews_confirmed_all'
+  patch '/admin/reviews/disclosed' => 'admin/reviews#disclosed', as: 'review_disclosed'
   patch '/admin/reviews/closed' => 'admin/reviews#closed', as: 'review_closed'
 
   namespace :admin do
