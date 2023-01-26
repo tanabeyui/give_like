@@ -10,27 +10,26 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-root
+
   <body>
-    <%= link_to root_path, class: "nav-link btn-light border-right border-left" do%>
-      <i class="fa-solid fa-user"></i> GiveLike
-    <% end %>　||
-    <%= link_to items_path, class: "nav-link btn-light border-right border-left" do%>
-      <i class="fa-solid fa-user"></i> 楽天ランキング
-    <% end %>　||
-    <%= link_to reviews_ranking_path, class: "nav-link btn-light border-right border-left" do%>
-      <i class="fa-solid fa-user"></i> レビューランキング
-    <% end %>　||
-    <%= link_to "アンケート", responses_path, class: "btn btn-light bg-gold px-5" %>
-
-    <%= form_with url: items_search_path, method: :get, local: true do |f| %>
-      <div class="form-group">
-        <%= f.text_field :keyword, value: params[:keyword], class: "form-control" %>
-        <%= f.submit '製品名を検索', class: "form-control btn btn-success" %>
-      </div>
-    <% end %>
-
     <% if end_user_signed_in? %>
+      <%= link_to root_path, class: "nav-link btn-light border-right border-left" do%>
+        <i class="fa-solid fa-user"></i> GiveLike
+      <% end %>　||
+      <%= link_to items_path, class: "nav-link btn-light border-right border-left" do%>
+        <i class="fa-solid fa-user"></i> 楽天ランキング
+      <% end %>　||
+      <%= link_to reviews_ranking_path, class: "nav-link btn-light border-right border-left" do%>
+        <i class="fa-solid fa-user"></i> レビューランキング
+      <% end %>　||
+      <%= link_to "アンケート", responses_path, class: "btn btn-light bg-gold px-5" %>
+  
+      <%= form_with url: items_search_path, method: :get, local: true do |f| %>
+        <div class="form-group">
+          <%= f.text_field :keyword, value: params[:keyword], class: "form-control" %>
+          <%= f.submit '製品名を検索', class: "form-control btn btn-success" %>
+        </div>
+      <% end %>
       <li class="nav-item pl-3">
         <%= link_to end_user_path(current_end_user.screen_name), class: "nav-link btn-light border-right border-left" do%>
           <i class="fa-solid fa-user"></i> Mypage
@@ -43,6 +42,8 @@ root
       </li>
 
     <% elsif admin_signed_in? %>
+      <%= link_to "新着レビュー", admin_path, class: "btn btn-light bg-gold px-5" %> || 
+      <%= link_to "レビュー一覧", admin_reviews_path, class: "btn btn-light bg-gold px-5" %>
       <li class="nav-item pl-3">
         <%= link_to destroy_admin_session_path, method: :delete, class: "nav-link btn-light border-right border-left" do%>
           ログアウト
@@ -50,7 +51,24 @@ root
       </li>
 
     <% else %>
-      <li class="nav-item pl-3">
+      <%= link_to root_path, class: "nav-link btn-light border-right border-left" do%>
+        <i class="fa-solid fa-user"></i> GiveLike
+      <% end %>　||
+      <%= link_to items_path, class: "nav-link btn-light border-right border-left" do%>
+        <i class="fa-solid fa-user"></i> 楽天ランキング
+      <% end %>　||
+      <%= link_to reviews_ranking_path, class: "nav-link btn-light border-right border-left" do%>
+        <i class="fa-solid fa-user"></i> レビューランキング
+      <% end %>　||
+      <%= link_to "アンケート", responses_path, class: "btn btn-light bg-gold px-5" %>
+  
+      <%= form_with url: items_search_path, method: :get, local: true do |f| %>
+        <div class="form-group">
+          <%= f.text_field :keyword, value: params[:keyword], class: "form-control" %>
+          <%= f.submit '製品名を検索', class: "form-control btn btn-success" %>
+        </div>
+      <% end %>
+    <li class="nav-item pl-3">
         <%= link_to new_end_user_registration_path, class: "nav-link btn-light border-right border-left" do %>
           <i class="fas fa-user-plus"></i> Sign up
         <% end %>
