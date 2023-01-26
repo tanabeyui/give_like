@@ -12,6 +12,18 @@ class Admin::EndUsersController < ApplicationController
   def show
     @end_user = EndUser.find(params[:id])
   end
+  
+  def membership
+    @end_user = EndUser.find(params[:id])
+    @end_user.update(is_deleted: false)
+    redirect_to admin_end_user_path(@end_user)
+  end
+  
+  def unsubscribe
+    @end_user = EndUser.find(params[:id])
+    @end_user.update(is_deleted: true)
+    redirect_to admin_end_user_path(@end_user)
+  end
 
 
 

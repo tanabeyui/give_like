@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   patch '/admin/reviews/confirmed_all' => 'admin/reviews#confirmed_all', as: 'reviews_confirmed_all'
   patch '/admin/reviews/disclosed' => 'admin/reviews#disclosed', as: 'review_disclosed'
   patch '/admin/reviews/closed' => 'admin/reviews#closed', as: 'review_closed'
+  patch '/admin/end_users/membership' => 'admin/end_users#membership', as: 'end_user_membership'
+  patch '/admin/end_users/unsubscribe' => 'admin/end_users#unsubscribe', as: 'end_user_unsubscribe'
 
   namespace :admin do
     resources :end_users, only: [:index, :show]
