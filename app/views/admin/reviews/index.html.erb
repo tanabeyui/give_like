@@ -1,19 +1,104 @@
 <h2>レビュー一覧</h2>
-<% @reviews.each do |review| %>
-  <div style="background-color:#cccccc">
-    <%= review.created_at.strftime('%Y/%m/%d') %><br>
-    ユーザー名：<%= image_tag review.end_user.get_profile_image(30,30) %>
-    <%= review.end_user.name %>[@<%= review.end_user.screen_name %>]<br>
-    レビュー商品名：<%= review.name %>
+
+<div class="search-bar">
+  <%= search_form_for @q, url: admin_reviews_path do |f| %>
+    <div class="nav-title">詳細検索</div>
+    <%= f.search_field :body_cont, placeholder: 'レビュー本文から探す', class:'input-box' %>
+    <br>
+    <%= f.label :evaluation, '評価' %>
+    <%= f.check_box :evaluation_lteq_any, { multiple: true, include_hidden: false }, 1, '' %>
+      ★☆☆☆☆以下
+    <%= f.check_box :evaluation_lteq_any, { multiple: true, include_hidden: false }, 2, '' %>
+      ★★☆☆☆以下
+    <%= f.check_box :evaluation_lteq_any, { multiple: true, include_hidden: false }, 3, '' %>
+      ★★★☆☆以下
+    <%= f.check_box :evaluation_lteq_any, { multiple: true, include_hidden: false }, 4, '' %>
+      ★★★★☆以下
+    <%= f.check_box :evaluation_lteq_any, { multiple: true, include_hidden: false }, 5, '' %>
+      ★★★★★以下
+    <br>
+    <%= f.label :end_user_gender_eq_any, '性別' %>
+    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 0, '' %>
+      <%= f.label EndUser.genders_i18n[:male] %>
+    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 1, '' %>
+      <%= f.label EndUser.genders_i18n[:female] %>
+    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 2, '' %>
+      <%= f.label EndUser.genders_i18n[:not_selected] %>
+    <br>
+    <%= f.label :end_user_birth_day_to_age, '年齢' %>
+    <%= f.select :end_user_birth_day_to_age_gteq, *[10..100] , { include_blank: "" }, { class: "form-control" } %>歳以上～
+    <%= f.select :end_user_birth_day_to_age_lteq, *[10..100] , { include_blank: "" }, { class: "form-control" } %>歳以下
+    <br>
+    <%= f.date_field :created_at_gteq, include_blank: true, class: 'form-control'%> ～
+    <%= f.date_field :created_at_lteq_end_of_day, include_blank: true, class: 'form-control'%>
+    <%= f.submit '検索する' %>
+    <% end %>
   </div>
-  <%= review.body %>
-  <br>
-  <%= review.is_checked_i18n %> || <%= review.is_disclose_i18n %>
-  <br>
-  <% if review.is_disclose == "disclosed" %>
-    <%= link_to "非公開にする", review_closed_path(id: review.id), method: :patch, class: "btn btn-danger btn-block", style: "background-color:red" %>
-  <% else %>
-    <%= link_to "公開にする", review_disclosed_path(id: review.id), method: :patch, class: "btn btn-danger btn-block", style: "background-color:green" %>
-  <% end %>
   <hr>
+
+
+<% if params[:q] != nil %>
+  <% @search_reviews.each do |search_review| %>
+    <div style="background-color:#cccccc">
+      <%= search_review.created_at.strftime('%Y/%m/%d') %><br>
+      ユーザー名：<%= image_tag search_review.end_user.get_profile_image(30,30) %>
+      <%= search_review.end_user.name %>[@<%= search_review.end_user.screen_name %>]<br>
+      レビュー商品名：<%= search_review.name %>
+    </div>
+    <div id="star-rate<%= search_review.id %>"></div>
+        <script>
+        var elem = document.getElementById('star-rate<%= search_review.id %>');
+        var opt = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        starHalf: "<%= asset_path('star-half.png') %>",
+        half: true,
+        readOnly: true,
+        score: <%= search_review.evaluation %>,
+          };
+          raty(elem,opt);
+        </script>
+    <%= search_review.body %>
+    <br>
+    <%= search_review.is_checked_i18n %> || <%= search_review.is_disclose_i18n %>
+    <br>
+    <% if search_review.is_disclose == "disclosed" %>
+      <%= link_to "非公開にする", review_closed_path(id: search_review.id), method: :patch, class: "btn btn-danger btn-block", style: "background-color:red" %>
+    <% else %>
+      <%= link_to "公開にする", review_disclosed_path(id: search_review.id), method: :patch, class: "btn btn-danger btn-block", style: "background-color:green" %>
+    <% end %>
+    <hr>
+  <% end %>
+<% else %>
+  <% @reviews.each do |review| %>
+    <div style="background-color:#cccccc">
+      <%= review.created_at.strftime('%Y/%m/%d') %><br>
+      ユーザー名：<%= image_tag review.end_user.get_profile_image(30,30) %>
+      <%= review.end_user.name %>[@<%= review.end_user.screen_name %>]<br>
+      レビュー商品名：<%= review.name %>
+    </div>
+    <div id="star-rate<%= review.id %>"></div>
+        <script>
+        var elem = document.getElementById('star-rate<%= review.id %>');
+        var opt = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        starHalf: "<%= asset_path('star-half.png') %>",
+        half: true,
+        readOnly: true,
+        score: <%= review.evaluation %>,
+          };
+          raty(elem,opt);
+        </script>
+    <%= review.body %>
+    <br>
+    <%= review.is_checked_i18n %> || <%= review.is_disclose_i18n %>
+    <br>
+    <% if review.is_disclose == "disclosed" %>
+      <%= link_to "非公開にする", review_closed_path(id: review.id), method: :patch, class: "btn btn-danger btn-block", style: "background-color:red" %>
+    <% else %>
+      <%= link_to "公開にする", review_disclosed_path(id: review.id), method: :patch, class: "btn btn-danger btn-block", style: "background-color:green" %>
+    <% end %>
+    <hr>
+  <% end %>
 <% end %>
