@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     resource :want_items, only: [:create, :update, :destroy]
   end
 
+
+
   get '/admin' => 'admin/homes#top', as: 'admin'
   patch '/admin/reviews/confirmed' => 'admin/reviews#confirmed', as: 'review_confirmed'
   patch '/admin/reviews/confirmed_all' => 'admin/reviews#confirmed_all', as: 'reviews_confirmed_all'
@@ -38,7 +40,10 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :end_users, only: [:index, :show]
     resources :reviews, only: [:index]
+    resources :responses, only: [:index, :destroy]
   end
+
+
 
   devise_for :end_users, skip: [:passwords],
     path: '',
