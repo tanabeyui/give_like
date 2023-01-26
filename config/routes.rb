@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   root to: 'public/homes#top'
+  get '/admin' => 'admin/homes#top', as: 'admin'
 
   get '/responses/confirm' => 'public/responses#confirm'
   get '/items/ranking' => 'public/items#ranking'
@@ -25,6 +26,10 @@ Rails.application.routes.draw do
     resources :items, only: [:index, :show]
     resource :favorites, only: [:create, :update, :destroy]
     resource :want_items, only: [:create, :update, :destroy]
+  end
+
+  namespace :admin do
+    resources :homes, only: [:top]
   end
 
   devise_for :end_users, skip: [:passwords],

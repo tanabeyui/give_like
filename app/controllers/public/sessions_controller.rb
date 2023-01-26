@@ -2,11 +2,11 @@ class Public::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
 
   def after_sign_in_path_for(resource)
-    items_path
+    end_user_path(current_end_user.screen_name)
   end
 
   def after_sign_out_path_for(resource)
-    items_path
+    root_path
   end
 
 end
