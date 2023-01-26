@@ -10,6 +10,7 @@ class Admin::EndUsersController < ApplicationController
   end
 
   def show
+    @end_user = EndUser.find(params[:id])
   end
 
 
@@ -17,7 +18,13 @@ class Admin::EndUsersController < ApplicationController
   private
 
   def set_search
-    @q = EndUser.ransack(params[:q])
-    @search_end_users = @q.result(distinct: true).order(created_at: "DESC")
+    if params[:id]
+       @q = Review.ransack(params[:q])
+      @search_reviews = @q.result(distinct: true).order(created_at: "DESC")
+    else
+      @q = EndUser.ransack(params[:q])
+      @search_end_users = @q.result(distinct: true).order(created_at: "DESC")
+    end
   end
+
 end
