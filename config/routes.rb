@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
   root to: 'public/homes#top'
-  get '/admin' => 'admin/homes#top', as: 'admin'
 
   get '/responses/confirm' => 'public/responses#confirm'
   get '/items/ranking' => 'public/items#ranking'
@@ -9,7 +8,7 @@ Rails.application.routes.draw do
   get '/reviews/ranking' => 'public/reviews#ranking'
   post '/reviews/add_post' => 'public/reviews#add_post'
   post '/reviews/confirm' => 'public/reviews#confirm'
-  
+
   get '/end_users/:screen_name', to: 'public/end_users#show', as: 'end_user'
   get '/end_users/:screen_name/reviews', to: 'public/reviews#index', as: 'end_user_reviews'
   get '/end_users/:screen_name/favorites', to: 'public/favorites#index', as: 'end_user_favorites'
@@ -28,8 +27,13 @@ Rails.application.routes.draw do
     resource :want_items, only: [:create, :update, :destroy]
   end
 
+  get '/admin' => 'admin/homes#top', as: 'admin'
+  patch '/admin/reviews/confirmed' => 'admin/reviews#confirmed', as: 'review_confirmed'
+  patch '/admin/reviews/confirmed_all' => 'admin/reviews#confirmed_all', as: 'reviews_confirmed_all'
+  patch '/admin/reviews/closed' => 'admin/reviews#closed', as: 'review_closed'
+
   namespace :admin do
-    resources :homes, only: [:top]
+    resources :reviews, only: [:index]
   end
 
   devise_for :end_users, skip: [:passwords],

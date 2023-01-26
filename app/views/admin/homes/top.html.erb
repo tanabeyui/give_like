@@ -1,4 +1,5 @@
 <h2>新着レビュー</h2>
+<%= link_to "全て確認済みにする", reviews_confirmed_all_path, method: :patch, class: "btn btn-danger btn-block", style: "background-color:green" %>
 <% @reviews.each do |review| %>
   <div style="background-color:#cccccc">
     <%= review.created_at.strftime('%Y/%m/%d') %><br>
@@ -8,12 +9,9 @@
   </div>
   <%= review.body %>
   <br>
-  <%#= link_to "確認する", customers_unsubscribe_path, method: :patch, class: "btn btn-danger btn-block", "data-confirm" => "本当に退会しますか？" %>
-  <%= link_to edit_review_path(review) do %>
-    編集
-  <% end %>
-  <%= link_to review_path(review), method: :delete do %>
-    削除
-  <% end %>
+  <%= review.is_checked %> || <%= review.is_disclose %>
+  <br>
+  <%= link_to "確認する", review_confirmed_path(id: review.id), method: :patch, class: "btn btn-danger btn-block" %>
+  <%= link_to "非公開にする", review_closed_path(id: review.id), method: :patch, class: "btn btn-danger btn-block" %>
   <hr>
 <% end %>
