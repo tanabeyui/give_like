@@ -1,8 +1,18 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
 
-body {
-  box-sizing: border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+// footer {
+//     height: 300px;
+// }
+
+p {
+  font-size: 14px;
 }
 
 .medium {
