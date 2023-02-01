@@ -1,49 +1,61 @@
-<h2>Sign up</h2>
+<div class="container-fluid bg-yellow">
+  <div class="row pb-5">
+    <div class="col-lg-5 col-md-8 py-5 mt-4 mb-5 mx-auto">
+      <h2 class="mb-n1">SignUp</h2>
 
-<%= form_with model: @end_user, url: end_user_registration_path, method: :post do |f| %>
-  <div class="field">
-    <%= f.label :"ID" %><br />
-    <%= f.text_field :screen_name, autofocus: true %>
-    <p>マイプロフィールのURLになります</p>
-  </div>
+      <div class="form-body border border-secondary bg-white p-5">
+        <%= form_with model: @end_user, url: end_user_registration_path, method: :post do |f| %>
+          <div class="form-group row">
+            <%= f.label :"ID", class:"col-sm-2 col-form-label text-uppercase" %>
+            <div class="col-sm-10">
+              <%= f.text_field :screen_name, class: "form-control" %>
+              <small class="text-danger">マイプロフィールのURLになります</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <%= f.label :"名前", class:"col-sm-2 col-form-label" %>
+            <div class="col-sm-10">
+              <%= f.text_field :name, autocomplete: "name", class: "form-control" %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <%= f.label :email , class: "col-sm-2 col-form-label" %>
+            <div class="col-sm-10">
+               <%= f.email_field :email, autocomplete: "email", class: "form-control" %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <%= f.label :password, class: "col-sm-2 col-form-label" %>
+            <div class="col-sm-10">
+               <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+            </div>
+          </div>
 
-  <div class="field">
-    <%= f.label :"名前" %><br />
-    <%= f.text_field :name, autocomplete: "name" %>
-  </div>
+          <div class="form-group row">
+            <%= f.label :"性別", class: "col-sm-2 col-form-label" %>
+            <div class="form-check form-check-inline ml-3">
+              <%= f.radio_button :gender, EndUser.genders.key(0), id: "male", class: "form-check-input" %>
+              <%= f.label :gender, EndUser.genders_i18n[:male], for: "male", class:"form-check-label" %>
+            </div>
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :gender, EndUser.genders.key(1), id: "female", class: "form-check-input" %>
+              <%= f.label :gender, EndUser.genders_i18n[:female], for: "female", class:"form-check-label" %>
+            </div>
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :gender, EndUser.genders.key(2), id: "not_selected", class: "form-check-input" %>
+              <%= f.label :gender, EndUser.genders_i18n[:not_selected], for: "not_selected", class:"form-check-label" %>
+            </div>
+          </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autocomplete: "email" %>
-  </div>
+          <div class="form-group row no-gutters">
+            <%= f.label :"生年月日" , class: "col-sm-2 col-form-label" %>
+            <div class="col-sm-10">
+              <%= f.date_select :birth_day, {use_month_numbers: true, start_year: 1950, end_year: (Time.now.year - 10), default: Date.new(1990, 1, 1), date_separator: '/'}, {class: 'form-control', style: 'display: inline-block;width: auto;'} %>
+            </div>
+          </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <div class="form-check">
-      <%= f.radio_button :gender, EndUser.genders.key(0), id: "male" %>
-      <%= f.label :gender, EndUser.genders_i18n[:male], for: "male" %>
-    </div>
-    <div class="form-check">
-      <%= f.radio_button :gender, EndUser.genders.key(1), id: "female" %>
-      <%= f.label :gender, EndUser.genders_i18n[:female], for: "female" %>
-    </div>
-    <div class="form-check">
-      <%= f.radio_button :gender, EndUser.genders.key(2), id: "not_selected" %>
-      <%= f.label :gender, EndUser.genders_i18n[:not_selected], for: "not_selected" %>
-    </div>
-  </div>
-
-  <div class="field">
-    <%= f.label :"生年月日" %><br />
-    <%= f.date_select :birth_day, use_month_numbers: true, start_year: 1950, end_year: (Time.now.year - 10), default: Date.new(1990, 1, 1) %>
-  </div>
-
-  <div class="actions">
-    <%= f.hidden_field :internet_protocol_address, :value => request.remote_ip %>
-    <%= f.submit "新規登録" %>
-  </div>
-<% end %>
+          <div class="actions text-center mt-5">
+            <%= f.hidden_field :internet_protocol_address, :value => request.remote_ip %>
+            <%= f.submit "新規登録", class:"btn bg-blue w-50 medium" %>
+          </div>
+        <% end %>
