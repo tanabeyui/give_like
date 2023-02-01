@@ -7,9 +7,13 @@
     box-sizing: border-box;
 }
 
-// footer {
-//     height: 300px;
-// }
+h1 {
+  font-family: 'Pacifico', cursive;
+}
+
+h2 {
+  font-family: 'Mulish', cursive;
+}
 
 p {
   font-size: 14px;
@@ -19,8 +23,12 @@ p {
   font-size: 14px;
 }
 
-h1 {
-  font-family: 'Pacifico', cursive;
+.bg-yellow {
+  background-color: #fffacd;
+}
+
+.bg-blue {
+  background-color: #598ab3;
 }
 
 .search::placeholder {

@@ -1,25 +1,25 @@
-<h2>Log in</h2>
+<div class="container-fluid bg-yellow">
+  <div class="row no-gutters">
+    <div class="col-lg-4 col-sm-7 py-5 my-5 mx-auto">
+      <h2 class="mb-n1">Login</h2>
 
-<%= form_with model: @end_user, url: end_user_session_path, method: :post do |f| %>
+      <div class="form-body border border-secondary bg-white p-5">
+        <%= form_with model: @end_user, url: end_user_session_path, method: :post do |f| %>
+          <div class="form-group">
+            <%= f.label :"ID", class: "text-uppercase" %>
+            <%= f.text_field :screen_name, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :"PASSWORD", class: "text-uppercase" %><br />
+            <%= f.password_field :password, class: "form-control", autocomplete: "current-password" %>
+          </div>
+          <div class="actions text-center my-5 py-3">
+            <%= f.submit "ログイン", class:"btn bg-blue w-50 medium" %>
+          </div>
+        <% end %>
+      </div>
 
-  <div class="field">
-    <%= f.label :"ID" %><br />
-    <%= f.text_field :screen_name, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+      <h6 class="float-right mb-5 pt-2 pb-5"><%= link_to "新規登録", new_end_user_registration_path, class: "text-dark" %></h6>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
+</div>
