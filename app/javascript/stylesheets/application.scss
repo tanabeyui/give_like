@@ -1,2 +1,18 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
+
+body {
+  box-sizing: border-box;
+}
+
+.medium {
+  font-size: 14px;
+}
+
+h1 {
+  font-family: 'Pacifico', cursive;
+}
+
+.search::placeholder {
+  color: #fff;
+}
