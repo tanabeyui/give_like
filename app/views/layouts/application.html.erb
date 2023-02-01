@@ -14,7 +14,7 @@
   </head>
 
   <body class="d-flex flex-column vh-100">
-    <header class="border-bottom">
+    <header class="border-bottom border-secondary">
       <nav class="navbar navbar-expand-md navbar-light">
         <div class="container-fluid">
           <%= link_to root_path, class: "navbar-brand px-5" do %>
@@ -50,7 +50,7 @@
                   <a href="#" class="nav-link dropdown-toggle p-1" role="button" data-toggle="dropdown" aria-expanded="false">
                     <%= image_tag current_end_user.get_profile_image(30,30), class: "rounded-circle" %>
                   </a>
-                  <div class="dropdown-menu dropdown-menu-right">
+                  <div class="dropdown-menu dropdown-menu-right medium">
                     <%= link_to "マイページ", end_user_path(current_end_user.screen_name), class: "dropdown-item" %>
                     <%= link_to "ログアウト", destroy_end_user_session_path, method: :delete, class: "dropdown-item" %>
                   </div>
@@ -99,7 +99,7 @@
                   <%= link_to "新規", new_end_user_registration_path, class: "btn btn-success btn-sm" %>
                 </li>
                 <li class="nav-item my-auto p-1">
-                  <%= link_to "ログイン", new_end_user_session_path, class: "btn btn-primary btn-sm" %>
+                  <%= link_to "ログイン", new_end_user_session_path, class: "btn bg-blue btn-sm text-white" %>
                 </li>
               </ul>
             <% end %>

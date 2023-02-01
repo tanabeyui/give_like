@@ -3,7 +3,7 @@
     <div class="col-lg-4 col-sm-7 py-5 my-5 mx-auto">
       <h2 class="mb-n1">Login</h2>
 
-      <div class="form-body border border-secondary bg-white p-5">
+      <div class="form-body shadow bg-white p-5">
         <%= form_with model: @end_user, url: end_user_session_path, method: :post do |f| %>
           <div class="form-group">
             <%= f.label :"ID", class: "text-uppercase" %>
@@ -14,7 +14,7 @@
             <%= f.password_field :password, class: "form-control", autocomplete: "current-password" %>
           </div>
           <div class="actions text-center my-5 py-3">
-            <%= f.submit "ログイン", class:"btn bg-blue w-50 medium" %>
+            <%= f.submit "ログイン", class:"btn bg-blue w-50 medium text-white" %>
           </div>
         <% end %>
       </div>

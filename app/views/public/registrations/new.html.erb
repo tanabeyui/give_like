@@ -3,7 +3,7 @@
     <div class="col-lg-5 col-md-8 py-5 mt-4 mb-5 mx-auto">
       <h2 class="mb-n1">SignUp</h2>
 
-      <div class="form-body border border-secondary bg-white p-5">
+      <div class="form-body shadow bg-white p-5">
         <%= form_with model: @end_user, url: end_user_registration_path, method: :post do |f| %>
           <div class="form-group row">
             <%= f.label :"ID", class:"col-sm-2 col-form-label text-uppercase" %>
@@ -56,6 +56,6 @@
 
           <div class="actions text-center mt-5">
             <%= f.hidden_field :internet_protocol_address, :value => request.remote_ip %>
-            <%= f.submit "新規登録", class:"btn bg-blue w-50 medium" %>
+            <%= f.submit "新規登録", class:"btn btn-success w-50 medium" %>
           </div>
         <% end %>
