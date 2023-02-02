@@ -30,9 +30,9 @@
             <% if end_user_signed_in? %>
               <%= form_with url: items_search_path, method: :get, local: true, class: "w-50 ml-auto" do |f| %>
                 <div class="input-group">
-                  <%= f.text_field :keyword, value: params[:keyword], class: "form-control search bg-dark border-dark" , placeholder: "商品を検索", aria_describedby: "button-addon2" %>
+                  <%= f.text_field :keyword, value: params[:keyword], class: "form-control search bg-dark border-dark medium" , placeholder: "商品を検索", aria_describedby: "button-addon2" %>
                   <div class="input-group-append">
-                    <%= button_tag sanitize('<i class="fa fa-search"></i>'), :type => "submit", :class =>"btn btn-dark", :id => "button-addon2" %>
+                    <%= button_tag sanitize('<i class="fa fa-search"></i>'), :type => "submit", :class =>"btn btn-dark medium", :id => "button-addon2" %>
                   </div>
                 </div>
               <% end %>
@@ -79,9 +79,9 @@
             <% else %>
               <%= form_with url: items_search_path, method: :get, local: true, class: "w-50 ml-auto" do |f| %>
                 <div class="input-group">
-                  <%= f.text_field :keyword, value: params[:keyword], class: "form-control search bg-dark border-dark" , placeholder: "商品を検索", aria_describedby: "button-addon2" %>
+                  <%= f.text_field :keyword, value: params[:keyword], class: "form-control search bg-dark border-dark medium" , placeholder: "商品を検索", aria_describedby: "button-addon2" %>
                   <div class="input-group-append">
-                    <%= button_tag sanitize('<i class="fa fa-search"></i>'), :type => "submit", :class =>"btn btn-dark", :id => "button-addon2" %>
+                    <%= button_tag sanitize('<i class="fa fa-search"></i>'), :type => "submit", :class =>"btn btn-dark medium", :id => "button-addon2" %>
                   </div>
                 </div>
               <% end %>
