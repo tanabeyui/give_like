@@ -15,10 +15,6 @@ h2 {
   font-family: 'Mulish', cursive;
 }
 
-p {
-  font-size: 14px;
-}
-
 .medium {
   font-size: 14px;
 }
@@ -33,4 +29,8 @@ p {
 
 .search::placeholder {
   color: #fff;
+}
+
+.sidebar {
+  width: 250px;
 }
