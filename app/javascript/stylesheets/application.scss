@@ -15,6 +15,20 @@ h2 {
   font-family: 'Mulish', cursive;
 }
 
+.headline {
+	position: relative;
+	padding: 0.1em 0.3em;
+	padding-left: 1.5em;
+	vertical-align: middle;
+	border-radius: 0 25px 25px 0;
+}
+
+.subheading {
+	padding: 0.1em 0.3em;
+	border-left: 10px solid;
+	border-bottom: 1px solid;
+}
+
 .medium {
   font-size: 14px;
 }
@@ -27,10 +41,37 @@ h2 {
   background-color: #598ab3;
 }
 
+.bg-beige {
+  background-color: #e6d0a8;
+}
+
+.bg-gray {
+  background-color: #e6e6e6;
+}
+
+.text-gold {
+  color: #e6ae22;
+}
+
+.text-silver {
+  color: #a9a9a9;
+}
+
+.text-bronze {
+  color: #b87333;
+}
+
 .search::placeholder {
   color: #fff;
 }
 
 .sidebar {
   width: 250px;
+}
+
+.text-limit {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* 任意の行数を指定 */
 }

@@ -4,9 +4,9 @@
 <div class="container-fluid">
 
   <div class="row mx-5 px-5 my-4">
-    <div class="col-xl-3 px-xl-5">
-      <h5 class="border-bottom font-weight-bold">
-        <i class="fa-solid fa-crown"></i> 楽天売れ筋<span class="small font-weight-bold">ランキング</span>
+    <div class="col-xl-3 px-xl-5 mt-2">
+      <h5 class="border-bottom border-secondary font-weight-bold">
+        <i class="fa-sharp fa-solid fa-crown"></i> 楽天売れ筋<span class="small font-weight-bold">ランキング</span>
       </h5>
       <ul class="list-unstyled medium">
         <li>
@@ -73,8 +73,8 @@
           <%= link_to "カタログギフト・チケット", items_ranking_path(genre: 101381, title: "カタログギフト・チケット" ), class: "text-dark" %>
         </li>
       </ul>
-      <h5 class="border-bottom font-weight-bold pt-4">
-        <i class="fa-solid fa-crown"></i>GiveLike<span class="small font-weight-bold">レビューランキング</span>
+      <h5 class="border-bottom border-secondary font-weight-bold pt-4">
+        <i class="fa-sharp fa-solid fa-crown"></i>GiveLike<span class="small font-weight-bold">レビューランキング</span>
       </h5>
       <ul class="list-unstyled medium">
         <li>
@@ -161,133 +161,215 @@
 
 
   <div class="col-xl-9">
+    <h5 class="headline bg-beige font-weight-bold py-3">
+      貰って嬉しかったものアンケート
+      <%= link_to " 投票する（全５問）", new_response_path, class: "bg-danger text-white medium mx-3 py-1 pl-2 pr-1" %>
+    </h5>
 
-<h2 style="background-color:#cccccc">貰って嬉しかった物アンケート <%= link_to "アンケートに参加する(全５問)", new_response_path, class: "btn btn-light bg-gold px-5" %></h2>
+    <div class="mx-auto" style="position:relative; width:90%; height:250px;">
+        <canvas id="responsesChart"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const ctx = document.getElementById('responsesChart');
 
-<div style="position:relative; width:950px; height:250px;">
-    <canvas id="responsesChart"></canvas>
-</div>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    const ctx = document.getElementById('responsesChart');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels:[
+              <% @responses.each do |response| %>
+                "<%= response.present_genre_i18n %>",
+              <% end %>
+              ],
+          datasets: [{
+            data: [
+              <% @responses.each do |response| %>
+                <%= Response.where(present_genre: response.present_genre ).count.to_i %>,
+              <% end %>
+              ],
+              barPercentgifted_event: 0.7,
+              backgroundColor: "#17a2b8"
+          }]
+        },
+        options: {
+            indexAxis: 'y',
+            maintainAspectRatio: false,
+            plugins: {
+              legend: false
+            },
+            scales: {
+                  x: {
+                      grid: {
+                          display: false,
+                      },
+                      ticks: {
+                          display: false
+                      },
+                      border: {
+                          display: false
+                      }
+                  }
+              }
+        }
+      });
+    </script>
 
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels:[
-          <% @responses.each do |response| %>
-              "<%= response.present_genre_i18n %>",
-            <% end %>
-            ],
-        datasets: [{
-          data: [
-            <% @responses.each do |response| %>
-              <%= Response.where(present_genre: response.present_genre ).count.to_i %>,
-            <% end %>
-            ],
-            barPercentgifted_event: 0.7
-        }]
-      },
-      options: {
-          indexAxis: 'y',
-          maintainAspectRatio: false,
-          plugins: {
-            legend: false
-          },
-          scales: {
-                x: {
-                    grid: {
-                        display: false,
-                    },
-                    ticks: {
-                        display: false
-                    },
-                    border: {
-                        display: false
-                    }
-                }
-            }
-      }
-    });
-  </script>
+    <div class="row no-gutters my-3">
+      <div class="col-sm-6 bg-gray p-3">
+        <h6 class="subheading font-weight-bold">年齢別No.1</h6>
+          <ul class="list-unstyled medium p-2">
+            <li>
+              <% @teens_responses.each do |teens_response| %>
+                <%= teens_response.age_i18n %>
+                <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
+                <%= teens_response.present_genre_i18n %>
+              <% end %>
+            </li>
+            <li>
+              <% @twenties_responses.each do |twenties_response| %>
+                <%= twenties_response.age_i18n %>
+                <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
+                <%= twenties_response.present_genre_i18n %>
+              <% end %>
+            </li>
+            <li>
+              <% @thirties_responses.each do |thirties_response| %>
+                <%= thirties_response.age_i18n %>
+                <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
+                <%= thirties_response.present_genre_i18n %>
+              <% end %>
+            </li>
+            <li>
+              <% @forties_responses.each do |forties_response| %>
+                <%= forties_response.age_i18n %>
+                <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
+                <%= forties_response.present_genre_i18n %>
+              <% end %>
+            </li>
+            <li>
+              <% @fifties_responses.each do |fifties_response| %>
+                <%= fifties_response.age_i18n %>
+                <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
+                <%= fifties_response.present_genre_i18n %>
+              <% end %>
+            </li>
+            <li>
+              <% @sixties_responses.each do |sixties_response| %>
+                <%= sixties_response.age_i18n %>
+                <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
+                <%= sixties_response.present_genre_i18n %>
+              <% end %>
+            </li>
+            <li>
+              <% @seventies_responses.each do |seventies_response| %>
+                <%= seventies_response.age_i18n %>
+                <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
+                <%= seventies_response.present_genre_i18n %>
+              <% end %>
+            </li>
+          </ul>
+      </div>
 
-  <h4>年齢別集計結果</h4>
-  <% @teens_responses.each do |teens_response| %>
-    [<%= teens_response.age_i18n %>]<%= teens_response.present_genre_i18n %>
-    <%=  Response.where(present_genre: teens_response.present_genre, age: teens_response.age).count %><br>
-  <% end %>
-  <% @twenties_responses.each do |twenties_response| %>
-    [<%= twenties_response.age_i18n %>]<%= twenties_response.present_genre_i18n %>
-    <%=  Response.where(present_genre: twenties_response.present_genre, age: twenties_response.age).count %><br>
-  <% end %>
-  <% @thirties_responses.each do |thirties_response| %>
-    [<%= thirties_response.age_i18n %>]<%= thirties_response.present_genre_i18n %>
-    <%=  Response.where(present_genre: thirties_response.present_genre, age: thirties_response.age).count %><br>
-  <% end %>
-  <% @forties_responses.each do |forties_response| %>
-    [<%= forties_response.age_i18n %>]<%= forties_response.present_genre_i18n %>
-    <%=  Response.where(present_genre: forties_response.present_genre, age: forties_response.age).count %><br>
-  <% end %>
-  <% @fifties_responses.each do |fifties_response| %>
-    [<%= fifties_response.age_i18n %>]<%= fifties_response.present_genre_i18n %>
-    <%=  Response.where(present_genre: fifties_response.present_genre, age: fifties_response.age).count %><br>
-  <% end %>
-  <% @sixties_responses.each do |sixties_response| %>
-    [<%= sixties_response.age_i18n %>]<%= sixties_response.present_genre_i18n %>
-    <%=  Response.where(present_genre: sixties_response.present_genre, age: sixties_response.age).count %><br>
-  <% end %>
-  <% @seventies_responses.each do |seventies_response| %>
-    [<%= seventies_response.age_i18n %>]<%= seventies_response.present_genre_i18n %>
-    <%=  Response.where(present_genre: seventies_response.present_genre, age: seventies_response.age).count %><br>
-  <% end %>
+      <div class="col-sm-6 bg-gray p-3">
+        <h6 class="subheading font-weight-bold">男女別TOP3</h6>
 
-  <h4>男女別集計結果</h4>
-  <% @male_responses.each_with_index do |male_response, i| %>
-    <%= i + 1 %>位::
-    <%= male_response.present_genre_i18n %>
-    （<%=  Response.where(present_genre: male_response.present_genre, gender: male_response.gender).count %>）<br>
-  <% end %>
-  <br>
-  <% @female_responses.each_with_index do |female_response, i| %>
-    <%= i + 1 %>位::
-    <%= female_response.present_genre_i18n %>
-    （<%=  Response.where(present_genre: female_response.present_genre, gender: female_response.gender).count %>）<br>
-  <% end %>
+        <div class="row no-gutters p-2">
+          <div class="col-1">
+            <p class="font-weight-bold">男性</p>
+          </div>
+          <div class="col-1">
+            <ul class="list-unstyled medium m-0">
+              <li class="text-gold text-right px-1"><i class="fa-sharp fa-solid fa-crown"></i></span></li>
+              <li class="text-silver text-right px-1"><i class="fa-sharp fa-solid fa-crown"></i></span></li>
+              <li class="text-bronze text-right px-1"><i class="fa-sharp fa-solid fa-crown"></i></span></li>
+            </ul>
+          </div>
+          <div class="col-10">
+            <ul class="list-unstyled medium m-0">
+              <% @male_responses.each_with_index do |male_response| %>
+                <li><%= male_response.present_genre_i18n %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
 
-  <hr>
-  <%= link_to "アンケート結果をもっと見る", responses_path, class: "btn btn-light bg-gold px-5" %>
-  <hr>
+        <div class="row no-gutters p-2">
+          <div class="col-1">
+            <p class="font-weight-bold">女性</p>
+          </div>
+          <div class="col-1">
+            <ul class="list-unstyled medium">
+              <li class="text-gold text-right px-1"><i class="fa-sharp fa-solid fa-crown"></i></span></li>
+              <li class="text-silver text-right px-1"><i class="fa-sharp fa-solid fa-crown"></i></span></li>
+              <li class="text-bronze text-right px-1"><i class="fa-sharp fa-solid fa-crown"></i></span></li>
+            </ul>
+          </div>
+          <div class="col-10">
+            <ul class="list-unstyled medium">
+              <% @female_responses.each_with_index do |female_response| %>
+                <li><%= female_response.present_genre_i18n %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <%= link_to responses_path, class: "btn bg-blue btn-sm text-white float-right" do %>
+          アンケート結果をもっと見る <i class="fa-solid fa-angles-right"></i>
+        <% end %>
+      </div>
+    </div>
 
-  <h2 style="background-color:#cccccc">楽天プレゼントランキング <%= link_to "もっと見る", items_path, class: "btn btn-light bg-gold px-5" %></h2>
-  <% @items.each_with_index do |item, i| %>
-    <%= i + 1 %><br>
-    <%= link_to item_path(item.code, name: item.name, code: item.code, genre: item.genre.id, price: item.price, image: item.medium_image_urls[0], url: item.url) do %>
-      <%= image_tag (item['smallImageUrls'][0]) %>
-    <% end %>
-    <%= item.name %><br>
-    <%= number_with_delimiter(item.price) %>円
-    <hr>
-  <% end %>
 
-  <h2 style="background-color:#cccccc">GiveLikeレビューランキング <%= link_to "もっと見る", reviews_ranking_path, class: "btn btn-light bg-gold px-5" %></h2>
-  <% @reviews.each_with_index do |review, i| %>
-      <%= i + 1 %><br>
-      <%= image_tag (review.image) %>
-      <%= review.name %><br>
-      評価：<%=  (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %><br>
-      <%= number_with_delimiter(review.price) %>円
-      <div id="star-rate<%= review.id %>"></div>
-        <script>
-        var elem = document.getElementById('star-rate<%= review.id %>');
-        var opt = {
-        starOn: "<%= asset_path('star-on.png') %>",
-        starOff: "<%= asset_path('star-off.png') %>",
-        starHalf: "<%= asset_path('star-half.png') %>",
-        half: true,
-        readOnly: true,
-        score: <%= (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %>,
-          };
-          raty(elem,opt);
-        </script>
-      <hr>
-    <% end %>
+    <h5 class="headline bg-beige font-weight-bold mt-5 py-3">
+      楽天プレゼントランキング
+      <%= link_to  items_path, class: "text-dark font-weight-bold small float-right pr-3" do %>
+        もっと見る <i class="fa-solid fa-angles-right"></i>
+      <% end %>
+    </h5>
+    <div class="card-deck px-3">
+      <% @items.each_with_index do |item, i| %>
+      <div class="card m-2">
+        <%= link_to item_path(item.code, name: item.name, code: item.code, genre: item.genre.id, price: item.price, image: item.medium_image_urls[0], url: item.url) do %>
+          <%= image_tag (item['mediumImageUrls'][0]), class:"card-img-top" %>
+        <% end %>
+        <div class="card-body p-2">
+          <h6 class="card-title text-limit"><%= item.name %></h5>
+          <p class="card-text text-truncate medium"><%= number_with_delimiter(item.price) %>円</p>
+        </div>
+      </div>
+      <% end %>
+    </div>
+
+   <h5 class="headline bg-beige font-weight-bold mt-5 py-3">
+      GiveLikeレビューランキング
+      <%= link_to reviews_ranking_path, class: "text-dark font-weight-bold small float-right pr-3" do %>
+        もっと見る <i class="fa-solid fa-angles-right"></i>
+      <% end %>
+    </h5>
+    <div class="card-deck px-3">
+      <% @reviews.each_with_index do |review, i| %>
+      <div class="card m-2">
+        <%= link_to item_path(review.code, name: review.name, code: review.code, price: review.price, image: review.image, url: review.url) do %>
+          <%= image_tag (review.image), class:"card-img-top" %>
+        <% end %>
+        <div class="card-body p-2">
+          <h6 class="card-title text-limit"><%= review.name %></h5>
+          <p class="card-text text-truncate medium"><%= number_with_delimiter(review.price) %>円 <%= i + 1 %><br>
+          評価：<%=  (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %>
+          <div id="star-rate<%= review.id %>"></div>
+          <script>
+            var elem = document.getElementById('star-rate<%= review.id %>');
+            var opt = {
+            starOn: "<%= asset_path('star-on.png') %>",
+            starOff: "<%= asset_path('star-off.png') %>",
+            starHalf: "<%= asset_path('star-half.png') %>",
+            half: true,
+            readOnly: true,
+            score: <%= (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %>,
+              };
+              raty(elem,opt);
+          </script>
+          </p>
+        </div>
+      </div>
+      <% end %>
+    </div>
