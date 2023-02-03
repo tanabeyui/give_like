@@ -217,57 +217,17 @@
     <div class="row no-gutters my-3">
       <div class="col-sm-6 bg-gray p-3">
         <h6 class="subheading font-weight-bold">年齢別No.1</h6>
-          <ul class="list-unstyled medium p-2">
-            <li>
-              <% @teens_responses.each do |teens_response| %>
-                <%= teens_response.age_i18n %>
-                <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
-                <%= teens_response.present_genre_i18n %>
-              <% end %>
-            </li>
-            <li>
-              <% @twenties_responses.each do |twenties_response| %>
-                <%= twenties_response.age_i18n %>
-                <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
-                <%= twenties_response.present_genre_i18n %>
-              <% end %>
-            </li>
-            <li>
-              <% @thirties_responses.each do |thirties_response| %>
-                <%= thirties_response.age_i18n %>
-                <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
-                <%= thirties_response.present_genre_i18n %>
-              <% end %>
-            </li>
-            <li>
-              <% @forties_responses.each do |forties_response| %>
-                <%= forties_response.age_i18n %>
-                <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
-                <%= forties_response.present_genre_i18n %>
-              <% end %>
-            </li>
-            <li>
-              <% @fifties_responses.each do |fifties_response| %>
-                <%= fifties_response.age_i18n %>
-                <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
-                <%= fifties_response.present_genre_i18n %>
-              <% end %>
-            </li>
-            <li>
-              <% @sixties_responses.each do |sixties_response| %>
-                <%= sixties_response.age_i18n %>
-                <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
-                <%= sixties_response.present_genre_i18n %>
-              <% end %>
-            </li>
-            <li>
-              <% @seventies_responses.each do |seventies_response| %>
-                <%= seventies_response.age_i18n %>
-                <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
-                <%= seventies_response.present_genre_i18n %>
-              <% end %>
-            </li>
-          </ul>
+
+        <dl class="row no-gutters medium p-2">
+          <% @ages.each do |age| %>
+            <% by_age_response = Response.where(age: age).group(:present_genre).order('count(id) desc').first %>
+            <dd class="col-2 font-weight-bold medium m-0"><%= by_age_response.age_i18n %></dd>
+            <dd class="col-10 medium m-0">
+              <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
+              <%= by_age_response.present_genre_i18n %>
+            </dd>
+          <% end %>
+        </dl>
       </div>
 
       <div class="col-sm-6 bg-gray p-3">
@@ -319,15 +279,18 @@
     </div>
 
 
-    <h5 class="headline bg-beige font-weight-bold mt-5 py-3">
+    <h5 class="headline bg-beige font-weight-bold py-3 mt-5">
       楽天プレゼントランキング
       <%= link_to  items_path, class: "text-dark font-weight-bold small float-right pr-3" do %>
         もっと見る <i class="fa-solid fa-angles-right"></i>
       <% end %>
     </h5>
-    <div class="card-deck px-3">
+    <div class="card-deck pt-3 px-3">
       <% @items.each_with_index do |item, i| %>
-      <div class="card m-2">
+      <div class="card position-relative m-2">
+        <%= content_tag :div, class: "card-rank position-absolute rounded-circle #{@rank_colors[i]} text-white my-n3 mx-n2", style: "width: 40px;height: 40px;" do %>
+          <h6 class="text-center", style="line-height: 40px;"><%= i + 1 %></h6>
+        <% end %>
         <%= link_to item_path(item.code, name: item.name, code: item.code, genre: item.genre.id, price: item.price, image: item.medium_image_urls[0], url: item.url) do %>
           <%= image_tag (item['mediumImageUrls'][0]), class:"card-img-top" %>
         <% end %>
@@ -339,37 +302,48 @@
       <% end %>
     </div>
 
-   <h5 class="headline bg-beige font-weight-bold mt-5 py-3">
+   <h5 class="headline bg-beige font-weight-bold py-3 mt-5">
       GiveLikeレビューランキング
       <%= link_to reviews_ranking_path, class: "text-dark font-weight-bold small float-right pr-3" do %>
         もっと見る <i class="fa-solid fa-angles-right"></i>
       <% end %>
     </h5>
-    <div class="card-deck px-3">
+    <div class="card-deck pt-3 px-3">
       <% @reviews.each_with_index do |review, i| %>
-      <div class="card m-2">
+      <div class="card position-relative m-2">
+        <%= content_tag :div, class: "card-rank position-absolute rounded-circle #{@rank_colors[i]} text-white my-n3 mx-n2", style: "width: 40px;height: 40px;" do %>
+          <h6 class="text-center", style="line-height: 40px;"><%= i + 1 %></h6>
+        <% end %>
         <%= link_to item_path(review.code, name: review.name, code: review.code, price: review.price, image: review.image, url: review.url) do %>
           <%= image_tag (review.image), class:"card-img-top" %>
         <% end %>
         <div class="card-body p-2">
           <h6 class="card-title text-limit"><%= review.name %></h5>
-          <p class="card-text text-truncate medium"><%= number_with_delimiter(review.price) %>円 <%= i + 1 %><br>
-          評価：<%=  (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %>
-          <div id="star-rate<%= review.id %>"></div>
-          <script>
-            var elem = document.getElementById('star-rate<%= review.id %>');
-            var opt = {
-            starOn: "<%= asset_path('star-on.png') %>",
-            starOff: "<%= asset_path('star-off.png') %>",
-            starHalf: "<%= asset_path('star-half.png') %>",
-            half: true,
-            readOnly: true,
-            score: <%= (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %>,
-              };
-              raty(elem,opt);
-          </script>
-          </p>
+          <p class="card-text text-truncate medium"><%= number_with_delimiter(review.price) %>円</p>
+          <div class="card-rate row">
+            <div class="col-auto pr-1">
+              <div id="star-rate<%= review.id %>"></div>
+              <script>
+                $('#star-rate<%= review.id %>').empty();
+                var elem = document.getElementById('star-rate<%= review.id %>');
+                var opt = {
+                  starOn: "<%= asset_path('star-on-sm.png') %>",
+                  starOff: "<%= asset_path('star-off-sm.png') %>",
+                  starHalf: "<%= asset_path('star-half-sm.png') %>",
+                  half: true,
+                  readOnly: true,
+                  size : 12,
+                  score: <%= (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %>,
+                  };
+                raty(elem,opt);
+              </script>
+            </div>
+            <p class="col-2 medium text-secondary py-1 px-0">(<%= Review.where(code: review.code).count %>)</p>
+          </div>
         </div>
       </div>
       <% end %>
     </div>
+
+  </div>
+</div>
