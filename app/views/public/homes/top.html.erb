@@ -215,7 +215,7 @@
     </script>
 
     <div class="row no-gutters my-3">
-      <div class="col-sm-6 bg-gray p-3">
+      <div class="col-sm-6 bg-gray p-4">
         <h6 class="subheading font-weight-bold">年齢別No.1</h6>
 
         <dl class="row no-gutters medium p-2">
@@ -230,7 +230,7 @@
         </dl>
       </div>
 
-      <div class="col-sm-6 bg-gray p-3">
+      <div class="col-sm-6 bg-gray p-4">
         <h6 class="subheading font-weight-bold">男女別TOP3</h6>
 
         <div class="row no-gutters p-2">
@@ -295,7 +295,7 @@
           <%= image_tag (item['mediumImageUrls'][0]), class:"card-img-top" %>
         <% end %>
         <div class="card-body p-2">
-          <h6 class="card-title text-limit"><%= item.name %></h5>
+          <h6 class="card-title text-limit mb-1"><%= item.name %></h5>
           <p class="card-text text-truncate medium"><%= number_with_delimiter(item.price) %>円</p>
         </div>
       </div>
@@ -308,7 +308,7 @@
         もっと見る <i class="fa-solid fa-angles-right"></i>
       <% end %>
     </h5>
-    <div class="card-deck pt-3 px-3">
+    <div class="card-deck pt-3 px-3 mb-5">
       <% @reviews.each_with_index do |review, i| %>
       <div class="card position-relative m-2">
         <%= content_tag :div, class: "card-rank position-absolute rounded-circle #{@rank_colors[i]} text-white my-n3 mx-n2", style: "width: 40px;height: 40px;" do %>
@@ -318,8 +318,7 @@
           <%= image_tag (review.image), class:"card-img-top" %>
         <% end %>
         <div class="card-body p-2">
-          <h6 class="card-title text-limit"><%= review.name %></h5>
-          <p class="card-text text-truncate medium"><%= number_with_delimiter(review.price) %>円</p>
+          <h6 class="card-title text-limit mb-1"><%= review.name %></h5>
           <div class="card-rate row">
             <div class="col-auto pr-1">
               <div id="star-rate<%= review.id %>"></div>
@@ -338,8 +337,9 @@
                 raty(elem,opt);
               </script>
             </div>
-            <p class="col-2 medium text-secondary py-1 px-0">(<%= Review.where(code: review.code).count %>)</p>
+            <p class="col-2 medium text-secondary py-1 px-0 m-0">(<%= Review.where(code: review.code).count %>)</p>
           </div>
+          <p class="card-text text-truncate medium"><%= number_with_delimiter(review.price) %>円</p>
         </div>
       </div>
       <% end %>
