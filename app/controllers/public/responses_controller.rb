@@ -13,7 +13,7 @@ class Public::ResponsesController < ApplicationController
   def create
     @response = Response.new(response_params)
     if @response.save
-      redirect_to responses_confirm_path
+      redirect_to responses_thanks_path
     else
       render :new
     end

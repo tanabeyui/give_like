@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   root to: 'public/homes#top'
 
-  get '/responses/confirm' => 'public/responses#confirm'
+  get '/responses/thanks' => 'public/responses#thanks'
   get '/items/ranking' => 'public/items#ranking'
   get '/items/search' => 'public/items#search'
   get '/reviews/ranking' => 'public/reviews#ranking'
