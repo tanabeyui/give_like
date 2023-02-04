@@ -39,8 +39,8 @@ class Public::ResponsesController < ApplicationController
       @responses_count = @q.result(distinct: true)
       @search_responses = @q.result(distinct: true).group(:present_genre).order('count(id) desc')
 		else
-			@default = (params[:q] = {"gender_eq_any"=>["1"]})
-			@q = Response.ransack(@default)
+			params[:q] = {"gender_eq_any"=>["1"]}
+			@q = Response.ransack(params[:q])
       @responses_count = @q.result(distinct: true)
       @search_responses = @q.result(distinct: true).group(:present_genre).order('count(id) desc')
 		end
