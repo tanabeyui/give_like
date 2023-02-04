@@ -1,49 +1,56 @@
-  <div style="position:relative; width:700px;">
-    <canvas id="responsesChart"></canvas>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    const ctx = document.getElementById('responsesChart');
-
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels:[
-          <% @responses.each do |response| %>
-              "<%= response.present_genre_i18n %>",
-            <% end %>
-            ],
-        datasets: [{
-          data: [
+<div class="container">
+  <div class="response my-5">
+    <div class="response_bubble">本当に</div>
+    <h2 class="text-center mx-auto p-4">
+      <%= image_tag ("enliven-left.png"), size: '40x50' %>
+      貰って嬉しかったものアンケート
+      <%= image_tag ("enliven-right.png"), size: '40x50', class: 'mt-n1 ml-n1' %>
+    </h2>
+    <div class="mx-auto" style="position:relative; width:750px; height:350px;">
+      <canvas id="responsesChart"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const ctx = document.getElementById('responsesChart');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels:[
             <% @responses.each do |response| %>
-              <%= Response.where(present_genre: response.present_genre ).count.to_i %>,
-            <% end %>
-            ],
-            barPercentgifted_event: 0.7
-        }]
-      },
-      options: {
-          indexAxis: 'y',
-          maintainAspectRatio: false,
-          plugins: {
-            legend: false
-          },
-          scales: {
-                x: {
-                    grid: {
-                        display: false,
-                    },
-                    ticks: {
-                        display: false
-                    },
-                    border: {
-                        display: false
-                    }
-                }
-            }
-      }
-    });
-  </script>
+                "<%= response.present_genre_i18n %>",
+              <% end %>
+              ],
+          datasets: [{
+            data: [
+              <% @responses.each do |response| %>
+                <%= Response.where(present_genre: response.present_genre ).count.to_i %>,
+              <% end %>
+              ],
+              barPercentgifted_event: 0.7
+          }]
+        },
+        options: {
+            indexAxis: 'y',
+            maintainAspectRatio: false,
+            plugins: {
+              legend: false
+            },
+            scales: {
+                  x: {
+                      grid: {
+                          display: false,
+                      },
+                      ticks: {
+                          display: false
+                      },
+                      border: {
+                          display: false
+                      }
+                  }
+              }
+        }
+      });
+    </script>
 
   <hr>
   <%= link_to "アンケートに参加する(全５問)", new_response_path, class: "btn btn-light bg-gold px-5" %>
