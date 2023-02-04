@@ -2,7 +2,7 @@ class Public::ResponsesController < ApplicationController
   before_action :set_search
 
   def index
-    @responses = Response.select(:present_genre).distinct
+    @responses = Response.group(:present_genre).order('count(id) desc').first(10)
   end
 
   def new
@@ -33,12 +33,16 @@ class Public::ResponsesController < ApplicationController
     if params[:q].present?
 			@q = Response.ransack(params[:q])
       @responses_count = @q.result(distinct: true)
-      @search_responses = @q.result(distinct: true).select(:present_genre)
+      @search_responses = @q.result(distinct: true).group(:present_genre).order('count(id) desc')
+    elsif params[:commit]
+      @q = Response.ransack
+      @responses_count = @q.result(distinct: true)
+      @search_responses = @q.result(distinct: true).group(:present_genre).order('count(id) desc')
 		else
 			@default = (params[:q] = {"gender_eq_any"=>["1"]})
 			@q = Response.ransack(@default)
       @responses_count = @q.result(distinct: true)
-      @search_responses = @q.result(distinct: true).select(:present_genre)
+      @search_responses = @q.result(distinct: true).group(:present_genre).order('count(id) desc')
 		end
   end
 

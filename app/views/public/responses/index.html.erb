@@ -1,11 +1,14 @@
 <div class="container">
-  <div class="response my-5">
-    <div class="response_bubble">本当に</div>
-    <h2 class="text-center mx-auto p-4">
-      <%= image_tag ("enliven-left.png"), size: '40x50' %>
+  <div class="responses my-5">
+
+    <div class="response_bubble">
+      <p>本当に</p>
+    </div>
+
+    <h2 class="text-center mx-auto">
       貰って嬉しかったものアンケート
-      <%= image_tag ("enliven-right.png"), size: '40x50', class: 'mt-n1 ml-n1' %>
     </h2>
+
     <div class="mx-auto" style="position:relative; width:750px; height:350px;">
       <canvas id="responsesChart"></canvas>
     </div>
@@ -26,7 +29,8 @@
                 <%= Response.where(present_genre: response.present_genre ).count.to_i %>,
               <% end %>
               ],
-              barPercentgifted_event: 0.7
+              barPercentgifted_event: 0.7,
+              backgroundColor: "#17a2b8"
           }]
         },
         options: {
@@ -51,141 +55,233 @@
         }
       });
     </script>
-
-  <hr>
-  <%= link_to "アンケートに参加する(全５問)", new_response_path, class: "btn btn-light bg-gold px-5" %>
-  <hr>
-
-  <%= search_form_for @q, url: responses_path do |f| %>
-    <div class="nav-title">詳細検索</div>
-
-    <%= f.label :gender_eq_any, '性別' %>
-    <%= f.check_box :gender_eq_any, { multiple: true, include_hidden: false }, 0, '' %>
-      <%= f.label Response.genders_i18n[:male] %>
-    <%= f.check_box :gender_eq_any, { multiple: true, include_hidden: false }, 1, '' %>
-      <%= f.label Response.genders_i18n[:female] %>
-    <%= f.check_box :gender_eq_any, { multiple: true, include_hidden: false }, 2, '' %>
-      <%= f.label Response.genders_i18n[:not_selected] %>
-    <br>
-    <%= f.label :age_eq_any, '年齢' %>
-    <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false }, 1, '' %>
-      <%= f.label Response.ages_i18n[:teens] %>
-    <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false }, 2, '' %>
-      <%= f.label Response.ages_i18n[:twenties] %>
-    <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false }, 3, '' %>
-      <%= f.label Response.ages_i18n[:thirties] %>
-    <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false }, 4, '' %>
-      <%= f.label Response.ages_i18n[:forties] %>
-    <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false }, 5, '' %>
-      <%= f.label Response.ages_i18n[:fifties] %>
-    <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false }, 6, '' %>
-      <%= f.label Response.ages_i18n[:sixties] %>
-    <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false }, 7, '' %>
-      <%= f.label Response.ages_i18n[:seventies] %>
-    <br>
-    <%= f.label :giver_eq_any, '贈り主' %>
-    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 1, '' %>
-      <%= f.label Response.givers_i18n[:friend] %>
-    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 2, '' %>
-      <%= f.label Response.givers_i18n[:lover] %>
-    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 3, '' %>
-      <%= f.label Response.givers_i18n[:parents] %>
-    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 4, '' %>
-      <%= f.label Response.givers_i18n[:my_child] %>
-    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 5, '' %>
-      <%= f.label Response.givers_i18n[:sibling] %>
-    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 6, '' %>
-      <%= f.label Response.givers_i18n[:relatives] %>
-    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 7, '' %>
-      <%= f.label Response.givers_i18n[:boss] %>
-    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 8, '' %>
-      <%= f.label Response.givers_i18n[:subordinate] %>
-    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 9, '' %>
-      <%= f.label Response.givers_i18n[:coworker] %>
-    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 10, '' %>
-      <%= f.label Response.givers_i18n[:business_people] %>
-    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 11, '' %>
-      <%= f.label Response.givers_i18n[:acquaintance] %>
-    <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false }, 12, '' %>
-      <%= f.label Response.givers_i18n[:other_people] %>
-    <br>
-    <%= f.label :gifted_event_eq_any, 'イベント' %>
-    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 1, '' %>
-      <%= f.label Response.gifted_events_i18n[:birthday] %>
-    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 2, '' %>
-      <%= f.label Response.gifted_events_i18n[:christmas] %>
-    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 3, '' %>
-      <%= f.label Response.gifted_events_i18n[:father_day] %>
-    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 4, '' %>
-      <%= f.label Response.gifted_events_i18n[:mother_day] %>
-    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 5, '' %>
-      <%= f.label Response.gifted_events_i18n[:anniversary] %>
-    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 6, '' %>
-      <%= f.label Response.gifted_events_i18n[:valentine] %>
-    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 7, '' %>
-      <%= f.label Response.gifted_events_i18n[:white_day] %>
-    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 8, '' %>
-      <%= f.label Response.gifted_events_i18n[:birthday_20th] %>
-    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 9, '' %>
-      <%= f.label Response.gifted_events_i18n[:celebrate_job] %>
-    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 10, '' %>
-      <%= f.label Response.gifted_events_i18n[:wedding_gift] %>
-    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 11, '' %>
-      <%= f.label Response.gifted_events_i18n[:baby_gift] %>
-    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 12, '' %>
-      <%= f.label Response.gifted_events_i18n[:housewarming] %>
-    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 13, '' %>
-      <%= f.label Response.gifted_events_i18n[:birthday_60th] %>
-    <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false }, 14, '' %>
-      <%= f.label Response.gifted_events_i18n[:other_day] %>
-
-    <br>
-      <%= f.submit '検索する' %>
-      </ul>
-    <% end %>
-
-     <div style="position:relative; width:700px;">
-    <canvas id="responsesSearchChart"></canvas>
+    <div class="text-center">
+      <%= link_to "アンケートに参加する(全５問)", new_response_path, class: "btn btn-danger w-75 px-5" %>
     </div>
-    <script>
-      const ctx1 = document.getElementById('responsesSearchChart');
-      new Chart(ctx1, {
-        type: 'bar',
-        data: {
-          labels:[
-              <% @search_responses.each do |search_response| %>
-                  "<%= search_response.present_genre_i18n %>",
-              <% end %>
-              ],
-          datasets: [{
-            data: [
-              <% @search_responses.each do |search_response| %>
-                  <%= @responses_count.where(present_genre: search_response.present_genre ).count.to_i %>,
-              <% end %>
-              ],
-              barPercentgifted_event: 0.7
-          }]
-        },
-        options: {
-            indexAxis: 'y',
-            maintainAspectRatio: false,
-            plugins: {
-              legend: false
-            },
-            scales: {
-                  x: {
-                      grid: {
-                          display: false,
-                      },
-                      ticks: {
-                          display: false
-                      },
-                      border: {
-                          display: false
-                      }
-                  }
-              }
-        }
-      });
-    </script>
+  </div>
 
+
+
+
+  <h4 class="bg-blue rounded-pill font-weight-bold text-white shadow my-4 py-2 px-4"><i class="fa-solid fa-magnifying-glass"></i> アンケート結果検索</h4>
+  <div class="row mb-5 mx-1 pb-5">
+    <div class="col-md-3 ">
+      <%= search_form_for @q, url: responses_path do |f| %>
+        <div class="form-group medium">
+          <h6 class="font-weight-bold border-bottom border-secondary">性別</h6>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check1' }, 0, '' %>
+            <%= f.label Response.genders_i18n[:male], class:'form-check-label', for: 'gender-check1' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check2' }, 1, '' %>
+            <%= f.label Response.genders_i18n[:female], class:'form-check-label', for: 'gender-check2' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check3' }, 2, '' %>
+            <%= f.label Response.genders_i18n[:not_selected], class:'form-check-label', for: 'gender-check3' %>
+          </div>
+        </div>
+        <div class="form-group medium">
+          <h6 class="font-weight-bold border-bottom border-secondary">年齢</h6>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'age-check1' }, 0, '' %>
+            <%= f.label Response.ages_i18n[:teens], class:'form-check-label', for: 'age-check1' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'age-check2' }, 1, '' %>
+            <%= f.label Response.ages_i18n[:twenties], class:'form-check-label', for: 'age-check2' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'age-check3' }, 2, '' %>
+            <%= f.label Response.ages_i18n[:thirties], class:'form-check-label', for: 'age-check3' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'age-check4' }, 3, '' %>
+            <%= f.label Response.ages_i18n[:forties], class:'form-check-label', for: 'age-check4' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'age-check5' }, 4, '' %>
+            <%= f.label Response.ages_i18n[:fifties], class:'form-check-label', for: 'age-check5' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'age-check6' }, 5, '' %>
+            <%= f.label Response.ages_i18n[:sixties], class:'form-check-label', for: 'age-check6' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :age_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'age-check7' }, 6, '' %>
+            <%= f.label Response.ages_i18n[:seventies], class:'form-check-label', for: 'age-check7' %>
+          </div>
+        </div>
+        <div class="form-group medium">
+          <h6 class="font-weight-bold border-bottom border-secondary">プレゼント主</h6>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'giver-check1' }, 1, '' %>
+            <%= f.label Response.givers_i18n[:friend], class:'form-check-label', for: 'giver-check1' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'giver-check2' }, 2, '' %>
+            <%= f.label Response.givers_i18n[:lover], class:'form-check-label', for: 'giver-check2' %>
+          </div>
+          <br>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'giver-check3' }, 3, '' %>
+            <%= f.label Response.givers_i18n[:parents], class:'form-check-label', for: 'giver-check3' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'giver-check4' }, 4, '' %>
+            <%= f.label Response.givers_i18n[:my_child], class:'form-check-label', for: 'giver-check4' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'giver-check5' }, 5, '' %>
+            <%= f.label Response.givers_i18n[:sibling], class:'form-check-label', for: 'giver-check5' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'giver-check6' }, 6, '' %>
+            <%= f.label Response.givers_i18n[:relatives], class:'form-check-label', for: 'giver-check6' %>
+          </div>
+          <br>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'giver-check7' }, 7, '' %>
+            <%= f.label Response.givers_i18n[:boss], class:'form-check-label', for: 'giver-check7' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'giver-check8' }, 8, '' %>
+            <%= f.label Response.givers_i18n[:subordinate], class:'form-check-label', for: 'giver-check8' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'giver-check9' }, 9, '' %>
+            <%= f.label Response.givers_i18n[:coworker], class:'form-check-label', for: 'giver-check9' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'giver-check10' }, 10, '' %>
+            <%= f.label Response.givers_i18n[:business_people], class:'form-check-label', for: 'giver-check10' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'giver-check11' }, 11, '' %>
+            <%= f.label Response.givers_i18n[:acquaintance], class:'form-check-label', for: 'giver-check11' %>
+          </div>
+          <br>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :giver_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'giver-check12' }, 12, '' %>
+            <%= f.label Response.givers_i18n[:other_people], class:'form-check-label', for: 'giver-check12' %>
+          </div>
+        </div>
+        <div class="form-group medium">
+          <h6 class="font-weight-bold border-bottom border-secondary">プレゼントシーン</h6>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gifted_event-check1' }, 1, '' %>
+            <%= f.label Response.gifted_events_i18n[:birthday], class:'form-check-label', for: 'gifted_event-check1' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gifted_event-check2' }, 2, '' %>
+            <%= f.label Response.gifted_events_i18n[:christmas], class:'form-check-label', for: 'gifted_event-check2' %>
+          </div>
+          <br>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gifted_event-check3' }, 3, '' %>
+            <%= f.label Response.gifted_events_i18n[:father_day], class:'form-check-label', for: 'gifted_event-check3' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gifted_event-check4' }, 4, '' %>
+            <%= f.label Response.gifted_events_i18n[:mother_day], class:'form-check-label', for: 'gifted_event-check4' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gifted_event-check5' }, 5, '' %>
+            <%= f.label Response.gifted_events_i18n[:anniversary], class:'form-check-label', for: 'gifted_event-check5' %>
+          </div>
+          <br>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gifted_event-check6' }, 6, '' %>
+            <%= f.label Response.gifted_events_i18n[:valentine], class:'form-check-label', for: 'gifted_event-check6' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gifted_event-check7' }, 7, '' %>
+            <%= f.label Response.gifted_events_i18n[:white_day], class:'form-check-label', for: 'gifted_event-check7' %>
+          </div>
+          <br>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gifted_event-check8' }, 8, '' %>
+            <%= f.label Response.gifted_events_i18n[:birthday_20th], class:'form-check-label', for: 'gifted_event-check8' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gifted_event-check9' }, 9, '' %>
+            <%= f.label Response.gifted_events_i18n[:celebrate_job], class:'form-check-label', for: 'gifted_event-check9' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gifted_event-check10' }, 10, '' %>
+            <%= f.label Response.gifted_events_i18n[:wedding_gift], class:'form-check-label', for: 'gifted_event-check10' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gifted_event-check11' }, 11, '' %>
+            <%= f.label Response.gifted_events_i18n[:baby_gift], class:'form-check-label', for: 'gifted_event-check11' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gifted_event-check12' }, 12, '' %>
+            <%= f.label Response.gifted_events_i18n[:housewarming], class:'form-check-label', for: 'gifted_event-check12' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gifted_event-check13' }, 13, '' %>
+            <%= f.label Response.gifted_events_i18n[:birthday_60th], class:'form-check-label', for: 'gifted_event-check13' %>
+          </div>
+          <br>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :gifted_event_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gifted_event-check14' }, 14, '' %>
+            <%= f.label Response.gifted_events_i18n[:other_day], class:'form-check-label', for: 'gifted_event-check14' %>
+          </div>
+        </div>
+        <%= f.submit '検索する', class: "btn btn-secondary btn-sm btn-block" %>
+      <% end %>
+
+    </div>
+    <div class="col-md-9 bg-yellow rounded-lg py-4">
+      <h5 class="subheading font-weight-bold">貰って嬉しかったものランキング</h5>
+      <div class="p-4" style="position:relative; width:100%; min-height:500px;">
+        <canvas id="responsesSearchChart"></canvas>
+      </div>
+      <script>
+        const ctx1 = document.getElementById('responsesSearchChart');
+        new Chart(ctx1, {
+          type: 'bar',
+          data: {
+            labels:[
+                <% @search_responses.each do |search_response| %>
+                    "<%= search_response.present_genre_i18n %>",
+                <% end %>
+                ],
+            datasets: [{
+              data: [
+                <% @search_responses.each do |search_response| %>
+                    <%= @responses_count.where(present_genre: search_response.present_genre ).count.to_i %>,
+                <% end %>
+                ],
+                barPercentgifted_event: 0.7,
+                backgroundColor: "#17a2b8"
+            }]
+          },
+          options: {
+              indexAxis: 'y',
+              maintainAspectRatio: false,
+              plugins: {
+                legend: false
+              },
+              scales: {
+                    x: {
+                        grid: {
+                            display: false,
+                        },
+                        ticks: {
+                            display: false
+                        },
+                        border: {
+                            display: false
+                        }
+                    }
+                }
+          }
+        });
+      </script>
+    </div>
+
+  </div>
+</div>

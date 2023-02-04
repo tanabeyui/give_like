@@ -221,8 +221,8 @@
         <dl class="row no-gutters medium p-2">
           <% @ages.each do |age| %>
             <% by_age_response = Response.where(age: age).group(:present_genre).order('count(id) desc').first %>
-            <dd class="col-2 font-weight-bold medium m-0"><%= by_age_response.age_i18n %></dd>
-            <dd class="col-10 medium m-0">
+            <dd class="col-2 font-weight-bold medium mb-1"><%= by_age_response.age_i18n %></dd>
+            <dd class="col-10 medium mb-1">
               <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
               <%= by_age_response.present_genre_i18n %>
             </dd>
@@ -272,9 +272,11 @@
             </ul>
           </div>
         </div>
-        <%= link_to responses_path, class: "btn bg-blue btn-sm text-white float-right" do %>
+        <div class="text-right">
+          <%= link_to responses_path, class: "btn bg-blue btn-sm text-white" do %>
           アンケート結果をもっと見る <i class="fa-solid fa-angles-right"></i>
-        <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
 
