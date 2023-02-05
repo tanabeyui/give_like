@@ -3,7 +3,7 @@ class Public::HomesController < ApplicationController
 
   def top
     @ages = 1..7
-    @rank_colors = ['bg-gold', 'bg-silver', 'bg-bronze', 'bg-dark', 'bg-dark']
+    @rank_colors = ['gold', 'silver', 'bronze', 'dark', 'dark']
     @responses = Response.group(:present_genre).order('count(id) desc').first(7)
     @male_responses = Response.where(gender: "0").group(:present_genre).order('count(id) desc').first(3)
     @female_responses = Response.where(gender: "1").group(:present_genre).order('count(id) desc').first(3)
