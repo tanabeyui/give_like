@@ -88,6 +88,10 @@ h2 {
   -webkit-line-clamp: 3;
 }
 
+.response-visual {
+  height: 500px;
+}
+
 .response_bubble {
   width: 100px;
   // background-image: image-url('bubble.png');
@@ -95,4 +99,31 @@ h2 {
 
 .response-heading {
   background: linear-gradient(transparent 60%, #fffacd 30%);
+}
+
+.balloon1 {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 1.5em;
+  padding: 7px 10px;
+  min-width: 120px;
+  max-width: 100%;
+  color: #555;
+  font-size: 16px;
+  background: #e6d0a8;
+}
+
+.balloon1:before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -15px;
+  border: 15px solid transparent;
+  border-top: 15px solid #e6d0a8;
+}
+
+.balloon1 p {
+  margin: 0;
+  padding: 0;
 }

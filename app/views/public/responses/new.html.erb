@@ -1,12 +1,11 @@
 <div class="container">
-  <div class="responses my-5">
+  <div class="response-body my-5">
     <div class="response_bubble">
       <p>本当に</p>
     </div>
     <h2 class="text-center mx-auto my-4">
       <span class="response-heading px-3">貰って嬉しかったものアンケート</span>
     </h2>
-
     <div class="form-body bg-yellow rounded-lg shadow-lg mx-5 py-5">
       <%= form_with model: @response, url: responses_path, method: :post do |f| %>
         <%= f.hidden_field :internet_protocol_address, :value => request.remote_ip %>
@@ -283,9 +282,11 @@
             <%= f.label :gifted_event, Response.gifted_events_i18n[:other_day], for: "other_day", class:"form-check-label" %>
           </div>
         </div>
-
       </div>
-    <div class="actions text-center my-5 pb-5">
-      <%= f.submit "投票する", class: "btn btn-danger btn-lg w-50" %>
-    </div>
-<% end %>
+      <div class="actions text-center my-5 pb-5">
+        <%= f.submit "投票する", class: "btn btn-danger btn-lg w-50" %>
+      </div>
+    <% end %>
+  </div>
+
+</div>
