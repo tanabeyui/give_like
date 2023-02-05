@@ -17,11 +17,10 @@
     <div class="col-lg-1">
     </div>
   </div>
-    
-    
-  <div class="form-body bg-yellow rounded-lg shadow-lg mx-5 py-5">
-    <%= form_with model: @response, url: responses_path, method: :post do |f| %>
-      <%= f.hidden_field :internet_protocol_address, :value => request.remote_ip %>
+
+  <%= form_with model: @response, url: responses_path, method: :post do |f| %>
+    <%= f.hidden_field :internet_protocol_address, :value => request.remote_ip %>
+    <div class="form-body bg-yellow rounded-lg shadow-lg mx-5 py-5">
       <div class="headline bg-blue text-white d-inline-flex ml-n3">
         <h5 class="font-weight-bold py-2 px-5 mb-0">Q1, あなたの性別を教えてください</h5>
       </div>
@@ -190,7 +189,7 @@
         </div>
         <div class="form-check form-check-inline">
           <%= f.radio_button :giver, Response.givers.key(3), id: "parents", class: "form-check-input" %>
-          <%= f.label :giver, Response.givers_i18n[:parents], for: "parentss", class:"form-check-label" %>
+          <%= f.label :giver, Response.givers_i18n[:parents], for: "parents", class:"form-check-label" %>
         </div>
         <div class="form-check form-check-inline">
           <%= f.radio_button :giver, Response.givers.key(4), id: "my_child", class: "form-check-input" %>
@@ -296,6 +295,7 @@
         </div>
       </div>
     </div>
+
     <div class="actions text-center my-5 pb-5">
       <%= f.submit "投票する", class: "btn btn-danger btn-lg w-50" %>
     </div>

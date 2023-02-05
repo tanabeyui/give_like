@@ -7,7 +7,6 @@ class Public::ResponsesController < ApplicationController
 
   def new
     @response = Response.new
-    @root = RakutenWebService::Ichiba::Genre.root
   end
 
   def create
