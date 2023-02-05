@@ -100,12 +100,24 @@
 }
 
 .response-visual {
-  height: 500px;
+  width: 100%;
+  height: 550px;
+  background-image: url('../images/responses_mv.png');
+  background-size: cover;
+  background-repeat:  no-repeat;
+  background-position: center;
 }
 
 .response_bubble {
-  width: 100px;
-  background-image: url('../images/bubble.png');
+  width: 100%;
+  height: 70px;
+  background-image: url('../images/response_bubble.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.response-heading img {
+  height: 50%;
 }
 
 .response-heading {

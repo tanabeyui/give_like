@@ -1,15 +1,26 @@
 <div class="container">
-  <div class="response-visual my-5">
+  <div class="response-visual mt-3 mb-5">
 
-    <div class="response_bubble">
-      <p>本当に</p>
+    <div class="response_title row justify-content-center pt-5">
+      <div class="col-lg-1 response_bubble">
+        <p class="pl-2 pt-3">本当に</p>
+      </div>
+      <div class="col-lg-6 d-flex justify-content-center align-items-end text-center p-0">
+        <div class="response_title_image">
+          <%= image_tag 'response_title_left.png', :width => '45', class:"img-fluid" %>
+        </div>
+        <div class="response-heading h2">
+          貰って嬉しかったものアンケート
+        </div>
+        <div class="response_title_image">
+          <%= image_tag 'response_title_right.png', :width => '45', class:"img-fluid" %>
+        </div>
+      </div>
+      <div class="col-lg-1">
+      </div>
     </div>
 
-    <h2 class="text-center mx-auto my-4">
-      <span class="response-heading px-3">貰って嬉しかったものアンケート</span>
-    </h2>
-
-    <div class="mx-auto" style="position:relative; width:750px; height:350px;">
+    <div class="mx-auto my-3" style="position:relative; width:750px; height:300px;">
       <canvas id="responsesChart"></canvas>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -55,15 +66,14 @@
         }
       });
     </script>
-    <div class="text-center">
-      <%= link_to "アンケートに参加する(全５問)", new_response_path, class: "btn btn-danger w-75 px-5" %>
+    <div class="row justify-content-center mb-5">
+      <%= link_to "アンケートに参加する(全５問)", new_response_path, class: "col-lg-6 col-12 btn btn-danger btn-lg font-weight-bold px-5" %>
     </div>
   </div>
 
 
 
-
-  <h4 class="bg-blue rounded-pill font-weight-bold text-white shadow my-4 py-2 px-4"><i class="fa-solid fa-magnifying-glass"></i> アンケート結果検索</h4>
+<h4 class="bg-blue rounded-pill font-weight-bold text-white shadow my-4 py-2 px-4"><i class="fa-solid fa-magnifying-glass"></i> アンケート結果検索</h4>
   <div class="row mb-5 mx-1 pb-5">
     <div class="col-md-3 ">
       <%= search_form_for @q, url: responses_path do |f| %>
@@ -285,3 +295,4 @@
 
   </div>
 </div>
+
