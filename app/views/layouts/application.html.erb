@@ -11,7 +11,7 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300&family=Noto+Serif+JP:wght@300&family=Pacifico&display=swap" rel="stylesheet">
   </head>
 
   <body class="d-flex flex-column vh-100">
@@ -19,7 +19,7 @@
       <nav class="navbar navbar-expand-md navbar-light">
         <div class="container-fluid">
           <%= link_to root_path, class: "navbar-brand px-5" do %>
-            <h1>GiveLike</h1>
+            <h1 class="logo">GiveLike</h1>
           <% end %>
 
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
@@ -119,7 +119,7 @@
         <div class="row no-gutters py-4">
           <div class="col-md-3 my-2">
             <p class="medium m-0">相手に寄り添うプレゼントサイト</p>
-            <h1>GiveLike</h1>
+            <h1 class="logo">GiveLike</h1>
           </div>
           <div class="col-md-3">
             <h6 class="my-3">楽天男女別売れ筋ランキング</h6>
