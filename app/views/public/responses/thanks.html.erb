@@ -1,25 +1,38 @@
 <div class="container">
-  <div class="response-visual mt-5">
-    <div class="response_bubble">
-      <p>本当に</p>
+  <div class="response-visual mt-3">
+    <div class="response_title row justify-content-center py-5">
+      <div class="col-lg-1 response_bubble">
+        <p class="pl-2 pt-3">本当に</p>
+      </div>
+      <div class="col-lg-6 d-flex justify-content-center align-items-end text-center p-0">
+        <div class="response_title_image">
+          <%= image_tag 'response_title_left.png', :width => '45', class:"img-fluid" %>
+        </div>
+        <div class="response-heading h2">
+          貰って嬉しかったものアンケート
+        </div>
+        <div class="response_title_image">
+          <%= image_tag 'response_title_right.png', :width => '45', class:"img-fluid" %>
+        </div>
+      </div>
+      <div class="col-lg-1">
+      </div>
     </div>
-    <h2 class="text-center mx-auto my-4">
-      <span class="response-heading px-3">貰って嬉しかったものアンケート</span>
-    </h2>
-    <h4 class="text-center ">アンケート協力ありがとうございました！</h4>
+    <h4 class="text-center py-5 my-4">ご協力ありがとうございました！</h4>
   </div>
-  <div class="row justify-content-center text-center mb-5">
-    <div class="col-sm-5 d-inline-flex align-items-end justify-content-center mb-5">
-      <%= link_to "GiveLikeに戻る", root_path, class: "btn btn-light bg-blue text-white w-75 px-5" %>
+  
+  <div class="row justify-content-center text-center mt-n4 mb-4">
+    <div class="col-md-4 d-inline-flex align-items-end mb-5">
+      <%= link_to "GiveLikeに戻る", root_path, class: "btn btn-light bg-blue text-white btn-block px-5" %>
     </div>
-    <div class="col-sm-5 mb-5">
+    <div class="col-md-4 mb-5">
       <div class="balloon1">
-        <p class="medium">
+        <p class="medium text-dark font-weight-bold">
           他にも貰って嬉しかったものが<br>
           ある方はこちら
         </p>
       </div>
-     <%= link_to "別の回答を送る", new_response_path, class: "btn btn-danger w-75 px-5" %>
+     <%= link_to "別の回答を送る", new_response_path, class: "btn btn-danger btn-block px-5" %>
     </div>
   </div>
 </div>
