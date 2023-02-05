@@ -1,219 +1,291 @@
-<h2>アンケート</h2>
-
-<%= form_with model: @response, url: responses_path, method: :post do |f| %>
-  <%= f.hidden_field :internet_protocol_address, :value => request.remote_ip %>
-  <div class="field">
-    <div class="form-check">
-      <%= f.radio_button :gender, Response.genders.key(0), id: "male" %>
-      <%= f.label :gender, Response.genders_i18n[:male], for: "male" %>
+<div class="container">
+  <div class="responses my-5">
+    <div class="response_bubble">
+      <p>本当に</p>
     </div>
-    <div class="form-check">
-      <%= f.radio_button :gender, Response.genders.key(1), id: "female" %>
-      <%= f.label :gender, Response.genders_i18n[:female], for: "female" %>
-    </div>
-    <div class="form-check">
-      <%= f.radio_button :gender, Response.genders.key(2), id: "not_selected" %>
-      <%= f.label :gender, Response.genders_i18n[:not_selected], for: "not_selected" %>
-    </div>
-  </div>
-  <hr>
-  <div class="field">
-    <div class="form-check">
-      <%= f.radio_button :age, Response.ages.key(1), id: "male", checked: "checked" %>
-      <%= f.label :age, Response.ages_i18n[:teens], for: "male" %>
-    </div>
-    <div class="form-check">
-      <%= f.radio_button :age, Response.ages.key(2), id: "female" %>
-      <%= f.label :age, Response.ages_i18n[:twenties], for: "female" %>
-    </div>
-    <div class="form-check">
-      <%= f.radio_button :age, Response.ages.key(3), id: "not_selected" %>
-      <%= f.label :age, Response.ages_i18n[:thirties], for: "not_selected" %>
-    </div>
-    <div class="form-check">
-      <%= f.radio_button :age, Response.ages.key(4), id: "female" %>
-      <%= f.label :age, Response.ages_i18n[:forties], for: "female" %>
-    </div>
-    <div class="form-check">
-      <%= f.radio_button :age, Response.ages.key(5), id: "not_selected" %>
-      <%= f.label :age, Response.ages_i18n[:fifties], for: "not_selected" %>
-    </div>
-    <div class="form-check">
-      <%= f.radio_button :age, Response.ages.key(6), id: "female" %>
-      <%= f.label :age, Response.ages_i18n[:sixties], for: "female" %>
-    </div>
-    <div class="form-check">
-      <%= f.radio_button :age, Response.ages.key(7), id: "not_selected" %>
-      <%= f.label :age, Response.ages_i18n[:seventies], for: "not_selected" %>
-    </div>
-  </div>
-  <hr>
-  <div class="form-group row">
-        <%= f.label :"プレゼント", class: "col-md-3 col-form-label" %>
-          <%= f.radio_button :present_genre, Response.present_genres.key(0), id: "item_on_sale", checked: "checked" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:flower], for: "item_on_sale"  %>
+    <h2 class="text-center mx-auto my-4">
+      <span class="response-heading px-3">貰って嬉しかったものアンケート</span>
+    </h2>
 
-          <%= f.radio_button :present_genre, Response.present_genres.key(1), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:letter], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(2), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:jewelry], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(3), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:cosmetic], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(4), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:branded_goods], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(5), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:fashion], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(6), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:large_appliance], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(7), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:small_appliance], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(8), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:tablet], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(9), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:foods], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(10), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:sweets], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(11), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:alcohol], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(12), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:interior], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(13), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:necessities], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(14), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:hobby], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(15), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:baby_supplies], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(16), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:pet_supplies], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(17), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:vehicle], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(18), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:house], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(19), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:catalog_gift], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(20), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:travel], for: "item_on_sale"  %>
-
-          <%= f.radio_button :present_genre, Response.present_genres.key(21), id: "item_on_sale" %>
-          <%= f.label :present_genre, Response.present_genres_i18n[:other_present], for: "item_on_sale"  %>
+    <div class="form-body bg-yellow rounded-lg shadow-lg mx-5 py-5">
+      <%= form_with model: @response, url: responses_path, method: :post do |f| %>
+        <%= f.hidden_field :internet_protocol_address, :value => request.remote_ip %>
+        <div class="headline bg-blue text-white d-inline-flex ml-n3">
+          <h5 class="font-weight-bold py-2 px-5 mb-0">Q1, あなたの性別を教えてください</h5>
         </div>
-  <hr>
-  <div class="form-group row">
-        <%= f.label :"プレゼント主", class: "col-md-3 col-form-label" %>
-          <%= f.radio_button :giver, Response.givers.key(0), id: "item_on_sale", checked: "checked" %>
-          <%= f.label :giver, Response.givers_i18n[:forgot_giver], for: "item_on_sale"  %>
-
-          <%= f.radio_button :giver, Response.givers.key(1), id: "item_on_sale" %>
-          <%= f.label :giver, Response.givers_i18n[:friend], for: "item_on_sale"  %>
-
-          <%= f.radio_button :giver, Response.givers.key(2), id: "item_on_sale" %>
-          <%= f.label :giver, Response.givers_i18n[:lover], for: "item_on_sale"  %>
-
-          <%= f.radio_button :giver, Response.givers.key(3), id: "item_on_sale" %>
-          <%= f.label :giver, Response.givers_i18n[:parents], for: "item_on_sale"  %>
-
-          <%= f.radio_button :giver, Response.givers.key(4), id: "item_on_sale" %>
-          <%= f.label :giver, Response.givers_i18n[:my_child], for: "item_on_sale"  %>
-
-          <%= f.radio_button :giver, Response.givers.key(5), id: "item_on_sale" %>
-          <%= f.label :giver, Response.givers_i18n[:sibling], for: "item_on_sale"  %>
-
-          <%= f.radio_button :giver, Response.givers.key(6), id: "item_on_sale" %>
-          <%= f.label :giver, Response.givers_i18n[:relatives], for: "item_on_sale"  %>
-
-          <%= f.radio_button :giver, Response.givers.key(7), id: "item_on_sale" %>
-          <%= f.label :giver, Response.givers_i18n[:boss], for: "item_on_sale"  %>
-
-          <%= f.radio_button :giver, Response.givers.key(8), id: "item_on_sale" %>
-          <%= f.label :giver, Response.givers_i18n[:subordinate], for: "item_on_sale"  %>
-
-          <%= f.radio_button :giver, Response.givers.key(9), id: "item_on_sale" %>
-          <%= f.label :giver, Response.givers_i18n[:coworker], for: "item_on_sale"  %>
-
-          <%= f.radio_button :giver, Response.givers.key(10), id: "item_on_sale" %>
-          <%= f.label :giver, Response.givers_i18n[:business_people], for: "item_on_sale"  %>
-
-          <%= f.radio_button :giver, Response.givers.key(11), id: "item_on_sale" %>
-          <%= f.label :giver, Response.givers_i18n[:acquaintance], for: "item_on_sale"  %>
-
-          <%= f.radio_button :giver, Response.givers.key(12), id: "item_on_sale" %>
-          <%= f.label :giver, Response.givers_i18n[:other_people], for: "item_on_sale"  %>
+        <div class="form-group row mt-3 mx-5 mb-5">
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gender, Response.genders.key(0), id: "male", class: "form-check-input" %>
+            <%= f.label :gender, Response.genders_i18n[:male], for: "male", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gender, Response.genders.key(1), id: "female", class: "form-check-input" %>
+            <%= f.label :gender, Response.genders_i18n[:female], for: "female", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gender, Response.genders.key(2), id: "not_selected", class: "form-check-input" %>
+            <%= f.label :gender, Response.genders_i18n[:not_selected], for: "not_selected", class:"form-check-label" %>
+          </div>
         </div>
+        <div class="headline bg-blue text-white d-inline-flex ml-n3">
+          <h5 class="font-weight-bold py-2 px-5 mb-0">Q2, あなたの年齢を教えてください</h5>
+        </div>
+        <div class="form-group row mt-3 mx-5 mb-5">
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :age, Response.ages.key(1), id: "teens", class: "form-check-input", checked: "checked" %>
+            <%= f.label :age, Response.ages_i18n[:teens], for: "teens", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :age, Response.ages.key(2), id: "twenties", class: "form-check-input" %>
+            <%= f.label :age, Response.ages_i18n[:twenties], for: "twenties", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :age, Response.ages.key(3), id: "thirties", class: "form-check-input" %>
+            <%= f.label :age, Response.ages_i18n[:thirties], for: "thirties", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :age, Response.ages.key(4), id: "forties", class: "form-check-input" %>
+            <%= f.label :age, Response.ages_i18n[:forties], for: "forties", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :age, Response.ages.key(5), id: "fifties", class: "form-check-input" %>
+            <%= f.label :age, Response.ages_i18n[:fifties], for: "fifties", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :age, Response.ages.key(6), id: "sixties", class: "form-check-input" %>
+            <%= f.label :age, Response.ages_i18n[:sixties], for: "sixties", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :age, Response.ages.key(7), id: "seventies", class: "form-check-input" %>
+            <%= f.label :age, Response.ages_i18n[:seventies], for: "seventies", class:"form-check-label" %>
+          </div>
+        </div>
+        <div class="headline bg-blue text-white d-inline-flex ml-n3">
+          <h5 class="font-weight-bold py-2 px-5 mb-0">Q3, 貰って嬉しかったプレゼントのジャンルを選択してください</h5>
+        </div>
+        <div class="form-group mt-3 mx-5 mb-5">
+          <h6 class="border-bottom border-warning font-weight-bold my-4">定番プレゼント</h6>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(0), id: "flower", class: "form-check-input", checked: "checked" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:flower], for: "flower", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(1), id: "letter", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:letter], for: "letter", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(19), id: "catalog_gift", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:catalog_gift], for: "catalog_gift", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(20), id: "travel", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:travel], for: "travel", class:"form-check-label" %>
+          </div>
+          <h6 class="border-bottom border-warning font-weight-bold my-4">ファッション</h6>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(2), id: "jewelry", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:jewelry], for: "jewelry", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(3), id: "cosmetic", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:cosmetic], for: "cosmetic", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(4), id: "branded_goods", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:branded_goods], for: "branded_goods", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(5), id: "fashion", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:fashion], for: "fashion", class:"form-check-label" %>
+          </div>
+          <h6 class="border-bottom border-warning font-weight-bold my-4">電化製品・生活用品</h6>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(6), id: "large_appliance", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:large_appliance], for: "large_appliance", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(7), id: "small_appliance", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:small_appliance], for: "small_appliance", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(12), id: "interior", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:interior], for: "interior", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(13), id: "necessities", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:necessities], for: "necessities", class:"form-check-label" %>
+          </div>
+          <h6 class="border-bottom border-warning font-weight-bold my-4">食べ物</h6>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(9), id: "foods", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:foods], for: "foods", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(10), id: "sweets", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:sweets], for: "sweets", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(11), id: "alcohol", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:alcohol], for: "alcohol", class:"form-check-label" %>
+          </div>
+          <h6 class="border-bottom border-warning font-weight-bold my-4">自分の趣味やニーズに寄り添ったもの</h6>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(14), id: "hobby", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:hobby], for: "hobby", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(15), id: "baby_supplies", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:baby_supplies], for: "baby_supplies", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(16), id: "pet_supplies", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:pet_supplies], for: "pet_supplies", class:"form-check-label" %>
+          </div>
+          <h6 class="border-bottom border-warning font-weight-bold my-4">高額ギフト</h6>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(17), id: "vehicle", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:vehicle], for: "vehicle", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(18), id: "house", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:house], for: "house", class:"form-check-label" %>
+          </div>
+          <h6 class="border-bottom border-warning font-weight-bold my-4">その他</h6>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(8), id: "cash", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:cash], for: "cash", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :present_genre, Response.present_genres.key(21), id: "other_present", class: "form-check-input" %>
+            <%= f.label :present_genre, Response.present_genres_i18n[:other_present], for: "other_present", class:"form-check-label" %>
+          </div>
+        </div>
+        <div class="headline bg-blue text-white d-inline-flex ml-n3">
+          <h5 class="font-weight-bold py-2 px-5 mb-0">Q4, そのプレゼントは誰から貰いましたか？</h5>
+        </div>
+        <div class="form-group mt-3 mx-5 mb-5">
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :giver, Response.givers.key(0), id: "forgot_giver", class: "form-check-input", checked: "checked" %>
+            <%= f.label :giver, Response.givers_i18n[:forgot_giver], for: "forgot_giver", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :giver, Response.givers.key(1), id: "friend", class: "form-check-input" %>
+            <%= f.label :giver, Response.givers_i18n[:friend], for: "friend", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :giver, Response.givers.key(2), id: "lover", class: "form-check-input" %>
+            <%= f.label :giver, Response.givers_i18n[:lover], for: "lover", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :giver, Response.givers.key(3), id: "parents", class: "form-check-input" %>
+            <%= f.label :giver, Response.givers_i18n[:parents], for: "parentss", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :giver, Response.givers.key(4), id: "my_child", class: "form-check-input" %>
+            <%= f.label :giver, Response.givers_i18n[:my_child], for: "my_child", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :giver, Response.givers.key(5), id: "sibling", class: "form-check-input" %>
+            <%= f.label :giver, Response.givers_i18n[:sibling], for: "sibling", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :giver, Response.givers.key(6), id: "relatives", class: "form-check-input" %>
+            <%= f.label :giver, Response.givers_i18n[:relatives], for: "relatives", class:"form-check-label" %>
+          </div>
+          <br>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :giver, Response.givers.key(7), id: "boss", class: "form-check-input" %>
+            <%= f.label :giver, Response.givers_i18n[:boss], for: "boss", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :giver, Response.givers.key(8), id: "subordinate", class: "form-check-input" %>
+            <%= f.label :giver, Response.givers_i18n[:subordinate], for: "subordinate", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :giver, Response.givers.key(9), id: "coworker", class: "form-check-input" %>
+            <%= f.label :giver, Response.givers_i18n[:coworker], for: "coworker", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :giver, Response.givers.key(10), id: "business_people", class: "form-check-input" %>
+            <%= f.label :giver, Response.givers_i18n[:business_people], for: "business_people", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :giver, Response.givers.key(11), id: "acquaintance", class: "form-check-input" %>
+            <%= f.label :giver, Response.givers_i18n[:acquaintance], for: "acquaintance", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :giver, Response.givers.key(12), id: "other_people", class: "form-check-input" %>
+            <%= f.label :giver, Response.givers_i18n[:other_people], for: "other_people", class:"form-check-label" %>
+          </div>
+        </div>
+        <div class="headline bg-blue text-white d-inline-flex ml-n3">
+          <h5 class="font-weight-bold py-2 px-5 mb-0">Q5, そのプレゼントはどんな時に貰いましたか？</h5>
+        </div>
+        <div class="form-group mt-3 mx-5 mb-5">
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gifted_event, Response.gifted_events.key(0), id: "forgot_date", class: "form-check-input", checked: "checked" %>
+            <%= f.label :gifted_event, Response.gifted_events_i18n[:forgot_date], for: "forgot_date", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gifted_event, Response.gifted_events.key(1), id: "birthday", class: "form-check-input" %>
+            <%= f.label :gifted_event, Response.gifted_events_i18n[:birthday], for: "birthday", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gifted_event, Response.gifted_events.key(2), id: "christmas", class: "form-check-input" %>
+            <%= f.label :gifted_event, Response.gifted_events_i18n[:christmas], for: "christmas", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gifted_event, Response.gifted_events.key(3), id: "father_day", class: "form-check-input" %>
+            <%= f.label :gifted_event, Response.gifted_events_i18n[:father_day], for: "father_day", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gifted_event, Response.gifted_events.key(4), id: "mother_day", class: "form-check-input" %>
+            <%= f.label :gifted_event, Response.gifted_events_i18n[:mother_day], for: "mother_day", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gifted_event, Response.gifted_events.key(5), id: "anniversary", class: "form-check-input" %>
+            <%= f.label :gifted_event, Response.gifted_events_i18n[:anniversary], for: "anniversary", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gifted_event, Response.gifted_events.key(6), id: "valentine", class: "form-check-input" %>
+            <%= f.label :gifted_event, Response.gifted_events_i18n[:valentine], for: "valentine", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gifted_event, Response.gifted_events.key(7), id: "white_day", class: "form-check-input" %>
+            <%= f.label :gifted_event, Response.gifted_events_i18n[:white_day], for: "white_day", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gifted_event, Response.gifted_events.key(8), id: "birthday_20th", class: "form-check-input" %>
+            <%= f.label :gifted_event, Response.gifted_events_i18n[:birthday_20th], for: "birthday_20th", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gifted_event, Response.gifted_events.key(9), id: "celebrate_job", class: "form-check-input" %>
+            <%= f.label :gifted_event, Response.gifted_events_i18n[:celebrate_job], for: "celebrate_job", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gifted_event, Response.gifted_events.key(10), id: "wedding_gift", class: "form-check-input" %>
+            <%= f.label :gifted_event, Response.gifted_events_i18n[:wedding_gift], for: "wedding_gift", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gifted_event, Response.gifted_events.key(11), id: "baby_gift", class: "form-check-input" %>
+            <%= f.label :gifted_event, Response.gifted_events_i18n[:baby_gift], for: "baby_gift", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gifted_event, Response.gifted_events.key(12), id: "housewarming", class: "form-check-input" %>
+            <%= f.label :gifted_event, Response.gifted_events_i18n[:housewarming], for: "housewarming", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gifted_event, Response.gifted_events.key(13), id: "birthday_60th", class: "form-check-input" %>
+            <%= f.label :gifted_event, Response.gifted_events_i18n[:birthday_60th], for: "birthday_60th", class:"form-check-label" %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :gifted_event, Response.gifted_events.key(14), id: "other_day", class: "form-check-input" %>
+            <%= f.label :gifted_event, Response.gifted_events_i18n[:other_day], for: "other_day", class:"form-check-label" %>
+          </div>
+        </div>
+
       </div>
-    <hr>
-       <div class="form-group row">
-        <%= f.label :"イベント", class: "col-md-3 col-form-label" %>
-          <%= f.radio_button :gifted_event, Response.gifted_events.key(0), id: "item_on_sale", checked: "checked" %>
-          <%= f.label :gifted_event, Response.gifted_events_i18n[:forgot_date], for: "item_on_sale"  %>
-
-          <%= f.radio_button :gifted_event, Response.gifted_events.key(1), id: "item_on_sale" %>
-          <%= f.label :gifted_event, Response.gifted_events_i18n[:birthday], for: "item_on_sale"  %>
-
-          <%= f.radio_button :gifted_event, Response.gifted_events.key(2), id: "item_on_sale" %>
-          <%= f.label :gifted_event, Response.gifted_events_i18n[:christmas], for: "item_on_sale"  %>
-
-          <%= f.radio_button :gifted_event, Response.gifted_events.key(3), id: "item_on_sale" %>
-          <%= f.label :gifted_event, Response.gifted_events_i18n[:father_day], for: "item_on_sale"  %>
-
-          <%= f.radio_button :gifted_event, Response.gifted_events.key(4), id: "item_on_sale" %>
-          <%= f.label :gifted_event, Response.gifted_events_i18n[:mother_day], for: "item_on_sale"  %>
-
-          <%= f.radio_button :gifted_event, Response.gifted_events.key(5), id: "item_on_sale" %>
-          <%= f.label :gifted_event, Response.gifted_events_i18n[:anniversary], for: "item_on_sale"  %>
-
-          <%= f.radio_button :gifted_event, Response.gifted_events.key(6), id: "item_on_sale" %>
-          <%= f.label :gifted_event, Response.gifted_events_i18n[:valentine], for: "item_on_sale"  %>
-
-          <%= f.radio_button :gifted_event, Response.gifted_events.key(7), id: "item_on_sale" %>
-          <%= f.label :gifted_event, Response.gifted_events_i18n[:white_day], for: "item_on_sale"  %>
-
-          <%= f.radio_button :gifted_event, Response.gifted_events.key(8), id: "item_on_sale" %>
-          <%= f.label :gifted_event, Response.gifted_events_i18n[:birthday_20th], for: "item_on_sale"  %>
-
-          <%= f.radio_button :gifted_event, Response.gifted_events.key(9), id: "item_on_sale" %>
-          <%= f.label :gifted_event, Response.gifted_events_i18n[:celebrate_job], for: "item_on_sale"  %>
-
-          <%= f.radio_button :gifted_event, Response.gifted_events.key(10), id: "item_on_sale" %>
-          <%= f.label :gifted_event, Response.gifted_events_i18n[:wedding_gift], for: "item_on_sale"  %>
-
-          <%= f.radio_button :gifted_event, Response.gifted_events.key(11), id: "item_on_sale" %>
-          <%= f.label :gifted_event, Response.gifted_events_i18n[:baby_gift], for: "item_on_sale"  %>
-
-          <%= f.radio_button :gifted_event, Response.gifted_events.key(12), id: "item_on_sale" %>
-          <%= f.label :gifted_event, Response.gifted_events_i18n[:housewarming], for: "item_on_sale"  %>
-
-          <%= f.radio_button :gifted_event, Response.gifted_events.key(13), id: "item_on_sale" %>
-          <%= f.label :gifted_event, Response.gifted_events_i18n[:birthday_60th], for: "item_on_sale"  %>
-
-          <%= f.radio_button :gifted_event, Response.gifted_events.key(14), id: "item_on_sale" %>
-          <%= f.label :gifted_event, Response.gifted_events_i18n[:other_day], for: "item_on_sale"  %>
-        </div>
-
-
-  <div class="actions">
-    <%= f.submit "新規登録" %>
-  </div>
+    <div class="actions text-center my-5 pb-5">
+      <%= f.submit "投票する", class: "btn btn-danger btn-lg w-50" %>
+    </div>
 <% end %>
-
-<%# @root.children.each do |child| %>
-    <%#= "[#{child.level}] #{child.name}" %>
-<%# end %>
