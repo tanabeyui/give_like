@@ -49,7 +49,13 @@ class Public::ItemsController < ApplicationController
 
   def search
     @keyword = params[:keyword]
-    @items = RakutenWebService::Ichiba::Item.search(keyword: @keyword)
+    @SearchItems = RakutenWebService::Ichiba::Item.search(keyword: @keyword)
+    items_all = []
+    items_all.concat(@SearchItems.page(1).to_a)
+    items_all.concat(@SearchItems.page(2).to_a)
+    items_all.concat(@SearchItems.page(3).to_a)
+    @items_page = Kaminari.paginate_array(items_all).page(params[:page])
+    @items = RakutenWebService::Ichiba::Item.search(keyword: @keyword).page(params[:page])
   end
 
 

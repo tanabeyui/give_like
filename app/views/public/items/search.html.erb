@@ -20,5 +20,8 @@
     </div>
     <% end %>
   </div>
+  <% if @items_page.present? %>
+    <%= paginate @items_page, class: "" %>
+  <% end %>
 </div>
 
