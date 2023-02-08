@@ -2,11 +2,28 @@ class Public::ItemsController < ApplicationController
   before_action :set_search
 
   def index
-    @rankingSearchItems = RakutenWebService::Ichiba::Item.search(keyword: 'プレゼント', sort: '-reviewCount')
-    @items = []
-    @items.concat(@rankingSearchItems.page(1).to_a)
+    # @rankingSearchItems = RakutenWebService::Ichiba::Item.search(keyword: 'プレゼント', sort: '-reviewCount')
+    # @items = []
+    # @items.concat(@rankingSearchItems.page(1).to_a)
     # @items.concat(@rankingSearchItems.page(2).to_a)
     # @items.pop(10)
+    @rank_colors = ['gold', 'silver', 'bronze']
+    if params[:genre]
+      @title = params[:title]
+      @genre_id = params[:genre]
+      @items = RakutenWebService::Ichiba::Genre[@genre_id].ranking
+    elsif params[:sex]
+      @title = params[:title]
+      @sex = params[:sex]
+      @items = RakutenWebService::Ichiba::Item.ranking(:sex => @sex)
+    elsif params[:age]
+      @title = params[:title]
+      @age = params[:age]
+      @items = RakutenWebService::Ichiba::Item.ranking(:age => @age)
+    else
+      @title = "プレゼント"
+      @items = RakutenWebService::Ichiba::Item.search(keyword: 'プレゼント', sort: '-reviewCount')
+    end
   end
 
   def show
@@ -28,25 +45,6 @@ class Public::ItemsController < ApplicationController
     @favorite = Favorite.new
     @want_item = WantItem.new
     @item_params = params[:q] || params
-  end
-
-  def ranking
-    if params[:genre]
-      @title = params[:title]
-      @genre_id = params[:genre]
-      @items = RakutenWebService::Ichiba::Genre[@genre_id].ranking
-    elsif params[:sex]
-      @title = params[:title]
-      @sex = params[:sex]
-      @items = RakutenWebService::Ichiba::Item.ranking(:sex => @sex)
-    elsif params[:age]
-      @title = params[:title]
-      @age = params[:age]
-      @items = RakutenWebService::Ichiba::Item.ranking(:age => @age)
-    else
-      @title = "プレゼント"
-      @items = RakutenWebService::Ichiba::Item.search(keyword: 'プレゼント', sort: '-reviewCount')
-    end
   end
 
   def search

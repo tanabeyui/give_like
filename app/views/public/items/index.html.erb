@@ -1,17 +1,46 @@
-<h1>楽天プレゼントランキング</h1>
+<div class="container-fluid px-0">
+  <div class="row mx-5 px-5 my-4">
+    <div class="col-md-3 px-xl-5 mt-2">
+      <%= render 'public/shared/sidebar', q: @q %>
+    </div>
 
-<% @items.each_with_index do |item, i| %>
-  <%= i + 1 %><br>
-  <%= link_to item_path(item.code, name: item.name, code: item.code, genre: item.genre.id, price: item.price, image: item.medium_image_urls[0], url: item.url) do %>
-    <%= image_tag (item['smallImageUrls'][0]) %>
-  <% end %>
-  <%= item.name %><br>
-  <% @current_genre = item.genre.id %>
-  <% @root = RakutenWebService::Ichiba::Genre[@current_genre] %>
-    <% @root.parents.first(1).each do |parent| %>
-      <%= parent.level %>::<%= parent.name %>
-    <% end %>
-  <br>
-  <%= number_with_delimiter(item.price) %>円
-  <hr>
-<% end %>
+    <div class="col-md-9">
+      <h4 class="headline bg-beige font-weight-bold py-3 mb-4"><i class="fa-sharp fa-solid fa-crown"></i> 楽天<%= @title %>ランキング</h4>
+      <% @items.each_with_index do |item, i| %>
+        <div class="card border-light shadow-sm my-3 p-3">
+          <div class="row no-gutters position-relative">
+            <div class="col-sm-2 text-center">
+              <%= image_tag (item['medium_image_urls'][0]), class:"img-fluid" %>
+            </div>
+            <div class="col-sm-9">
+              <div class="card-body p-0">
+                <h6 class="card-title text-limit mb-1">
+                  <%= link_to item_path(item.code, name: item.name, code: item.code, genre: item.genre.id, price: item.price, image: item.medium_image_urls[0], url: item.url), class:"text-dark" do %>
+                    <%= item.name %>
+                  <% end %>
+                </h6>
+                <p class="card-text text-muted small">
+                  <% @current_genre = item.genre.id %>
+                  <% @root = RakutenWebService::Ichiba::Genre[@current_genre] %>
+                  <% @root.parents.first(1).each do |parent| %>
+                    <%= parent.name %>
+                  <% end %>
+                </p>
+                <p class="card-text"><%= number_with_delimiter(item.price) %>円</p>
+              </div>
+            </div>
+            <% if i < 3  %>
+              <%= content_tag :div, class: "card-rank position-absolute rounded-circle bg-#{@rank_colors[i]} text-white mt-n3", style: "width: 40px;height: 40px;" do %>
+                <h6 class="text-center", style="line-height: 40px;"><%= i + 1 %></h6>
+              <% end %>
+            <% else %>
+              <%= content_tag :div, class: "card-rank position-absolute rounded-circle bg-dark text-white mt-n3", style: "width: 40px;height: 40px;" do %>
+                <h6 class="text-center", style="line-height: 40px;"><%= i + 1 %></h6>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

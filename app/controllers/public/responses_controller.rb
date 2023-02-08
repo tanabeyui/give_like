@@ -30,19 +30,19 @@ class Public::ResponsesController < ApplicationController
 
   def set_search
     if params[:q].present?
-			@q = Response.ransack(params[:q])
+      @q = Response.ransack(params[:q])
       @responses_count = @q.result(distinct: true)
       @search_responses = @q.result(distinct: true).group(:present_genre).order('count(id) desc')
     elsif params[:commit]
       @q = Response.ransack
       @responses_count = @q.result(distinct: true)
       @search_responses = @q.result(distinct: true).group(:present_genre).order('count(id) desc')
-		else
-			params[:q] = {"gender_eq_any"=>["1"]}
-			@q = Response.ransack(params[:q])
+    else
+      params[:q] = {"gender_eq_any"=>["1"]}
+      @q = Response.ransack(params[:q])
       @responses_count = @q.result(distinct: true)
       @search_responses = @q.result(distinct: true).group(:present_genre).order('count(id) desc')
-		end
+    end
   end
 
   def response_params
