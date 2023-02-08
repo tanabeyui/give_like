@@ -10,7 +10,9 @@
         <div class="card border-light shadow-sm my-3 p-3">
           <div class="row no-gutters position-relative">
             <div class="col-sm-2 text-center">
-              <%= image_tag (item['medium_image_urls'][0]), class:"img-fluid" %>
+              <%= link_to item_path(item.code, name: item.name, code: item.code, genre: item.genre.id, price: item.price, image: item.medium_image_urls[0], url: item.url) do %>
+                <%= image_tag (item['medium_image_urls'][0]), width: '90%' %>
+              <% end %>
             </div>
             <div class="col-sm-9">
               <div class="card-body p-0">

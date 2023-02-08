@@ -1,13 +1,24 @@
-<% if @items.present? %>
-  <h1>検索結果</h1>
+<div class="container-fluid px-0">
+  <h5 class="bg-beige font-weight-bold py-4 px-5 mb-4"><i class="fa-solid fa-magnifying-glass"></i> "<%= @keyword %>"の検索結果</h5>
 
-  <% @items.first(10).each do |item| %>
-    <%= link_to item_path(item, name: item.name, code: item.code, genre: item.genre.id, price: item.price, image: item.medium_image_urls, url: item.url) do %>
-      <%= image_tag (item['smallImageUrls'][0]) %>
+  <div class="row row-cols-3 row-cols-md-4 row-cols-lg-6 mx-md-5 px-5">
+    <% @items.each do |item| %>
+    <div class="col mb-5 p-2">
+      <div class="card border-light h-100">
+        <%= link_to item_path(item.code, name: item.name, code: item.code, genre: item.genre.id, price: item.price, image: item.medium_image_urls[0], url: item.url) do %>
+          <%= image_tag (item['medium_image_urls'][0]), width: '100%' %>
+        <% end %>
+        <div class="card-body p-0">
+          <h6 class="card-title text-limit">
+            <%= link_to item_path(item.code, name: item.name, code: item.code, genre: item.genre.id, price: item.price, image: item.medium_image_urls[0], url: item.url), class:"text-dark" do %>
+              <%= item.name %>
+            <% end %>
+          </h6>
+          <h5 class="card-text"><%= number_with_delimiter(item.price) %>円</h5>
+        </div>
+      </div>
+    </div>
     <% end %>
-    <%= item.name %><br>
-    <%= number_with_delimiter(item.price) %>円
-  <hr>
-  <% end %>
+  </div>
+</div>
 
-<% end %>

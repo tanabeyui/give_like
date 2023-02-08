@@ -2,11 +2,6 @@ class Public::ItemsController < ApplicationController
   before_action :set_search
 
   def index
-    # @rankingSearchItems = RakutenWebService::Ichiba::Item.search(keyword: 'プレゼント', sort: '-reviewCount')
-    # @items = []
-    # @items.concat(@rankingSearchItems.page(1).to_a)
-    # @items.concat(@rankingSearchItems.page(2).to_a)
-    # @items.pop(10)
     @rank_colors = ['gold', 'silver', 'bronze']
     if params[:genre]
       @title = params[:title]
@@ -24,6 +19,11 @@ class Public::ItemsController < ApplicationController
       @title = "プレゼント"
       @items = RakutenWebService::Ichiba::Item.search(keyword: 'プレゼント', sort: '-reviewCount')
     end
+    # @rankingSearchItems = RakutenWebService::Ichiba::Item.search(keyword: 'プレゼント', sort: '-reviewCount')
+    # @items = []
+    # @items.concat(@rankingSearchItems.page(1).to_a)
+    # @items.concat(@rankingSearchItems.page(2).to_a)
+    # @items.pop(10)
   end
 
   def show
@@ -48,6 +48,7 @@ class Public::ItemsController < ApplicationController
   end
 
   def search
+    @keyword = params[:keyword]
     if params[:keyword]
       @items = RakutenWebService::Ichiba::Item.search(keyword: params[:keyword])
     end
