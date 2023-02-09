@@ -1,129 +1,290 @@
-<p><%= image_tag (@item_params[:image]), size: '200x200' %></p>
-<p><%= @item_params[:name] %></p>
-<p><%= @item_params[:price] %>円</p>
-<p>カテゴリー：<%= @category %>
-</p>
-<%= link_to "楽天ページ", @item_params[:url] %>
+<div class="container">
+  <div class="row my-5">
+    <div class="col-md-3">
+      <%= image_tag (@item_params[:image]), width: '100%' %>
+    </div>
 
-<div>
-  <%= form_with model: @favorite, url: favorites_path, method: :post do |f| %>
-    <%= f.hidden_field :code, :value => @item_params[:code] %>
-    <%= f.hidden_field :name, :value => @item_params[:name] %>
-    <%= f.hidden_field :url, :value => @item_params[:url] %>
-    <%= f.hidden_field :category, :value => @category %>
-    <%= f.hidden_field :price, :value => @item_params[:price] %>
-    <%= f.hidden_field :image, :value => @item_params[:image] %>
-    <%= f.hidden_field :genre, :value => @item_params[:genre] %>
-    <%= f.submit '好きな物に追加' %>
-  <% end %>
-  <%= form_with model: @want_item, url: want_items_path, method: :post do |f| %>
-    <%= f.hidden_field :code, :value => @item_params[:code] %>
-    <%= f.hidden_field :name, :value => @item_params[:name] %>
-    <%= f.hidden_field :url, :value => @item_params[:url] %>
-    <%= f.hidden_field :category, :value => @category %>
-    <%= f.hidden_field :price, :value => @item_params[:price] %>
-    <%= f.hidden_field :image, :value => @item_params[:image] %>
-    <%= f.hidden_field :genre, :value => @item_params[:genre] %>
-    <%= f.submit '欲しい物に追加' %>
-  <% end %>
-  <%= link_to "レビューを書く", new_review_path(name: @item_params[:name], code: @item_params[:code], image: @item_params[:image], price: @item_params[:price], genre: @item_params[:genre], category: @category, url: @item_params[:url] ) %>
+    <div class="col-md-7">
+      <p class="text-muted small mb-2">
+        <% @current_genre.parents.each do |parent| %>
+          <span><%= parent.name %></span>
+          <span class="px-2"><i class="fa-solid fa-chevron-right"></i></span>
+        <% end %>
+        <%= @current_genre.name %>
+      </p>
+      <h5><%= @item_params[:name] %></h5>
+      <div class="row justify-content-between my-3 mx-0 ">
+        <div>
+          <h4 class="m-0">￥<%= number_with_delimiter(@item_params[:price]) %></h4>
+        </div>
+        <div class="text-right">
+          <%= link_to @item_params[:url], target: :_blank, class:"btn btn-danger btn-sm px-4" do %>
+            <i class="fa-solid fa-cart-shopping"></i> 楽天市場で見る <i class="fa-solid fa-angles-right"></i>
+          <% end %>
+        </div>
+      </div>
+      <% if Review.where(code: @item_params[:code]).count != 0 %>
+        <div class="row bg-yellow rounded-lg mx-md-0 mx-n3 py-3">
+          <h6 class="col-auto pt-1 m-0">GiveLikeレビュー</h6>
+          <div class="col-auto px-1">
+            <div id="star-rate<%= @item_params[:code] %>"></div>
+            <script>
+              $('#star-rate<%= @item_params[:code] %>').empty();
+              var elem = document.getElementById('star-rate<%= @item_params[:code] %>');
+              var opt = {
+                starOn: "<%= asset_path('star-on.png') %>",
+                starOff: "<%= asset_path('star-off.png') %>",
+                starHalf: "<%= asset_path('star-half.png') %>",
+                half: true,
+                readOnly: true,
+                size : 12,
+                score: <%= Review.where(code: @item_params[:code]).average(:evaluation) %>,
+                };
+              raty(elem,opt);
+            </script>
+          </div>
+          <p class="col-2 text-black-50 medium pt-1 px-0 m-0">(<%= Review.where(code: @item_params[:code]).count %>)</p>
+        </div>
+      <% end %>
+    </div>
 
-</div>
-
-
-<h3>▼レビュー</h3>
-<div class="search-bar">
-  <%= search_form_for @q, url: item_path do |f| %>
-    <div class="nav-title">詳細検索</div>
-    <%= f.hidden_field :code, :value => @item_params[:code] %>
-    <%= f.hidden_field :genre, :value => @item_params[:genre] %>
-    <%= f.hidden_field :name, :value => @item_params[:name] %>
-    <%= f.hidden_field :url, :value => @item_params[:url] %>
-    <%= f.hidden_field :price, :value => @item_params[:price] %>
-    <%= f.hidden_field :image, :value => @item_params[:image] %>
-    <%= f.hidden_field :code_eq, :value => @item_params[:code] %>
-
-    <%= f.search_field :body_cont, placeholder: 'キーワードから探す', class:'input-box' %>
-    <br>
-
-    <%= f.label :end_user_gender_eq_any, '性別' %>
-    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 0, '' %>
-      <%= f.label EndUser.genders_i18n[:male] %>
-    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 1, '' %>
-      <%= f.label EndUser.genders_i18n[:female] %>
-    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 2, '' %>
-      <%= f.label EndUser.genders_i18n[:not_selected] %>
-
-    <br>
-    <%= f.label :evaluation, '評価' %>
-    <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false }, 1, '' %>
-      ★☆☆☆☆以上
-    <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false }, 2, '' %>
-      ★★☆☆☆以上
-    <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false }, 3, '' %>
-      ★★★☆☆以上
-    <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false }, 4, '' %>
-      ★★★★☆以上
-    <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false }, 5, '' %>
-      ★★★★★
-
-    <br>
-    <%= f.label :end_user_birth_day_to_age, '年齢' %>
-    <%= f.select :end_user_birth_day_to_age_gteq, *[10..100] , { include_blank: "" }, { class: "form-control" } %>歳以上～
-    <%= f.select :end_user_birth_day_to_age_lteq, *[10..100] , { include_blank: "" }, { class: "form-control" } %>歳以下
-
-    <br>
-      <%= f.submit '検索する' %>
-      </ul>
-    <% end %>
+    <div class="col-md-auto bg-gray rounded-lg p-3">
+      <div class="text-center">
+        <%= link_to new_review_path(name: @item_params[:name], code: @item_params[:code], image: @item_params[:image], price: @item_params[:price],
+                            genre: @item_params[:genre], category: @category, url: @item_params[:url] ), class: "btn btn-link btn-sm text-dark py-1 pl-0 pr-1" do %>
+          <i class="fa-solid fa-pen-to-square"></i> レビューを書く
+        <% end %>
+      </div>
+      <%= form_with model: @favorite, url: favorites_path, method: :post do |f| %>
+        <%= f.hidden_field :code, :value => @item_params[:code] %>
+        <%= f.hidden_field :name, :value => @item_params[:name] %>
+        <%= f.hidden_field :url, :value => @item_params[:url] %>
+        <%= f.hidden_field :category, :value => @category %>
+        <%= f.hidden_field :price, :value => @item_params[:price] %>
+        <%= f.hidden_field :image, :value => @item_params[:image] %>
+        <%= f.hidden_field :genre, :value => @item_params[:genre] %>
+        <div class="text-center">
+          <%= button_tag sanitize('<i class="far fa-heart"></i> 好きな物に追加'), :type => "submit", :class =>"btn btn-link btn-sm text-dark py-1 pl-0 pr-1" %>
+        </div>
+      <% end %>
+      <%= form_with model: @want_item, url: want_items_path, method: :post do |f| %>
+        <%= f.hidden_field :code, :value => @item_params[:code] %>
+        <%= f.hidden_field :name, :value => @item_params[:name] %>
+        <%= f.hidden_field :url, :value => @item_params[:url] %>
+        <%= f.hidden_field :category, :value => @category %>
+        <%= f.hidden_field :price, :value => @item_params[:price] %>
+        <%= f.hidden_field :image, :value => @item_params[:image] %>
+        <%= f.hidden_field :genre, :value => @item_params[:genre] %>
+        <div class="text-center">
+          <%= button_tag sanitize('<i class="far fa-star"></i> 欲しい物に追加'), :type => "submit", :class =>"btn btn-link btn-sm text-dark py-1 pl-0 pr-1" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
-   <%= form_with model: @review, url: item_path, method: :get do |f| %>
-   <%= f.hidden_field :code, :value => @item_params[:code] %>
-    <%= f.hidden_field :genre, :value => @item_params[:genre] %>
-    <%= f.hidden_field :name, :value => @item_params[:name] %>
-    <%= f.hidden_field :url, :value => @item_params[:url] %>
-    <%= f.hidden_field :price, :value => @item_params[:price] %>
-    <%= f.hidden_field :image, :value => @item_params[:image] %>
-    <%= f.hidden_field :code, :value => @item_params[:code] %>
+  <hr>
 
-   <%= f.select :keyword, [ ['投稿が新しい順', 'new'], ['投稿が古い順', 'old'], ['評価が高い順', 'high_rated'], ['評価が低い順', 'low_rated']], {}, { class: "user_class" } %>
-   <%= f.submit %>
-  <% end %>
+  <div class="row mb-5">
+    <div class="search-bar col-md-3">
+      <h4 class="font-weight-bold mb-4">レビュー</h4>
+      <h6 class="font-weight-bold mb-2">
+        <i class="fa-solid fa-magnifying-glass"></i> 絞り込み検索
+      </h6>
+      <%= search_form_for @q, url: item_path do |f| %>
+        <%= f.hidden_field :code, :value => @item_params[:code] %>
+        <%= f.hidden_field :genre, :value => @item_params[:genre] %>
+        <%= f.hidden_field :name, :value => @item_params[:name] %>
+        <%= f.hidden_field :url, :value => @item_params[:url] %>
+        <%= f.hidden_field :price, :value => @item_params[:price] %>
+        <%= f.hidden_field :image, :value => @item_params[:image] %>
+        <%= f.hidden_field :code_eq, :value => @item_params[:code] %>
+        <div class="form-group">
+          <%= f.search_field :body_cont, placeholder: 'キーワードからレビューを探す', class:'form-control medium' %>
+        </div>
+        <div class="form-group medium">
+          <div class="form-check">
+            <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'evaluation-check1' }, 1, '' %>
+            <%= f.label "★☆☆☆☆以上", class:'form-check-label', for: 'evaluation-check1' %>
+          </div>
+          <div class="form-check">
+            <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'evaluation-check2' }, 2, '' %>
+            <%= f.label "★★☆☆☆以上", class:'form-check-label', for: 'evaluation-check2' %>
+          </div>
+          <div class="form-check">
+            <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'evaluation-check3' }, 3, '' %>
+            <%= f.label "★★★☆☆以上", class:'form-check-label', for: 'evaluation-check3' %>
+          </div>
+          <div class="form-check">
+            <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'evaluation-check4' }, 4, '' %>
+            <%= f.label "★★★★☆以上", class:'form-check-label', for: 'evaluation-check4' %>
+          </div>
+          <div class="form-check">
+            <%= f.check_box :evaluation_gteq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'evaluation-check5' }, 5, '' %>
+            <%= f.label "★★★★★", class:'form-check-label', for: 'evaluation-check5' %>
+          </div>
+        </div>
+        <div class="form-group medium">
+          <div class="form-check form-check-inline">
+            <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check1' }, 0, '' %>
+            <%= f.label EndUser.genders_i18n[:male], class:'form-check-label', for: 'gender-check1' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check2' }, 1, '' %>
+            <%= f.label EndUser.genders_i18n[:female], class:'form-check-label', for: 'gender-check2' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check3' }, 2, '' %>
+            <%= f.label EndUser.genders_i18n[:not_selected], class:'form-check-label', for: 'gender-check3' %>
+          </div>
+        </div>
+        <div class="form-group row no-gutters medium">
+          <div class="col-3">
+            <%= f.select :end_user_birth_day_to_age_gteq, *[10..100] , { include_blank: "" }, { class: "form-control small" } %>
+          </div>
+          <label for="staticEmail" class="col-3 col-form-label pl-1">歳以上</label>
+            <div class="col-3">
+            <%= f.select :end_user_birth_day_to_age_lteq, *[10..100] , { include_blank: "" }, { class: "form-control small" } %>
+          </div>
+          <label for="staticEmail" class="col-3 col-form-label pl-1">歳以下</label>
+        </div>
+        <%= f.submit '検索する', class: "btn btn-secondary btn-sm btn-block mb-5" %>
 
-    <hr>
-    <% if @q.code_eq != nil %>
-      <% @search_reviews.each do |search_review| %>
-        <%= search_review.body %><br>
-        <%= search_review.end_user.name%> <%= search_review.end_user.era %> <%= search_review.end_user.gender_i18n %><br>
-      <hr>
       <% end %>
-     <% elsif params[:keyword] != nil %>
-      <% @sort_reviews.each do |sort_review| %>
-        <%= image_tag (sort_review.image) %>
-        <%= sort_review.name %>
-        <%= sort_review.price %>
-        <%= sort_review.body %><br>
-        <%= sort_review.end_user.name %>　<%= sort_review.end_user.era %>　 <%= sort_review.end_user.gender_i18n %>
-      <hr>
-      <% end %>
-    <% else %>
-      <% @reviews.order(created_at: "DESC").each do |review| %>
-        <div id="star-rate<%= review.id %>"></div>
-        <script>
-        var elem = document.getElementById('star-rate<%= review.id %>');
-        var opt = {
-        starOn: "<%= asset_path('star-on.png') %>",
-        starOff: "<%= asset_path('star-off.png') %>",
-        starHalf: "<%= asset_path('star-half.png') %>",
-        half: true,
-        readOnly: true,
-        score: <%= review.evaluation %>,
-          };
-          raty(elem,opt);
-        </script>
-        <%= review.created_at.strftime('%Y/%m/%d') %> :: <%= review.body %><br>
-        <%= review.end_user.name %>　<%= review.end_user.era %>　 <%= review.end_user.gender_i18n %>
-      <hr>
-    <% end %>
-  <% end %>
+    </div>
+
+      <div class="col-md-8 mx-auto mt-2">
+        <%= form_with model: @review, url: item_path, method: :get do |f| %>
+          <%= f.hidden_field :code, :value => @item_params[:code] %>
+          <%= f.hidden_field :genre, :value => @item_params[:genre] %>
+          <%= f.hidden_field :name, :value => @item_params[:name] %>
+          <%= f.hidden_field :url, :value => @item_params[:url] %>
+          <%= f.hidden_field :price, :value => @item_params[:price] %>
+          <%= f.hidden_field :image, :value => @item_params[:image] %>
+          <%= f.hidden_field :code, :value => @item_params[:code] %>
+          <div class="form-row justify-content-end px-4">
+            <div class="col-3 small p-0">
+              <%= f.select :sort, [ ['投稿が新しい順', 'new'], ['投稿が古い順', 'old'],
+                              ['評価が高い順', 'high_rated'], ['評価が低い順', 'low_rated']], {}, { class: "custom-select border-secondary medium" } %>
+            </div>
+            <div class="col-1 p-0">
+              <%= f.submit '並び替え', class: "btn btn-outline-secondary btn-sm h-100" %>
+            </div>
+          </div>
+        <% end %>
+
+        <% if @q.code_eq != nil %>
+          <% @search_reviews.each do |search_review| %>
+            <div class="review border my-3 px-3 pt-3 pb-2">
+              <div class="review-header d-flex justify-content-between medium">
+                <p class="m-0">
+                  <%= image_tag search_review.end_user.get_profile_image(30,30), class: "rounded-circle" %>
+                  <%= search_review.end_user.name %> ( <%= search_review.end_user.era %> / <%= search_review.end_user.gender_i18n %> )
+                </p>
+                <div class="text-secondary">
+                  <p class="m-0">投稿日：<%= search_review.created_at.strftime('%Y/%m/%d') %></p>
+                </div>
+              </div>
+              <div class="review-body border-bottom border-secondary px-2">
+                <div id="star-rate<%= search_review.id %>"></div>
+                <script>
+                      $('#star-rate<%= search_review.id %>').empty();
+                var elem = document.getElementById('star-rate<%= search_review.id %>');
+                var opt = {
+                starOn: "<%= asset_path('star-on-sm.png') %>",
+                starOff: "<%= asset_path('star-off-sm.png') %>",
+                starHalf: "<%= asset_path('star-half-sm.png') %>",
+                half: true,
+                readOnly: true,
+                score: <%= search_review.evaluation %>,
+                  };
+                raty(elem,opt);
+                </script>
+                <p class="mb-2 py-3"><%= search_review.body %></p>
+              </div>
+              <dl class="row review-footer medium m-2">
+                <dt class="col-4 bg-dark text-white mb-1">プレゼント主</dt>
+                <dd class="col-8"><%= search_review.giver_i18n %></dd>
+                <dt class="col-4 bg-dark text-white mb-1">プレゼントシーン</dt>
+                <dd class="col-8"><%= search_review.gifted_event_i18n %></dd>
+              </dl>
+            </div>
+          <% end %>
+        <% elsif params[:sort] != nil %>
+          <% @sort_reviews.each do |sort_review| %>
+            <div class="review border my-3 px-3 pt-3 pb-2">
+              <div class="review-header d-flex justify-content-between medium">
+                <p class="m-0">
+                  <%= image_tag sort_review.end_user.get_profile_image(30,30), class: "rounded-circle" %>
+                  <%= sort_review.end_user.name %> ( <%= sort_review.end_user.era %> / <%= sort_review.end_user.gender_i18n %> )
+                </p>
+                <div class="text-secondary">
+                  <p class="m-0">投稿日：<%= sort_review.created_at.strftime('%Y/%m/%d') %></p>
+                </div>
+              </div>
+              <div class="review-body border-bottom border-secondary px-2">
+                <div id="star-rate<%= sort_review.id %>"></div>
+                <script>
+                      $('#star-rate<%= sort_review.id %>').empty();
+                var elem = document.getElementById('star-rate<%= sort_review.id %>');
+                var opt = {
+                starOn: "<%= asset_path('star-on-sm.png') %>",
+                starOff: "<%= asset_path('star-off-sm.png') %>",
+                starHalf: "<%= asset_path('star-half-sm.png') %>",
+                half: true,
+                readOnly: true,
+                score: <%= sort_review.evaluation %>,
+                  };
+                raty(elem,opt);
+                </script>
+                <p class="mb-2 py-3"><%= sort_review.body %></p>
+              </div>
+              <dl class="row review-footer medium m-2">
+                <dt class="col-4 bg-dark text-white mb-1">プレゼント主</dt>
+                <dd class="col-8"><%= sort_review.giver_i18n %></dd>
+                <dt class="col-4 bg-dark text-white mb-1">プレゼントシーン</dt>
+                <dd class="col-8"><%= sort_review.gifted_event_i18n %></dd>
+              </dl>
+            </div>
+          <% end %>
+        <% else %>
+          <% @reviews.order(created_at: "DESC").each do |review| %>
+            <div class="review border my-3 px-3 pt-3 pb-2">
+              <div class="review-header d-flex justify-content-between medium">
+                <p class="m-0">
+                  <%= image_tag review.end_user.get_profile_image(30,30), class: "rounded-circle" %>
+                  <%= review.end_user.name %> ( <%= review.end_user.era %> / <%= review.end_user.gender_i18n %> )
+                </p>
+                <div class="text-secondary">
+                  <p class="m-0">投稿日：<%= review.created_at.strftime('%Y/%m/%d') %></p>
+                </div>
+              </div>
+              <div class="review-body border-bottom border-secondary px-2">
+                <div id="star-rate<%= review.id %>"></div>
+                <script>
+                      $('#star-rate<%= review.id %>').empty();
+                var elem = document.getElementById('star-rate<%= review.id %>');
+                var opt = {
+                starOn: "<%= asset_path('star-on-sm.png') %>",
+                starOff: "<%= asset_path('star-off-sm.png') %>",
+                starHalf: "<%= asset_path('star-half-sm.png') %>",
+                half: true,
+                readOnly: true,
+                score: <%= review.evaluation %>,
+                  };
+                  raty(elem,opt);
+                </script>
+                <p class="mb-2 py-3"><%= review.body %></p>
+              </div>
+              <dl class="row review-footer medium m-2">
+                <dt class="col-4 bg-dark text-white mb-1">プレゼント主</dt>
+                <dd class="col-8"><%= review.giver_i18n %></dd>
+                <dt class="col-4 bg-dark text-white mb-1">プレゼントシーン</dt>
+                <dd class="col-8"><%= review.gifted_event_i18n %></dd>
+              </dl>
+            </div>
+          <% end %>
+        <% end %>
+
+    </div>
+  </div>
+</div>

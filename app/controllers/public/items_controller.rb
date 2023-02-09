@@ -27,24 +27,21 @@ class Public::ItemsController < ApplicationController
   end
 
   def show
-    current_genre = params[:genre] || params[:q][:genre]
-    @root = RakutenWebService::Ichiba::Genre[current_genre]
-    @root.parents.first(1).each do |parent|
-      @category = parent.name
-    end
+    @item_params = params[:q] || params
+    current_genre_id = params[:genre] || params[:q][:genre]
+    @current_genre = RakutenWebService::Ichiba::Genre[current_genre_id]
     @reviews = Review.where(code: params[:code]).all
-    if params[:keyword] == "new"
-      @sort_reviews = @reviews.order(created_at: "DESC")
-    elsif params[:keyword] == "old"
-      @sort_reviews = @reviews.order(created_at: "ASC")
-    elsif params[:keyword] == "high_rated"
-      @sort_reviews = @reviews.order(evaluation: "DESC")
-    elsif params[:keyword] == "low_rated"
-      @sort_reviews = @reviews.order(evaluation: "ASC")
-    end
     @favorite = Favorite.new
     @want_item = WantItem.new
-    @item_params = params[:q] || params
+    if params[:sort] == "new"
+      @sort_reviews = @reviews.order(created_at: "DESC")
+    elsif params[:sort] == "old"
+      @sort_reviews = @reviews.order(created_at: "ASC")
+    elsif params[:sort] == "high_rated"
+      @sort_reviews = @reviews.order(evaluation: "DESC")
+    elsif params[:sort] == "low_rated"
+      @sort_reviews = @reviews.order(evaluation: "ASC")
+    end
   end
 
   def search
