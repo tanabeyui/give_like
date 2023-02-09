@@ -172,7 +172,9 @@
           </div>
         <% end %>
 
-        <% if @q.code_eq != nil %>
+        <% if Review.where(code: @item_params[:code]).count == 0 %>
+          <h5 class="text-center text-secondary my-5 py-5">レビューはまだありません！</h5>
+        <% elsif @q.code_eq != nil %>
           <% @search_reviews.each do |search_review| %>
             <div class="review border my-3 px-3 pt-3 pb-2">
               <div class="review-header d-flex justify-content-between medium">
