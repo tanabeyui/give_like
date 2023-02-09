@@ -23,7 +23,7 @@
           <% end %>
         </div>
       </div>
-      <% if Review.where(code: @item_params[:code]).count != 0 %>
+      <% if @reviews.count != 0 %>
         <div class="row bg-yellow rounded-lg mx-md-0 mx-n3 py-3">
           <h6 class="col-auto pt-1 m-0">GiveLikeレビュー</h6>
           <div class="col-auto px-1">
@@ -38,12 +38,12 @@
                 half: true,
                 readOnly: true,
                 size : 12,
-                score: <%= Review.where(code: @item_params[:code]).average(:evaluation) %>,
+                score: <%= @reviews.average(:evaluation) %>,
                 };
               raty(elem,opt);
             </script>
           </div>
-          <p class="col-2 text-black-50 medium pt-1 px-0 m-0">(<%= Review.where(code: @item_params[:code]).count %>)</p>
+          <p class="col-2 text-black-50 medium pt-1 px-0 m-0">(<%= @reviews.count %>)</p>
         </div>
       <% end %>
     </div>
@@ -137,6 +137,16 @@
             <%= f.label EndUser.genders_i18n[:not_selected], class:'form-check-label', for: 'gender-check3' %>
           </div>
         </div>
+        <div class="form-group medium">
+          <div class="form-check form-check-inline">
+            <%= f.check_box :getting_method_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'getting_method-check1' }, 0, '' %>
+            <%= f.label Review.getting_methods_i18n[:self_purchase], class:'form-check-label', for: 'getting_method-check1' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :getting_method_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'getting_method-check2' }, 1, '' %>
+            <%= f.label Review.getting_methods_i18n[:gift], class:'form-check-label', for: 'getting_method-check2' %>
+          </div>
+        </div>
         <div class="form-group row no-gutters medium">
           <div class="col-3">
             <%= f.select :end_user_birth_day_to_age_gteq, *[10..100] , { include_blank: "" }, { class: "form-control small" } %>
@@ -171,8 +181,7 @@
             </div>
           </div>
         <% end %>
-
-        <% if Review.where(code: @item_params[:code]).count == 0 %>
+        <% if @reviews.count == 0 %>
           <h5 class="text-center text-secondary my-5 py-5">レビューはまだありません！</h5>
         <% elsif @q.code_eq != nil %>
           <% @search_reviews.each do |search_review| %>
@@ -204,6 +213,8 @@
                 <p class="mb-2 py-3"><%= search_review.body %></p>
               </div>
               <dl class="row review-footer medium m-2">
+                <dt class="col-4 bg-dark text-white mb-1">入手方法</dt>
+                <dd class="col-8"><%= search_review.getting_method_i18n %></dd>
                 <dt class="col-4 bg-dark text-white mb-1">プレゼント主</dt>
                 <dd class="col-8"><%= search_review.giver_i18n %></dd>
                 <dt class="col-4 bg-dark text-white mb-1">プレゼントシーン</dt>
@@ -241,6 +252,8 @@
                 <p class="mb-2 py-3"><%= sort_review.body %></p>
               </div>
               <dl class="row review-footer medium m-2">
+                <dt class="col-4 bg-dark text-white mb-1">入手方法</dt>
+                <dd class="col-8"><%= sort_review.getting_method_i18n %></dd>
                 <dt class="col-4 bg-dark text-white mb-1">プレゼント主</dt>
                 <dd class="col-8"><%= sort_review.giver_i18n %></dd>
                 <dt class="col-4 bg-dark text-white mb-1">プレゼントシーン</dt>
@@ -252,10 +265,15 @@
           <% @reviews.order(created_at: "DESC").each do |review| %>
             <div class="review border my-3 px-3 pt-3 pb-2">
               <div class="review-header d-flex justify-content-between medium">
-                <p class="m-0">
-                  <%= image_tag review.end_user.get_profile_image(30,30), class: "rounded-circle" %>
-                  <%= review.end_user.name %> ( <%= review.end_user.era %> / <%= review.end_user.gender_i18n %> )
-                </p>
+                <div>
+                  <% if review.is_anonymous == "anonymous" %>
+                    <%= image_tag 'no-image.png', :size => '30x30', class: "rounded-circle" %>
+                    <span class="px-1">ゲストさん ( <%= review.end_user.era %> / <%= review.end_user.gender_i18n %> )</span>
+                  <% else %>
+                    <%= image_tag review.end_user.get_profile_image(30,30), class: "rounded-circle" %>
+                    <span class="px-1"><%= review.end_user.name %> さん ( <%= review.end_user.era %> / <%= review.end_user.gender_i18n %> )</span>
+                  <% end %>
+                </div>
                 <div class="text-secondary">
                   <p class="m-0">投稿日：<%= review.created_at.strftime('%Y/%m/%d') %></p>
                 </div>
@@ -278,6 +296,8 @@
                 <p class="mb-2 py-3"><%= review.body %></p>
               </div>
               <dl class="row review-footer medium m-2">
+                <dt class="col-4 bg-dark text-white mb-1">入手方法</dt>
+                <dd class="col-8"><%= review.getting_method_i18n %></dd>
                 <dt class="col-4 bg-dark text-white mb-1">プレゼント主</dt>
                 <dd class="col-8"><%= review.giver_i18n %></dd>
                 <dt class="col-4 bg-dark text-white mb-1">プレゼントシーン</dt>
@@ -285,6 +305,9 @@
               </dl>
             </div>
           <% end %>
+        <% end %>
+        <% if @search_reviews.count == 0 %>
+          <h5 class="text-center text-secondary my-5 py-5">該当するレビューがありません！</h5>
         <% end %>
 
     </div>

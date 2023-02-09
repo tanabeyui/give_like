@@ -30,9 +30,9 @@ class Public::ItemsController < ApplicationController
     @item_params = params[:q] || params
     current_genre_id = params[:genre] || params[:q][:genre]
     @current_genre = RakutenWebService::Ichiba::Genre[current_genre_id]
-    @reviews = Review.where(code: params[:code]).all
     @favorite = Favorite.new
     @want_item = WantItem.new
+    @reviews = Review.where(code: @item_params[:code]).disclosed
     if params[:sort] == "new"
       @sort_reviews = @reviews.order(created_at: "DESC")
     elsif params[:sort] == "old"
@@ -61,7 +61,7 @@ class Public::ItemsController < ApplicationController
 
   def set_search
     @q = Review.ransack(params[:q])
-    @search_reviews = @q.result(distinct: true)
+    @search_reviews = @q.result(distinct: true).disclosed.order(created_at: "DESC")
   end
 
 end
