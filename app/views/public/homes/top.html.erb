@@ -15,14 +15,14 @@
         貰って嬉しかったものアンケート
         <%= link_to " 投票する（全５問）", new_response_path, class: "btn btn-danger btn-sm font-weight-bold ml-2" %>
       </h5>
-  
+
       <div class="mx-auto" style="position:relative; width:90%; height:250px;">
           <canvas id="responsesChart"></canvas>
       </div>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script>
         const ctx = document.getElementById('responsesChart');
-  
+
         new Chart(ctx, {
           type: 'bar',
           data: {
@@ -63,11 +63,11 @@
           }
         });
       </script>
-  
+
       <div class="row no-gutters my-3">
         <div class="col-sm-6 bg-gray p-4">
           <h6 class="subheading font-weight-bold">年齢別No.1</h6>
-  
+
           <dl class="row no-gutters medium p-2">
             <% @ages.each do |age| %>
               <% by_age_response = Response.where(age: age).group(:present_genre).order('count(id) desc').first %>
@@ -79,10 +79,10 @@
             <% end %>
           </dl>
         </div>
-  
+
         <div class="col-sm-6 bg-gray p-4">
           <h6 class="subheading font-weight-bold">男女別TOP3</h6>
-  
+
           <div class="row no-gutters p-2">
             <div class="col-1">
               <p class="font-weight-bold">男性</p>
@@ -100,7 +100,7 @@
               </ul>
             </div>
           </div>
-  
+
           <div class="row no-gutters p-2">
             <div class="col-1">
               <p class="font-weight-bold">女性</p>
@@ -125,8 +125,8 @@
           </div>
         </div>
       </div>
-  
-  
+
+
       <h5 class="headline bg-beige font-weight-bold py-3 mt-5">
         楽天プレゼントランキング
         <%= link_to  items_path, class: "text-dark font-weight-bold small float-right pr-3" do %>
@@ -149,7 +149,7 @@
         </div>
         <% end %>
       </div>
-  
+
      <h5 class="headline bg-beige font-weight-bold py-3 mt-5">
         GiveLikeレビューランキング
         <%= link_to reviews_ranking_path, class: "text-dark font-weight-bold small float-right pr-3" do %>
@@ -180,19 +180,19 @@
                     half: true,
                     readOnly: true,
                     size : 12,
-                    score: <%= (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %>,
+                    score: <%= Review.where(code: review.code).disclosed.average(:evaluation) %>,
                     };
                   raty(elem,opt);
                 </script>
               </div>
-              <p class="col-2 medium text-secondary py-1 px-0 m-0">(<%= Review.where(code: review.code).count %>)</p>
+              <p class="col-2 medium text-secondary py-1 px-0 m-0">(<%= Review.where(code: review.code).disclosed.count %>)</p>
             </div>
             <p class="card-text text-truncate medium"><%= number_with_delimiter(review.price) %>円</p>
           </div>
         </div>
         <% end %>
       </div>
-  
+
     </div>
   </div>
 </div>
