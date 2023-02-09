@@ -17,7 +17,7 @@ class Public::HomesController < ApplicationController
 
   def set_search
     @q = Review.ransack(params[:q])
-    @search_reviews = @q.result(distinct: true)
-    @ranking_searchs = @q.result(distinct: true).group(:code).order("avg(evaluation) desc")
+    # @search_reviews = @q.result(distinct: true)
+    # @ranking_searchs = @q.result(distinct: true).group(:code).order("avg(evaluation) desc")
   end
 end
