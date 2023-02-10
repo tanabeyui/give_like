@@ -86,6 +86,11 @@
 	border-bottom: 1px solid;
 }
 
+.subheading2 {
+	padding: 0.1em 0.3em;
+	border-left: 10px solid;
+}
+
 .main-visual {
   height: 200px;
   background-image: url('../images/top-mv.png');
@@ -152,6 +157,33 @@
 }
 
 .balloon1 p {
+  margin: 0;
+  padding: 0;
+}
+
+.balloon-left {
+  position: relative;
+  // display: inline-block;
+  // margin: 1.5em 0 1.5em 15px;
+  padding: 10px 10px;
+  min-width: 120px;
+  max-width: 100%;
+  color: #555;
+  font-size: 16px;
+  background: #fffacd;
+}
+
+.balloon-left:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -30px;
+  margin-top: -15px;
+  border: 15px solid transparent;
+  border-right: 15px solid #fffacd;
+}
+
+.balloon-left p {
   margin: 0;
   padding: 0;
 }

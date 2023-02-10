@@ -1,13 +1,13 @@
 class Public::EndUsersController < ApplicationController
+
   def show
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
     @favorites = @end_user.favorites.order(created_at: :desc).limit(5)
     @want_items = @end_user.want_items.order(created_at: :desc).limit(5)
-    @reviews = @end_user.reviews.order(created_at: :desc).limit(1)
-    @high_reviews = @end_user.reviews.order(evaluation: "DESC")
-
-    @categorys = @end_user.reviews.map(&:category).uniq
-    @chartlabels = @end_user.reviews.map(&:category).uniq.to_json.html_safe
+    @reviews = Review.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
+    @latest_reviews = @end_user.reviews.order(created_at: :desc).limit(1)
+    @high_reviews = @end_user.reviews.order(evaluation: "DESC").limit(3)
+    @rank_colors = ['gold', 'silver', 'bronze', 'dark', 'dark']
   end
 
   def edit
@@ -39,6 +39,6 @@ class Public::EndUsersController < ApplicationController
   private
 
   def end_user_params
-    params.require(:end_user).permit(:screen_name, :name, :email, :gender, :birth_day, :favorites_introduction, :want_items_introduction, :is_deleted)
+    params.require(:end_user).permit(:profile_image, :screen_name, :name, :email, :gender, :birth_day, :favorites_introduction, :want_items_introduction, :is_deleted)
   end
 end

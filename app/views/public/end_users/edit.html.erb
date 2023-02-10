@@ -4,6 +4,8 @@
     <%= f.text_field :screen_name, autofocus: true %>
     <p>マイプロフィールのURLになります</p>
   </div>
+  <label for="inputImage">ProfileImage</label>
+  <%= f.file_field :profile_image, placeholder: "プロフィール画像", accept: "image/*" %>  
 
   <div class="field">
     <%= f.label :"名前" %><br />
