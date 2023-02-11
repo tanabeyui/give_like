@@ -1,22 +1,8 @@
 <div class="container">
-  <div class="row no-gutters">
-    <div class="col-md-3 p-4">
-      <div class="profile_image text-center">
-        <%= image_tag @end_user.get_profile_image(200,200), class: "rounded-circle img-fluid" %>
+    <div class="row no-gutters">
+      <div class="col-md-3 p-4">
+        <%= render 'public/shared/user_info', end_user: @end_user %>
       </div>
-      <div class="profile p-3">
-        <h5 class="font-weight-bold m-0"><%= @end_user.name %></h5>
-        <p class="text-secondary border-bottom">@<%= @end_user.screen_name %></p>
-        <dl class="row no-gutters justify-content-between medium m-0">
-          <dt class="col-3">年齢</dt>
-          <dd class="col-auto"><%= @end_user.era %></dd>
-        </dl>
-        <dl class="row no-gutters justify-content-between medium">
-          <dt class="col-3">性別</dt>
-          <dd class="col-auto"><%= @end_user.gender_i18n %></dd>
-        </dl>
-      </div>
-    </div>
 
     <div class="col-md-9 py-4 mt-3 mb-5">
       <h5 class="subheading2 font-weight-bold">プロフィール編集</h5>

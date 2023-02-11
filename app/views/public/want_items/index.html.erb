@@ -3,11 +3,11 @@
 <%= @end_user.want_items_introduction %>
 
 <div style="position:relative; width:250px; height:250px;">
-    <canvas id="MyFavoriteChart"></canvas>
+    <canvas id="MyWantItemsChart"></canvas>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    const ctx = document.getElementById('MyFavoriteChart');
+    const ctx = document.getElementById('MyWantItemsChart');
 
     new Chart(ctx, {
       type: 'pie',
@@ -67,7 +67,7 @@
       <% end %>
     <% else %>
       <% @want_items.each do |want_item| %>
-        <%= image_tag (favorite.image) %>
+        <%= image_tag (want_item.image) %>
         <%= want_item.name %>
         <%= want_item.price %><br>
         <%= link_to want_items_path(id: want_item.id), method: :delete do %>
