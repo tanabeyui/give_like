@@ -32,19 +32,19 @@
           <div class="form-group row">
             <%= f.label :"名前", class:"col-sm-3 col-form-label" %>
             <div class="col-sm-9 p-0">
-              <%= f.text_field :name, autocomplete: "name", class: "form-control" %>
+              <%= f.text_field :name, autocomplete: "name", class: "form-control medium" %>
             </div>
           </div>
           <div class="form-group row">
             <%= f.label :email , class: "col-sm-3 col-form-label" %>
             <div class="col-sm-9 p-0">
-               <%= f.email_field :email, autocomplete: "email", class: "form-control" %>
+               <%= f.email_field :email, autocomplete: "email", class: "form-control medium" %>
             </div>
           </div>
           <div class="form-group row">
             <%= f.label :password, class: "col-sm-3 col-form-label" %>
             <div class="col-sm-9 p-0">
-               <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+               <%= f.password_field :password, autocomplete: "new-password", class: "form-control medium" %>
             </div>
           </div>
 
@@ -67,33 +67,33 @@
           <div class="form-group row">
             <%= f.label :"生年月日" , class: "col-sm-3 col-form-label" %>
             <div class="col-sm-9 p-0">
-              <%= f.date_select :birth_day, {use_month_numbers: true, start_year: 1950, end_year: (Time.now.year - 10), default: Date.new(1990, 1, 1), date_separator: '/'}, {class: 'form-control', style: 'display: inline-block;width: auto;'} %>
+              <%= f.date_select :birth_day, {use_month_numbers: true, start_year: 1950, end_year: (Time.now.year - 10), default: Date.new(1990, 1, 1), date_separator: '/'}, {class: 'form-control medium', style: 'display: inline-block;width: auto;'} %>
             </div>
           </div>
 
           <div class="form-group row">
             <%= f.label :"好きなもの", class: "col-sm-3 col-form-label" %>
             <div class="col-sm-9 p-0">
-               <%= f.text_area :favorites_introduction, class: "form-control" %>
+               <%= f.text_area :favorites_introduction, class: "form-control medium" %>
             </div>
           </div>
 
           <div class="form-group row">
             <%= f.label :"欲しいもの", class: "col-sm-3 col-form-label" %>
             <div class="col-sm-9 p-0">
-               <%= f.text_area :want_items_introduction, class: "form-control" %>
+               <%= f.text_area :want_items_introduction, class: "form-control medium" %>
             </div>
           </div>
 
           <div class="actions row justify-content-center pt-4">
             <div class="col-md-4">
-              <%= f.submit "編集内容を保存", class: "btn btn-light bg-gold btn-block" %>
-            </div>
-            <div class="col-md-4">
-              <%= link_to "退会する", end_user_confirm_path, class: "btn btn-danger btn-block" %>
+              <%= f.submit "編集内容を保存", class: "btn bg-blue text-white btn-block medium" %>
             </div>
           </div>
         <% end %>
+      </div>
+      <div class="text-right">
+        <%= link_to "アカウントを削除する", end_user_confirm_path, class: "text-dark medium" %>
       </div>
     </div>
 

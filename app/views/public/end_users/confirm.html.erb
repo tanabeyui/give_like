@@ -1,6 +1,6 @@
 <div class="container text-center py-5">
   <h4 class="font-weight-bold mt-5">本当に退会しますか？</h4>
-  <div class="bg-yellow p-5 m-5">
+  <div class="bg-yellow p-5 mt-4 mb-5">
     <p style="line-height:2em;">
       <span class="red-marker px-2">退会するとマイページが削除されます。</span><br>
       <span class="red-marker px-2">また、これまでのレビューが全て編集できなくなりますので、</span><br>
@@ -8,12 +8,12 @@
     </p>
   </div>
 
-  <div class="row justify-content-center py-4">
+  <div class="row justify-content-center py-5">
     <div class="col-md-3">
-      <%= link_to "退会しない", end_user_path(current_end_user.screen_name), class: "btn btn-primary btn-block" %>
+      <%= link_to "退会しない", end_user_path(current_end_user.screen_name), class: "btn btn-primary btn-block medium" %>
     </div>
     <div class="col-md-3">
-      <%= link_to "退会する", end_users_unsubscribe_path, method: :patch, class: "btn btn-danger btn-block", "data-confirm" => "本当に退会しますか？" %>
+      <%= link_to "退会する", end_users_unsubscribe_path, method: :patch, class: "btn btn-danger btn-block medium", "data-confirm" => "本当に退会しますか？" %>
     </div>
   </div>
 
