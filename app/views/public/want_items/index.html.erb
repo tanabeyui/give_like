@@ -1,78 +1,189 @@
-<h3><%= @end_user.name %>さん好きなもの一覧</h3>
+<div class="container">
+    <div class="row no-gutters">
+      <div class="col-md-3 p-4">
+        <%= render 'public/shared/user_info', end_user: @end_user %>
+      </div>
 
-<%= @end_user.want_items_introduction %>
-
-<div style="position:relative; width:250px; height:250px;">
-    <canvas id="MyWantItemsChart"></canvas>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    const ctx = document.getElementById('MyWantItemsChart');
-
-    new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: <%= @chartlabels %>,
-        datasets: [{
-          data: [
-            <% @categorys.each do |category| %>
-              <%= WantItem.where(category: category, end_user_id: @end_user.id ).count.to_i %>,
+      <div class="col-md-9 py-4">
+        <h5 class="headline bg-blue font-weight-bold text-white py-3">
+          <span class="text-warning"><i class="fa-solid fa-star"></i></span> <%= @end_user.name %>さんの欲しいもの
+        </h5>
+        <% if @end_user.want_items_introduction != "" %>
+          <div class="balloon-left bg-yellow ml-3 mr-4 mb-2">
+            <p class="medium p-2"><%= @end_user.want_items_introduction %></p>
+            <% if end_user_signed_in? && current_end_user.screen_name == params[:screen_name] %>
+              <div class="text-right medium mt-n3">
+                <%= link_to end_user_edit_path, class: "text-dark" do %>
+                  <i class="fa-solid fa-pen"></i> 編集
+                <% end %>
+              </div>
             <% end %>
-            ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        plugins: {
-            legend: false
-        },
-      }
-    });
-  </script>
-  <% @categorys.each do |category| %>
-    <%= category %>
-    <%= @count = WantItem.where(category: category, end_user_id: @end_user.id ).count %>件
-    <br>
-  <% end %>
-
-  <hr>
-
-<div class="search-bar">
-  <%= search_form_for @q, url: end_user_favorites_path do |f| %>
-    <div class="nav-title">詳細検索</div>
-    <%= f.hidden_field :end_user_id_eq, :value => @end_user.id %>
-    <%= f.search_field :name_cont, placeholder: 'キーワードから探す', class:'input-box' %>
-    <br>
-    <%= f.label :price, '価格' %>
-      <%= f.number_field :price_gteq %>円以上～
-      <%= f.number_field :price_lteq %>円以下
-    <br>
-    <% @categorys.each do |category| %>
-      <%= f.check_box :category_eq_any, { multiple: true, include_hidden: false }, category, '' %>
-      <%= category %>
-    <% end %>
-    <br>
-    <%= f.date_field :created_at_gteq, include_blank: true, class: 'form-control'%> ～
-    <%= f.date_field :created_at_lteq_end_of_day, include_blank: true, class: 'form-control'%>
-    <%= f.submit '検索する' %>
-    <% end %>
-  </div>
-
-    <% if @q.price_gteq || @q.price_lteq || @q.category_eq_any || @q.created_at_gteq || @q.created_at_lteq_end_of_day != nil %>
-      <% @search_items.each do |search_item| %>
-        <%= image_tag (search_item.image) %>
-        <%= search_item.name %>
-        <%= search_item.price %><br>
-      <hr>
-      <% end %>
-    <% else %>
-      <% @want_items.each do |want_item| %>
-        <%= image_tag (want_item.image) %>
-        <%= want_item.name %>
-        <%= want_item.price %><br>
-        <%= link_to want_items_path(id: want_item.id), method: :delete do %>
-          削除
+          </div>
         <% end %>
-        <hr>
-      <% end %>
-    <% end %>
+        <div class="search-area mx-3 my-4">
+          <p class="font-weight-bold mb-0"><i class="fa-solid fa-magnifying-glass"></i> <%= @end_user.name %>さんの欲しいものを探す</p>
+          <div class="row border border-secondary mx-0 p-3">
+            <%= search_form_for @q, url: end_user_want_items_path do |f| %>
+              <%= f.hidden_field :end_user_id_eq, :value => @end_user.id %>
+              <div class="form-group">
+                <%= f.search_field :name_cont, placeholder: '商品名から探す', class:'form-control medium' %>
+              </div>
+              <div class="form-group medium">
+                <div class="form-check form-check-inline">
+                  <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check1' }, 0, '' %>
+                  <%= f.label EndUser.genders_i18n[:male], class:'form-check-label', for: 'gender-check1' %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check2' }, 1, '' %>
+                  <%= f.label EndUser.genders_i18n[:female], class:'form-check-label', for: 'gender-check2' %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check3' }, 2, '' %>
+                  <%= f.label EndUser.genders_i18n[:not_selected], class:'form-check-label', for: 'gender-check3' %>
+                </div>
+              </div>
+        <div class="form-group row no-gutters medium">
+          <div class="col-3">
+            <%= f.select :end_user_birth_day_to_age_gteq, *[10..100] , { include_blank: "" }, { class: "form-control small" } %>
+          </div>
+          <label for="staticEmail" class="col-3 col-form-label pl-1">歳以上</label>
+            <div class="col-3">
+            <%= f.select :end_user_birth_day_to_age_lteq, *[10..100] , { include_blank: "" }, { class: "form-control small" } %>
+          </div>
+          <label for="staticEmail" class="col-3 col-form-label pl-1">歳以下</label>
+        </div>
+
+              <%= f.label :price, '価格' %>
+                <%= f.number_field :price_gteq %>円以上～
+                <%= f.number_field :price_lteq %>円以下
+              <br>
+             <% @chart_want_items.each do |chart_want_item| %>
+                <%= f.check_box :category_eq_any, { multiple: true, include_hidden: false }, chart_want_item.category, '' %>
+                "<%= chart_want_item.category %>",
+              <% end %>
+              <br>
+              <%= f.date_field :created_at_gteq, include_blank: true, class: 'form-control'%> ～
+              <%= f.date_field :created_at_lteq_end_of_day, include_blank: true, class: 'form-control'%>
+              <%= f.submit '検索する' %>
+              <% end %>
+            </div>
+        </div>
+
+        <div class="row no-gutters mx-2 px-2">
+          <div class="col-lg-4">
+            <h6 class="subheading2 font-weight-bold my-1"><%= @end_user.name %>さんが欲しいものに追加した商品のカテゴリー比率</h6>
+                <div class="chart px-2 py-3 mx-auto" style="position:relative; width:90%; height:auto;">
+                  <canvas id="MyReviewChart"></canvas>
+                </div>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+                  const ctx = document.getElementById('MyReviewChart');
+                  new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                      labels: [
+                          <% @chart_want_items.each do |chart_want_item| %>
+                            "<%= chart_want_item.category %>",
+                          <% end %>
+                          ],
+                      datasets: [{
+                        data: [
+                          <% @chart_want_items.each do |chart_want_item| %>
+                            <%= WantItem.where(category: chart_want_item.category, end_user_id: @end_user.id ).count.to_i %>,
+                          <% end %>
+                          ],
+                        borderWidth: 1
+                      }]
+                    },
+                    options: {
+                      plugins: {
+                          legend: false
+                      },
+                  }
+                  });
+                </script>
+                <div class="category">
+                  <dl class="row medium pl-3">
+                    <% @chart_want_items.each do |chart_want_item| %>
+                      <dt class="col-10 p-0"><%= chart_want_item.category %></dt>
+                      <dd class="col-2 p-0 mb-1"><%= WantItem.where(category: chart_want_item.category, end_user_id: @end_user.id ).count.to_i %>件</dd>
+                    <% end %>
+                  </dl>
+                </div>
+              </div>
+
+          <div class="col-lg-8">
+            <% if @q.end_user_id_eq != nil %>
+              <% @search_items.each do |search_item| %>
+                <div class="card mb-3">
+                  <div class="card-header bg-gray d-flex">
+                    <p class="flex-grow-1 medium m-0">
+                    欲しいものに追加した日時 : <%= search_item.created_at.strftime('%Y/%m/%d') %>
+                    </p>
+                    <div>
+                      <%= link_to want_items_path(id: search_item.id), method: :delete, class:"text-dark" do %>
+                        <i class="fa-solid fa-trash-can"></i>
+                      <% end %>
+                    </div>
+                  </p>
+                  </div>
+                  <div class="row no-gutters">
+                    <div class="col-4">
+                      <%= image_tag (search_item.image), class: "card-img" %>
+                    </div>
+                    <div class="col-8">
+                      <div class="card-body d-flex flex-column h-100 p-2">
+                        <h6 class="card-title font-weight-bold text-limit-long"><%= search_item.name %></h6>
+                        <p class="card-text flex-grow-1 medium m-0"><%= number_with_delimiter(search_item.price) %>円</p>
+                        <div class="text-right mb-1">
+                          <%= link_to search_item.url, target: :_blank, class:"btn btn-danger btn-sm px-4" do %>
+                            <i class="fa-solid fa-cart-shopping"></i> 楽天市場で見る <i class="fa-solid fa-angles-right"></i>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              <% @want_items.each do |want_item| %>
+                <div class="card mb-3">
+                  <div class="card-header bg-gray d-flex">
+                    <p class="flex-grow-1 medium m-0">
+                    欲しいものに追加した日時 : <%= want_item.created_at.strftime('%Y/%m/%d') %>
+                    </p>
+                    <div>
+                      <%= link_to want_items_path(id: want_item.id), method: :delete, class:"text-dark" do %>
+                        <i class="fa-solid fa-trash-can"></i>
+                      <% end %>
+                    </div>
+                  </p>
+                  </div>
+                  <div class="row no-gutters">
+                    <div class="col-4">
+                      <%= image_tag (want_item.image), class: "card-img" %>
+                    </div>
+                    <div class="col-8">
+                      <div class="card-body d-flex flex-column h-100 p-2">
+                        <h6 class="card-title font-weight-bold text-limit-long"><%= want_item.name %></h6>
+                        <p class="card-text flex-grow-1 medium m-0"><%= number_with_delimiter(want_item.price) %>円</p>
+                        <div class="text-right mb-1">
+                          <%= link_to want_item.url, target: :_blank, class:"btn btn-danger btn-sm px-4" do %>
+                            <i class="fa-solid fa-cart-shopping"></i> 楽天市場で見る <i class="fa-solid fa-angles-right"></i>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <div class="row justify-content-center medium mt-4">
+          <%= paginate @want_items, class: "medium" %>
+        </div>
+
+      </div>
+    </div>
+</div>

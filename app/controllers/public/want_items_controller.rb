@@ -3,8 +3,9 @@ class Public::WantItemsController < ApplicationController
 
   def index
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
-    @want_items = @end_user.want_items.all
-    @categorys = @end_user.want_items.map(&:category).uniq
+    @chart_want_items = WantItem.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
+    @want_items = @end_user.want_items.order(created_at: :desc).page(params[:page])
+    @categorys = Review.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
     @chartlabels = @end_user.want_items.map(&:category).uniq.to_json.html_safe
   end
 
@@ -15,11 +16,11 @@ class Public::WantItemsController < ApplicationController
     if wanted_item != nil
       wanted_item.destroy
       @want_item.save
-      redirect_to item_path(params[:want_item][:code], name: params[:want_item][:name], code: params[:want_item][:code], 
+      redirect_to item_path(params[:want_item][:code], name: params[:want_item][:name], code: params[:want_item][:code],
             genre: params[:want_item][:genre], price: params[:want_item][:price], image: params[:want_item][:image], url: params[:want_item][:url])
-    elsif favorited == nil
-      @favorite.save
-      redirect_to item_path(params[:want_item][:code], name: params[:want_item][:name], code: params[:want_item][:code], 
+    elsif wanted_item == nil
+      @want_item.save
+      redirect_to item_path(params[:want_item][:code], name: params[:want_item][:name], code: params[:want_item][:code],
             genre: params[:want_item][:genre], price: params[:want_item][:price], image: params[:want_item][:image], url: params[:want_item][:url])
     end
   end

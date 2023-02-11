@@ -30,6 +30,9 @@ class Public::ItemsController < ApplicationController
     @item_params = params[:q] || params
     current_genre_id = params[:genre] || params[:q][:genre]
     @current_genre = RakutenWebService::Ichiba::Genre[current_genre_id]
+    @current_genre.parents.first(1).each do |parent|
+      @category = parent.name
+    end
     @favorite = Favorite.new
     @want_item = WantItem.new
     @reviews = Review.where(code: @item_params[:code]).disclosed
