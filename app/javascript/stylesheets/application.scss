@@ -23,6 +23,10 @@
   font-size: 14px;
 }
 
+.border-wavy {
+    text-decoration:underline wavy 1px red
+}
+
 .bg-yellow {
   background-color: #fffacd;
 }
@@ -187,4 +191,8 @@
 .balloon-left p {
   margin: 0;
   padding: 0;
+}
+
+.red-marker{
+  background:linear-gradient(transparent 80%, #f07d7d 0%);
 }
