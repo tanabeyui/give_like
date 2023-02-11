@@ -95,6 +95,10 @@
 	border-left: 10px solid;
 }
 
+.red-marker{
+  background:linear-gradient(transparent 80%, #f07d7d 0%);
+}
+
 .main-visual {
   height: 200px;
   width: 100%;
@@ -191,8 +195,4 @@
 .balloon-left p {
   margin: 0;
   padding: 0;
-}
-
-.red-marker{
-  background:linear-gradient(transparent 80%, #f07d7d 0%);
 }
