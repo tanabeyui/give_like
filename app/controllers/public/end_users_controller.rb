@@ -31,7 +31,7 @@ class Public::EndUsersController < ApplicationController
     @end_user = current_end_user
     @end_user.update(is_deleted: true)
     reset_session
-    flash[:notice] = "退会処理を実行いたしました"
+    # flash[:notice] = "退会処理を実行いたしました"
     redirect_to root_path
   end
 
@@ -39,6 +39,6 @@ class Public::EndUsersController < ApplicationController
   private
 
   def end_user_params
-    params.require(:end_user).permit(:profile_image, :screen_name, :name, :email, :gender, :birth_day, :favorites_introduction, :want_items_introduction, :is_deleted)
+    params.require(:end_user).permit(:profile_image, :name, :email, :gender, :birth_day, :favorites_introduction, :want_items_introduction, :is_deleted)
   end
 end
