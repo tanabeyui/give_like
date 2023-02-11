@@ -2,36 +2,45 @@
   <div class="row no-gutters">
     <div class="col-md-3 p-4">
       <div class="profile_image text-center">
-        <%= image_tag @end_user.get_profile_image(170,170), class: "rounded-circle img-fluid" %>
+        <%= image_tag @end_user.get_profile_image(200,200), class: "rounded-circle img-fluid" %>
       </div>
       <div class="profile p-3">
-        <h5 class="font-weight-bold mt-2 mb-0"><%= @end_user.name %></h5>
+        <h5 class="font-weight-bold m-0"><%= @end_user.name %></h5>
         <p class="text-secondary border-bottom">@<%= @end_user.screen_name %></p>
-        <dl class="row medium px-3">
-          <dt class="col-3 p-0">年齢</dt>
-          <dd class="col-auto p-0 mb-1"><%= @end_user.era %></dd>
-          <dt class="col-3 p-0">性別</dt>
-          <dd class="col-auto p-0 mb-1"><%= @end_user.gender_i18n %></dd>
+        <dl class="row no-gutters justify-content-between medium m-0">
+          <dt class="col-3">年齢</dt>
+          <dd class="col-auto"><%= @end_user.era %></dd>
         </dl>
-        <% if current_end_user.screen_name == params[:screen_name] %>
+        <dl class="row no-gutters justify-content-between medium">
+          <dt class="col-3">性別</dt>
+          <dd class="col-auto"><%= @end_user.gender_i18n %></dd>
+        </dl>
+        <% if end_user_signed_in? && current_end_user.screen_name == params[:screen_name] %>
           <%= link_to end_user_edit_path, class: "btn btn-outline-secondary btn-block" do %>
             <i class="fas fa-user-cog"></i>
           <% end %>
+        <% else %>
         <% end %>
       </div>
     </div>
 
     <div class="col-md-9 py-4">
-      <div class="favorite-items">
-        <% if (@end_user.favorites.count != 0) || (@end_user.favorites_introduction != "") || current_end_user.screen_name == params[:screen_name] %>
+      <div class="favorites">
+        <% if @end_user.favorites.count != 0 || @end_user.favorites_introduction != "" ||
+                              (end_user_signed_in? && current_end_user.screen_name == params[:screen_name]) %>
           <h5 class="headline bg-blue font-weight-bold text-white py-3">
             <span style="color:#e66a7e;"><i class="fa-solid fa-heart"></i></span> <%= @end_user.name %>さんの好きなもの
+            <% if @end_user.favorites.count != 0 %>
+              <%= link_to end_user_favorites_path(@end_user.screen_name), class: "text-white small float-right pt-1 pr-2" do %>
+                もっと見る <i class="fa-solid fa-angles-right"></i>
+              <% end %>
+            <% end %>
           </h5>
         <% end %>
         <% if @end_user.favorites_introduction != "" %>
-          <div class="balloon-left bg-yellow ml-3 mr-4">
+          <div class="balloon-left bg-yellow ml-3 mr-4 mb-2">
             <p class="medium p-2"><%= @end_user.favorites_introduction %></p>
-            <% if current_end_user.screen_name == params[:screen_name] %>
+            <% if end_user_signed_in? && current_end_user.screen_name == params[:screen_name] %>
               <div class="text-right medium mt-n3">
                 <%= link_to end_user_edit_path, class: "text-dark" do %>
                   <i class="fa-solid fa-pen"></i> 編集
@@ -39,7 +48,7 @@
               </div>
             <% end %>
           </div>
-        <% elsif current_end_user.screen_name == params[:screen_name] %>
+        <% elsif end_user_signed_in? && current_end_user.screen_name == params[:screen_name] %>
           <div class="balloon-left bg-yellow ml-3 mr-4">
             <p class="medium p-2">フリースペース</p>
             <div class="text-right medium mt-n3">
@@ -50,9 +59,9 @@
           </div>
         <% end %>
         <% if @end_user.favorites.count != 0 %>
-          <div class="row row-cols-3 row-cols-lg-6 my-3">
+          <div class="row row-cols-3 row-cols-lg-5 m-3">
             <% @favorites.each do |favorite| %>
-              <div class="col pr-0">
+              <div class="col pl-0 pr-2">
                 <div class="card">
                   <%= image_tag (favorite.image), class:"card-img-top" %>
                   <div class="card-body p-2">
@@ -62,32 +71,30 @@
                 </div>
               </div>
             <% end %>
-            <div class="col d-flex flex-column justify-content-center pr-0">
-              <div class="card border-light">
-                <%= link_to end_user_favorites_path(@end_user.screen_name), class: "btn bg-gray rounded-circle p-3", style: "width:3.5rem;height:3.5rem;" do %>
-                  <i class="fa-solid fa-angles-right"></i>
-                <% end %>
-                <p class="px-2">more</p>
-              </div>
-            </div>
           </div>
-        <% elsif current_end_user.screen_name == params[:screen_name] %>
-          <div class="my-3 text-center">
+        <% elsif end_user_signed_in? && current_end_user.screen_name == params[:screen_name] %>
+          <div class="text-center mb-4 py-5">
           　<h5>まだ商品はありません！</h5>
           </div>
         <% end %>
       </div>
 
-      <div class="want_items mt-5">
-        <% if (@end_user.want_items.count != 0) || (@end_user.want_items_introduction != "") || current_end_user.screen_name == params[:screen_name] %>
+      <div class="want_items">
+        <% if @end_user.want_items.count != 0 || @end_user.want_items_introduction != "" ||
+                              (end_user_signed_in? && current_end_user.screen_name == params[:screen_name]) %>
           <h5 class="headline bg-blue font-weight-bold text-white py-3">
             <span class="text-warning"><i class="fa-solid fa-star"></i></span> <%= @end_user.name %>さんの欲しいもの
+            <% if @end_user.want_items.count != 0 %>
+              <%= link_to end_user_want_items_path(@end_user.screen_name), class: "text-white small float-right pt-1 pr-2" do %>
+                もっと見る <i class="fa-solid fa-angles-right"></i>
+              <% end %>
+            <% end %>
           </h5>
         <% end %>
         <% if @end_user.want_items_introduction != "" %>
-          <div class="balloon-left bg-yellow ml-3 mr-4">
+          <div class="balloon-left bg-yellow ml-3 mr-4 mb-2">
             <p class="medium p-2"><%= @end_user.want_items_introduction %></p>
-            <% if current_end_user.screen_name == params[:screen_name] %>
+            <% if end_user_signed_in? && current_end_user.screen_name == params[:screen_name] %>
               <div class="text-right medium mt-n3">
                 <%= link_to end_user_edit_path, class: "text-dark" do %>
                   <i class="fa-solid fa-pen"></i> 編集
@@ -95,7 +102,7 @@
               </div>
             <% end %>
           </div>
-        <% elsif current_end_user.screen_name == params[:screen_name] %>
+        <% elsif end_user_signed_in? && current_end_user.screen_name == params[:screen_name] %>
           <div class="balloon-left bg-yellow ml-3 mr-4">
             <p class="medium p-2">フリースペース</p>
             <div class="text-right medium mt-n3">
@@ -106,10 +113,10 @@
           </div>
         <% end %>
         <% if @end_user.want_items.count != 0 %>
-          <div class="row row-cols-3 row-cols-lg-6 my-3 ml-3">
+          <div class="row row-cols-3 row-cols-lg-5 m-3">
             <% @want_items.each do |want_item| %>
-              <div class="col p-0">
-                <div class="card ml-1">
+              <div class="col pl-0 pr-2">
+                <div class="card">
                   <%= image_tag (want_item.image), class:"card-img-top" %>
                   <div class="card-body p-2">
                     <p class="card-title text-limit medium p-0 "><%= want_item.name %></p>
@@ -118,29 +125,28 @@
                 </div>
               </div>
             <% end %>
-            <div class="col d-flex flex-column justify-content-center pr-0">
-              <div class="card border-light">
-                <%= link_to end_user_want_items_path(@end_user.screen_name), class: "btn bg-gray rounded-circle p-3", style: "width:3.5rem;height:3.5rem;" do %>
-                  <i class="fa-solid fa-angles-right"></i>
-                <% end %>
-                <p class="px-2">more</p>
-              </div>
-            </div>
           </div>
-        <% elsif current_end_user.screen_name == params[:screen_name] %>
-          <div class="my-3 text-center">
+        <% elsif end_user_signed_in? && current_end_user.screen_name == params[:screen_name] %>
+          <div class="text-center mb-4 py-5">
           　<h5>まだ商品はありません！</h5>
           </div>
         <% end %>
       </div>
 
-      <div class="reviews mt-5">
+      <div class="reviews">
         <h5 class="headline bg-blue font-weight-bold text-white py-3">
           <i class="fa-solid fa-file"></i> <%= @end_user.name %>さんのレビュー
+          <% if @end_user.reviews.count != 0 %>
+            <%= link_to  end_user_reviews_path(@end_user.screen_name), class: "text-white small float-right pt-1 pr-2" do %>
+              もっと見る <i class="fa-solid fa-angles-right"></i>
+            <% end %>
+          <% end %>
         </h5>
-        <div class="row no-gutters mt-4 mx-1">
-          <div class="col-lg-4">
-            <h6 class="subheading font-weight-bold">カテゴリー割合</h6>
+
+        <% if @end_user.reviews.count != 0 %>
+          <div class="row no-gutters px-2">
+            <div class="col-lg-4 mt-4">
+              <h6 class="subheading font-weight-bold">カテゴリー割合</h6>
               <div class="chart px-2 py-3 mx-auto" style="position:relative; width:90%; height:auto;">
                 <canvas id="MyReviewChart"></canvas>
               </div>
@@ -171,102 +177,94 @@
                 }
                 });
               </script>
-            <div class="category">
-              <dl class="row medium pl-3">
-                <% @reviews.each do |review| %>
-                  <dt class="col-10 p-0"><%= review.category %></dt>
-                  <dd class="col-2 p-0 mb-1"><%= Review.where(category: review.category, end_user_id: @end_user.id ).count.to_i %>件</dd>
-                <% end %>
-              </dl>
+              <div class="category">
+                <dl class="row medium pl-3">
+                  <% @reviews.each do |review| %>
+                    <dt class="col-10 p-0"><%= review.category %></dt>
+                    <dd class="col-2 p-0 mb-1"><%= Review.where(category: review.category, end_user_id: @end_user.id ).count.to_i %>件</dd>
+                  <% end %>
+                </dl>
+              </div>
             </div>
-          </div>
-          <div class="col-lg-8">
-            <div class="bg-yellow mx-3 py-4 px-3">
-              <h6 class="subheading2 font-weight-bold">
-                最新レビュー
-                <%= link_to end_user_reviews_path(@end_user.screen_name), class: "float-right" do %>
-                  <span class="bg-info text-white medium py-1 px-4 mr-n3">もっと見る <i class="fa-solid fa-angles-right"></i></span>
-                <% end %>
-              </h6>
-              <div class="row no-gutters mt-3 mb-4">
-                <% @latest_reviews.each do |latest_review| %>
-                  <div class="col-3 pt-1">
-                    <%= image_tag (latest_review.image), width: '100%' %>
-                    <!--<h5 class="">￥<%#= number_with_delimiter(latest_review.price) %></h5>-->
-                  </div>
-                  <div class="col-9">
-                    <div class="shadow bg-white rounded-lg ml-3 p-3">
-                      <h6 class="font-weight-bold text-truncate mb-1"><%= latest_review.name %></h6>
-                      <div id="star-rate<%= latest_review.id %>"></div>
-                      <script>
-                        $('#star-rate<%= latest_review.id %>').empty();
-                        var elem = document.getElementById('star-rate<%= latest_review.id %>');
-                        var opt = {
-                          starOn: "<%= asset_path('star-on-sm.png') %>",
-                          starOff: "<%= asset_path('star-off-sm.png') %>",
-                          starHalf: "<%= asset_path('star-half-sm.png') %>",
-                          half: true,
-                          readOnly: true,
-                          score: <%= latest_review.evaluation %>,
-                        };
-                        raty(elem,opt);
-                      </script>
-                      <p class="review-body medium text-limit my-2">
-                        <%= latest_review.body %>
-                      </p>
-                      <div class="text-right">
-                        <p class="small text-muted m-0">
-                          <%= latest_review.created_at.strftime('%Y/%m/%d') %>
+
+            <div class="col-lg-8">
+              <div class="bg-yellow mx-3 py-4 px-3">
+                <h6 class="subheading font-weight-bold">最新レビュー</h6>
+                <div class="row no-gutters mt-3 mb-4">
+                  <% @latest_reviews.each do |latest_review| %>
+                    <div class="col-3 pt-1">
+                      <%= image_tag (latest_review.image), width: '100%' %>
+                      <!--<h5 class="">￥<%#= number_with_delimiter(latest_review.price) %></h5>-->
+                    </div>
+                    <div class="col-9">
+                      <div class="shadow bg-white rounded-lg ml-3 p-3">
+                        <h6 class="font-weight-bold text-truncate mb-1"><%= latest_review.name %></h6>
+                        <div id="star-rate<%= latest_review.id %>"></div>
+                        <script>
+                          $('#star-rate<%= latest_review.id %>').empty();
+                          var elem = document.getElementById('star-rate<%= latest_review.id %>');
+                          var opt = {
+                            starOn: "<%= asset_path('star-on-sm.png') %>",
+                            starOff: "<%= asset_path('star-off-sm.png') %>",
+                            starHalf: "<%= asset_path('star-half-sm.png') %>",
+                            half: true,
+                            readOnly: true,
+                            score: <%= latest_review.evaluation %>,
+                          };
+                          raty(elem,opt);
+                        </script>
+                        <p class="review-body medium text-limit my-2">
+                          <%= latest_review.body %>
                         </p>
+                        <div class="text-right">
+                          <p class="small text-muted m-0">
+                            <%= latest_review.created_at.strftime('%Y/%m/%d') %>
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                <% end %>
-            </div>
-            <h6 class="subheading2 font-weight-bold">高評価商品</h6>
-            <div class="card-deck pt-3 px-3">
-              <% @high_reviews.each_with_index do |high_review, i| %>
-              <div class="card position-relative m-2">
-                <%= content_tag :div, class: "card-rank position-absolute rounded-circle bg-#{@rank_colors[i]} text-white my-n3 mx-n2", style: "width: 40px;height: 40px;" do %>
-                  <h6 class="text-center", style="line-height: 40px;"><%= i + 1 %></h6>
-                <% end %>
-                  <%= image_tag (high_review.image), class:"card-img-top" %>
-                <div class="card-body p-2">
-                  <h6 class="card-title text-limit mb-1"><%= high_review.name %></h5>
-                  <div class="card-rate">
-                    <div id="star-rate<%= high_review.id %>"></div>
-                    <script>
-                      $('#star-rate<%= high_review.id %>').empty();
-                      var elem = document.getElementById('star-rate<%= high_review.id %>');
-                      var opt = {
-                        starOn: "<%= asset_path('star-on-sm.png') %>",
-                        starOff: "<%= asset_path('star-off-sm.png') %>",
-                        starHalf: "<%= asset_path('star-half-sm.png') %>",
-                        half: true,
-                        readOnly: true,
-                        size : 12,
-                        score: <%= high_review.evaluation %>,
-                        };
-                      raty(elem,opt);
-                    </script>
-                  </div>
-                  <p class="card-text text-truncate medium"><%= number_with_delimiter(high_review.price) %>円</p>
+                  <% end %>
+                </div>
+                <h6 class="subheading font-weight-bold">高評価商品</h6>
+                <div class="card-deck pt-3 px-3">
+                  <% @high_reviews.each_with_index do |high_review, i| %>
+                    <div class="card position-relative m-2">
+                      <%= content_tag :div, class: "card-rank position-absolute rounded-circle bg-#{@rank_colors[i]} text-white my-n3 mx-n2", style: "width: 40px;height: 40px;" do %>
+                        <h6 class="text-center", style="line-height: 40px;"><%= i + 1 %></h6>
+                      <% end %>
+                      <%= image_tag (high_review.image), class:"card-img-top" %>
+                      <div class="card-body p-2">
+                        <p class="card-title text-limit medium mb-1"><%= high_review.name %></p>
+                        <div id="star-rate<%= high_review.id %>"></div>
+                        <script>
+                          $('#star-rate<%= high_review.id %>').empty();
+                          var elem = document.getElementById('star-rate<%= high_review.id %>');
+                          var opt = {
+                            starOn: "<%= asset_path('star-on-sm.png') %>",
+                            starOff: "<%= asset_path('star-off-sm.png') %>",
+                            starHalf: "<%= asset_path('star-half-sm.png') %>",
+                            half: true,
+                            readOnly: true,
+                            size : 12,
+                            score: <%= high_review.evaluation %>,
+                            };
+                          raty(elem,opt);
+                        </script>
+                        <p class="card-text text-truncate medium"><%= number_with_delimiter(high_review.price) %>円</p>
+                      </div>
+                    </div>
+                  <% end %>
                 </div>
               </div>
-              <% end %>
             </div>
-
           </div>
-        </div>
+        <% else %>
+          <div class="text-center mb-4 py-5">
+          　<h5>まだレビューはありません！</h5>
+          </div>
+        <% end %>
       </div>
-
     </div>
+
   </div>
-
-
-        <!--<div>-->
-        <!--  <h4>-->
-        <!--    ようこそ、<%#= @end_user.name %>さん！-->
-        <!--    さっそく商品を検索してレビューしていきましょう！-->
-        <!--  </h4>-->
-        <!--</div>-->
+</div>
