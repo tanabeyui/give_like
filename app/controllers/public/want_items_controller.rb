@@ -14,12 +14,10 @@ class Public::WantItemsController < ApplicationController
     if wanted_item != nil
       wanted_item.destroy
       @want_item.save
-      redirect_to item_path(params[:want_item][:code], name: params[:want_item][:name], code: params[:want_item][:code],
-            genre: params[:want_item][:genre], price: params[:want_item][:price], image: params[:want_item][:image], url: params[:want_item][:url])
+      redirect_to end_user_want_items_path(screen_name: current_end_user.screen_name)
     else
       @want_item.save
-      redirect_to item_path(params[:want_item][:code], name: params[:want_item][:name], code: params[:want_item][:code],
-            genre: params[:want_item][:genre], price: params[:want_item][:price], image: params[:want_item][:image], url: params[:want_item][:url])
+      redirect_to end_user_want_items_path(screen_name: current_end_user.screen_name)
     end
   end
 
