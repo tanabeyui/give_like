@@ -4,7 +4,7 @@ class Public::WantItemsController < ApplicationController
   def index
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
     @chart_want_items = WantItem.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
-    @want_items = @end_user.want_items.order(created_at: :desc).page(params[:page])
+    @want_items = @end_user.want_items.order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def create
@@ -16,7 +16,7 @@ class Public::WantItemsController < ApplicationController
       @want_item.save
       redirect_to item_path(params[:want_item][:code], name: params[:want_item][:name], code: params[:want_item][:code],
             genre: params[:want_item][:genre], price: params[:want_item][:price], image: params[:want_item][:image], url: params[:want_item][:url])
-    elsif wanted_item == nil
+    else
       @want_item.save
       redirect_to item_path(params[:want_item][:code], name: params[:want_item][:name], code: params[:want_item][:code],
             genre: params[:want_item][:genre], price: params[:want_item][:price], image: params[:want_item][:image], url: params[:want_item][:url])
@@ -35,7 +35,7 @@ class Public::WantItemsController < ApplicationController
 
   def set_search
     @q = WantItem.ransack(params[:q])
-    @search_items = @q.result(distinct: true)
+    @search_items = @q.result(distinct: true).order(created_at: :desc).page(params[:page])
   end
 
   def want_item_params
