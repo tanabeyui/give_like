@@ -138,14 +138,14 @@
                     type: 'pie',
                     data: {
                       labels: [
-                          <% @reviews.each do |review| %>
-                            "<%= review.category %>",
+                          <% @review_categorys.each do |review_category| %>
+                            "<%= review_category.category %>",
                           <% end %>
                           ],
                       datasets: [{
                         data: [
-                          <% @reviews.each do |review| %>
-                            <%= Review.where(category: review.category, end_user_id: @end_user.id ).count.to_i %>,
+                          <% @review_categorys.each do |review_category| %>
+                            <%= Review.where(category: review_category.category, end_user_id: @end_user.id ).count.to_i %>,
                           <% end %>
                           ],
                         borderWidth: 1
@@ -160,9 +160,9 @@
                 </script>
                 <div class="category">
                   <dl class="row medium pl-3">
-                    <% @reviews.each do |review| %>
-                      <dt class="col-10 p-0"><%= review.category %></dt>
-                      <dd class="col-2 p-0 mb-1"><%= Review.where(category: review.category, end_user_id: @end_user.id ).count.to_i %>件</dd>
+                    <% @review_categorys.each do |review_category| %>
+                      <dt class="col-10 p-0"><%= review_category.category %></dt>
+                      <dd class="col-2 p-0 mb-1"><%= Review.where(category: review_category.category, end_user_id: @end_user.id ).count.to_i %>件</dd>
                     <% end %>
                   </dl>
                 </div>

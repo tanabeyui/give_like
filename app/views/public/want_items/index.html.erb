@@ -26,23 +26,23 @@
           <div class="col-lg-4">
             <h6 class="subheading2 font-weight-bold mb-0"><%= @end_user.name %>さんが欲しいものに追加した商品のカテゴリー比率</h6>
                 <div class="chart px-2 py-3 mx-auto" style="position:relative; width:90%; height:auto;">
-                  <canvas id="MyReviewChart"></canvas>
+                  <canvas id="MyWantItemChart"></canvas>
                 </div>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                 <script>
-                  const ctx = document.getElementById('MyReviewChart');
+                  const ctx = document.getElementById('MyWantItemChart');
                   new Chart(ctx, {
                     type: 'pie',
                     data: {
                       labels: [
-                          <% @chart_want_items.each do |chart_want_item| %>
-                            "<%= chart_want_item.category %>",
+                          <% @want_item_categorys.each do |want_item_category| %>
+                            "<%= want_item_category.category %>",
                           <% end %>
                           ],
                       datasets: [{
                         data: [
-                          <% @chart_want_items.each do |chart_want_item| %>
-                            <%= WantItem.where(category: chart_want_item.category, end_user_id: @end_user.id ).count.to_i %>,
+                          <% @want_item_categorys.each do |want_item_category| %>
+                            <%= WantItem.where(category: want_item_category.category, end_user_id: @end_user.id ).count.to_i %>,
                           <% end %>
                           ],
                         borderWidth: 1
@@ -57,9 +57,9 @@
                 </script>
                 <div class="category">
                   <dl class="row medium pl-3">
-                    <% @chart_want_items.each do |chart_want_item| %>
-                      <dt class="col-10 p-0"><%= chart_want_item.category %></dt>
-                      <dd class="col-2 p-0 mb-1"><%= WantItem.where(category: chart_want_item.category, end_user_id: @end_user.id ).count.to_i %>件</dd>
+                    <% @want_item_categorys.each do |want_item_category| %>
+                      <dt class="col-10 p-0"><%= want_item_category.category %></dt>
+                      <dd class="col-2 p-0 mb-1"><%= WantItem.where(category: want_item_category.category, end_user_id: @end_user.id ).count.to_i %>件</dd>
                     <% end %>
                   </dl>
                 </div>
@@ -86,10 +86,10 @@
                     </div>
                     <p class="font-weight-bold col-form-label">カテゴリー</p>
                     <div class="form-group">
-                      <% @chart_want_items.each do |chart_want_item| %>
+                      <% @want_item_categorys.each do |want_item_category| %>
                         <div class="form-check">
-                          <%= f.check_box :category_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: chart_want_item.category }, chart_want_item.category, '' %>
-                          <%= f.label chart_want_item.category, class:'form-check-label', for: chart_want_item.category %>
+                          <%= f.check_box :category_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: want_item_category.category }, want_item_category.category, '' %>
+                          <%= f.label want_item_category.category, class:'form-check-label', for: want_item_category.category %>
                         </div>
                       <% end %>
                     </div>

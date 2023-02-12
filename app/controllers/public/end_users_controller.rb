@@ -4,7 +4,7 @@ class Public::EndUsersController < ApplicationController
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
     @favorites = @end_user.favorites.order(created_at: :desc).limit(5)
     @want_items = @end_user.want_items.order(created_at: :desc).limit(5)
-    @reviews = Review.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
+    @review_categorys = Review.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
     @latest_reviews = @end_user.reviews.order(created_at: :desc).limit(1)
     @high_reviews = @end_user.reviews.order(evaluation: "DESC").limit(3)
     @rank_colors = ['gold', 'silver', 'bronze', 'dark', 'dark']

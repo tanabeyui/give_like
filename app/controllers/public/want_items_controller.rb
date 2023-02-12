@@ -3,7 +3,7 @@ class Public::WantItemsController < ApplicationController
 
   def index
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
-    @chart_want_items = WantItem.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
+    @want_item_categorys = WantItem.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
     @want_items = @end_user.want_items.order(created_at: :desc).page(params[:page]).per(10)
   end
 

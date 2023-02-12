@@ -3,7 +3,7 @@ class Public::FavoritesController < ApplicationController
 
   def index
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
-    @chart_favorites = Favorite.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
+    @favorite_categorys = Favorite.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
     @favorites = @end_user.favorites.order(created_at: :desc).page(params[:page]).per(10)
   end
 
