@@ -1,7 +1,7 @@
 <div class="profile_image text-center">
   <% if params[:screen_name] == nil %>
     <%= link_to end_user_path(current_end_user.screen_name), class: "text-dark" do %>
-      <%= image_tag end_user.get_profile_image(200,200), class: "rounded-circle img-fluid" %>
+      <%= image_tag end_user.get_profile_image(200,200), size: '200x200', class: "rounded-circle" %>
     <% end %>
   <% else %>
     <%= link_to end_user_path(params[:screen_name]), class: "text-dark" do %>

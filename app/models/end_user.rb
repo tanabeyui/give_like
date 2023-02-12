@@ -20,7 +20,7 @@ class EndUser < ApplicationRecord
       file_path = Rails.root.join('app/assets/images/no_image.png')
       profile_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/png')
     end
-    profile_image.variant(resize_to_limit: [width, height]).processed
+    profile_image.variant(resize: "#{width} x #{height}!").processed
   end
 
   def era
