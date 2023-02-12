@@ -88,8 +88,8 @@
                     <div class="form-group">
                       <% @chart_want_items.each do |chart_want_item| %>
                         <div class="form-check">
-                          <%= f.check_box :category_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input' }, chart_want_item.category, '' %>
-                          <%= f.label chart_want_item.category, class:'form-check-label' %>
+                          <%= f.check_box :category_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: chart_want_item.category }, chart_want_item.category, '' %>
+                          <%= f.label chart_want_item.category, class:'form-check-label', for: chart_want_item.category %>
                         </div>
                       <% end %>
                     </div>

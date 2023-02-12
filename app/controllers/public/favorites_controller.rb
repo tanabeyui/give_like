@@ -3,23 +3,22 @@ class Public::FavoritesController < ApplicationController
 
   def index
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
-    @favorites = @end_user.favorites.all
-    @categorys = @end_user.favorites.map(&:category).uniq
-    @chartlabels = @end_user.favorites.map(&:category).uniq.to_json.html_safe
+    @chart_favorites = Favorite.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
+    @favorites = @end_user.favorites.order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def create
     @favorite = Favorite.new(favorite_params)
     @favorite.end_user_id = current_end_user.id
-    favorited = current_end_user.favorites.find_by(code: @favorite.code)
-    if favorited != nil
-      favorited.destroy
+    favorited_item = current_end_user.favorites.find_by(code: @favorite.code)
+    if favorited_item != nil
+      favorited_item.destroy
       @favorite.save
-      redirect_to item_path(params[:favorite][:code], name: params[:favorite][:name], code: params[:favorite][:code], 
+      redirect_to item_path(params[:favorite][:code], name: params[:favorite][:name], code: params[:favorite][:code],
             genre: params[:favorite][:genre], price: params[:favorite][:price], image: params[:favorite][:image], url: params[:favorite][:url])
-    elsif favorited == nil
+    else
       @favorite.save
-      redirect_to item_path(params[:favorite][:code], name: params[:favorite][:name], code: params[:favorite][:code], 
+      redirect_to item_path(params[:favorite][:code], name: params[:favorite][:name], code: params[:favorite][:code],
             genre: params[:favorite][:genre], price: params[:favorite][:price], image: params[:favorite][:image], url: params[:favorite][:url])
     end
   end
@@ -36,7 +35,7 @@ class Public::FavoritesController < ApplicationController
 
   def set_search
     @q = Favorite.ransack(params[:q])
-    @search_items = @q.result(distinct: true)
+    @search_items = @q.result(distinct: true).order(created_at: :desc).page(params[:page])
   end
 
   def favorite_params

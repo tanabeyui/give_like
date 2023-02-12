@@ -1,79 +1,208 @@
-<h3><%= @end_user.name %>さん好きなもの一覧</h3>
+<% if @end_user.is_deleted == "member" %>
+  <div class="container">
+    <div class="row no-gutters">
+      <div class="col-md-3 p-4">
+        <%= render 'public/shared/user_info', end_user: @end_user %>
+      </div>
 
-<%= @end_user.favorites_introduction %>
-
-<div style="position:relative; width:250px; height:250px;">
-    <canvas id="MyFavoriteChart"></canvas>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    const ctx = document.getElementById('MyFavoriteChart');
-
-    new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: <%= @chartlabels %>,
-        datasets: [{
-          data: [
-            <% @categorys.each do |category| %>
-              <%= Favorite.where(category: category, end_user_id: @end_user.id ).count.to_i %>,
+      <div class="col-md-9 py-4">
+        <h5 class="headline bg-blue font-weight-bold text-white py-3">
+          <span style="color:#e66a7e;"><i class="fa-solid fa-heart"></i></span> <%= @end_user.name %>さんの好きなもの
+        </h5>
+        <% if @end_user.favorites_introduction != "" %>
+          <div class="balloon-left bg-yellow ml-3 mr-4 mb-2">
+            <p class="medium p-2"><%= @end_user.favorites_introduction %></p>
+            <% if end_user_signed_in? && current_end_user.screen_name == params[:screen_name] %>
+              <div class="text-right medium mt-n3">
+                <%= link_to end_user_edit_path, class: "text-dark" do %>
+                  <i class="fa-solid fa-pen"></i> 編集
+                <% end %>
+              </div>
             <% end %>
-            ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        plugins: {
-            legend: false
-        }
-      }
-    });
-  </script>
-
-  <% @categorys.each do |category| %>
-    <%= category %>
-    <%= @count = Favorite.where(category: category, end_user_id: @end_user.id ).count %>件
-    <br>
-  <% end %>
-
-  <hr>
-
-<div class="search-bar">
-  <%= search_form_for @q, url: end_user_favorites_path do |f| %>
-    <div class="nav-title">詳細検索</div>
-    <%= f.hidden_field :end_user_id_eq, :value => @end_user.id %>
-    <%= f.search_field :name_cont, placeholder: 'キーワードから探す', class:'input-box' %>
-    <br>
-    <%= f.label :price, '価格' %>
-      <%= f.number_field :price_gteq %>円以上～
-      <%= f.number_field :price_lteq %>円以下
-    <br>
-    <% @categorys.each do |category| %>
-      <%= f.check_box :category_eq_any, { multiple: true, include_hidden: false }, category, '' %>
-      <%= category %>
-    <% end %>
-    <br>
-    <%= f.date_field :created_at_gteq, include_blank: true, class: 'form-control'%> ～
-    <%= f.date_field :created_at_lteq_end_of_day, include_blank: true, class: 'form-control'%>
-    <%= f.submit '検索する' %>
-    <% end %>
-  </div>
-
-    <% if @q.price_gteq || @q.price_lteq || @q.category_eq_any || @q.created_at_gteq || @q.created_at_lteq_end_of_day != nil %>
-      <% @search_items.each do |search_item| %>
-        <%= image_tag (search_item.image) %>
-        <%= search_item.name %>
-        <%= search_item.price %><br>
-      <hr>
-      <% end %>
-    <% else %>
-      <% @favorites.each do |favorite| %>
-        <%= image_tag (favorite.image) %>
-        <%= favorite.name %>
-        <%= favorite.price %><br>
-        <%= link_to favorites_path(id: favorite.id), method: :delete do %>
-          削除
+          </div>
         <% end %>
-        <hr>
-      <% end %>
-    <% end %>
+
+        <div class="row no-gutters my-3 mx-2 px-2">
+          <div class="col-lg-4">
+            <h6 class="subheading2 font-weight-bold mb-0"><%= @end_user.name %>さんが好きなものに追加した商品のカテゴリー比率</h6>
+                <div class="chart px-2 py-3 mx-auto" style="position:relative; width:90%; height:auto;">
+                  <canvas id="MyReviewChart"></canvas>
+                </div>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+                  const ctx = document.getElementById('MyReviewChart');
+                  new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                      labels: [
+                          <% @chart_favorites.each do |chart_favorite| %>
+                            "<%= chart_favorite.category %>",
+                          <% end %>
+                          ],
+                      datasets: [{
+                        data: [
+                          <% @chart_favorites.each do |chart_favorite| %>
+                            <%= WantItem.where(category: chart_favorite.category, end_user_id: @end_user.id ).count.to_i %>,
+                          <% end %>
+                          ],
+                        borderWidth: 1
+                      }]
+                    },
+                    options: {
+                      plugins: {
+                          legend: false
+                      },
+                  }
+                  });
+                </script>
+                <div class="category">
+                  <dl class="row medium pl-3">
+                    <% @chart_favorites.each do |chart_favorite| %>
+                      <dt class="col-10 p-0"><%= chart_favorite.category %></dt>
+                      <dd class="col-2 p-0 mb-1"><%= WantItem.where(category: chart_favorite.category, end_user_id: @end_user.id ).count.to_i %>件</dd>
+                    <% end %>
+                  </dl>
+                </div>
+              </div>
+
+              <div class="search-area col-lg-8 px-md-3">
+                <p class="font-weight-bold mb-0"><i class="fa-solid fa-magnifying-glass"></i> <%= @end_user.name %>さんの好きなものを探す</p>
+                <div class="border border-secondary medium p-3">
+                  <%= search_form_for @q, url: end_user_favorites_path do |f| %>
+                    <%= f.hidden_field :end_user_id_eq, :value => @end_user.id %>
+                    <div class="form-group">
+                      <%= f.search_field :name_cont, placeholder: '商品名から探す', class:'form-control medium' %>
+                    </div>
+                    <p class="font-weight-bold col-form-label">価格</p>
+                    <div class="form-group row no-gutters">
+                      <div class="col-3">
+                        <%= f.number_field :price_gteq, class:'form-control medium' %>
+                      </div>
+                      <label class="col-2 col-form-label pl-1">円以上～</label>
+                      <div class="col-3">
+                        <%= f.number_field :price_lteq, class:'form-control medium' %>
+                      </div>
+                      <label class="col-2 col-form-label pl-1">円以下</label>
+                    </div>
+                    <p class="font-weight-bold col-form-label">カテゴリー</p>
+                    <div class="form-group">
+                      <% @chart_favorites.each do |chart_favorite| %>
+                        <div class="form-check">
+                          <%= f.check_box :category_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: chart_favorite.category }, chart_favorite.category, '' %>
+                          <%= f.label chart_favorite.category, class:'form-check-label', for: chart_favorite.category %>
+                        </div>
+                      <% end %>
+                    </div>
+                    <p class="font-weight-bold col-form-label">追加した日時</p>
+                    <div class="form-group row no-gutters">
+                      <div class="col-5">
+                        <%= f.date_field :created_at_gteq, include_blank: true, class:'form-control medium' %>
+                      </div>
+                      <label class="col-1 col-form-label text-center">～</label>
+                      <div class="col-5">
+                        <%= f.date_field :created_at_lteq_end_of_day, include_blank: true, class:'form-control medium' %>
+                      </div>
+                    </div>
+                    <div class="text-right">
+                      <%= f.submit '検索する', class: "btn btn-secondary btn-sm px-5" %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+
+            <% if @q.end_user_id_eq != nil %>
+              <% @search_items.each do |search_item| %>
+                <div class="card mb-3 mx-3">
+                  <div class="card-header bg-gray d-flex">
+                    <p class="flex-grow-1 medium m-0">
+                    好きなものに追加した日時 : <%= search_item.created_at.strftime('%Y/%m/%d') %>
+                    </p>
+                    <div>
+                      <% if end_user_signed_in? && current_end_user.screen_name == params[:screen_name] %>
+                        <%= link_to favorites_path(id: search_item.id), method: :delete, class:"text-dark" do %>
+                          <i class="fa-solid fa-trash-can"></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </p>
+                  </div>
+                  <div class="row no-gutters">
+                    <div class="col-2">
+                      <%= image_tag (search_item.image), class: "card-img" %>
+                    </div>
+                    <div class="col-10 card-body d-flex flex-column p-2">
+                      <h6 class="card-title font-weight-bold text-limit m-0"><%= search_item.name %></h6>
+                      <div class="row no-gutters flex-grow-1">
+                        <div class="col-7">
+                          <p class="card-text medium text-secondary"><%= search_item.category %></p>
+                          <h5 class="card-text m-0"><%= number_with_delimiter(search_item.price) %>円</h5>
+                        </div>
+                        <div class="col-5 d-flex flex-column justify-content-end h-100 ">
+                          <%= link_to search_item.url, target: :_blank, class:"btn btn-danger btn-sm btn-block" do %>
+                            <i class="fa-solid fa-cart-shopping"></i> 楽天市場で見る <i class="fa-solid fa-angles-right"></i>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              <% @favorites.each do |favorite| %>
+                <div class="card mb-3 mx-3">
+                  <div class="card-header bg-gray d-flex">
+                    <p class="flex-grow-1 medium m-0">
+                    好きなものに追加した日時 : <%= favorite.created_at.strftime('%Y/%m/%d') %>
+                    </p>
+                    <div>
+                      <% if end_user_signed_in? && current_end_user.screen_name == params[:screen_name] %>
+                        <%= link_to favorites_path(id: favorite.id), method: :delete, class:"text-dark" do %>
+                          <i class="fa-solid fa-trash-can"></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </p>
+                  </div>
+                  <div class="row no-gutters">
+                    <div class="col-2">
+                      <%= image_tag (favorite.image), class: "card-img" %>
+                    </div>
+                    <div class="col-10 card-body d-flex flex-column p-2">
+                      <h6 class="card-title font-weight-bold text-limit m-0"><%= favorite.name %></h6>
+                      <div class="row no-gutters flex-grow-1">
+                        <div class="col-7">
+                          <p class="card-text medium text-secondary"><%= favorite.category %></p>
+                          <h5 class="card-text m-0"><%= number_with_delimiter(favorite.price) %>円</h5>
+                        </div>
+                        <div class="col-5 d-flex flex-column justify-content-end h-100 ">
+                          <%= link_to favorite.url, target: :_blank, class:"btn btn-danger btn-sm btn-block" do %>
+                            <i class="fa-solid fa-cart-shopping"></i> 楽天市場で見る <i class="fa-solid fa-angles-right"></i>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <div class="row justify-content-center medium mt-4">
+          <%= paginate @favorites, class: "medium" %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="container-fluid bg-yellow text-center p-5">
+    <div class="my-5 py-4">
+      <span class="display-2"><i class="fa-solid fa-user-slash"></i></span>
+      <h1 class="sign_in font-weight-bold">Not Found.</h1>
+      <p class="mb-5 py-5">
+        お探しページは退会済みユーザーのものです。
+      </p>
+    </div>
+  </div>
+<% end %>
