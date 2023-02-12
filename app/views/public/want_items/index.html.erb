@@ -1,4 +1,5 @@
-<div class="container">
+<% if @end_user.is_deleted == "member" %>
+  <div class="container">
     <div class="row no-gutters">
       <div class="col-md-3 p-4">
         <%= render 'public/shared/user_info', end_user: @end_user %>
@@ -22,51 +23,60 @@
         <% end %>
         <div class="search-area mx-3 my-4">
           <p class="font-weight-bold mb-0"><i class="fa-solid fa-magnifying-glass"></i> <%= @end_user.name %>さんの欲しいものを探す</p>
-          <div class="row border border-secondary mx-0 p-3">
+          <div class="border border-secondary medium mx-0 p-3">
             <%= search_form_for @q, url: end_user_want_items_path do |f| %>
               <%= f.hidden_field :end_user_id_eq, :value => @end_user.id %>
               <div class="form-group">
                 <%= f.search_field :name_cont, placeholder: '商品名から探す', class:'form-control medium' %>
               </div>
-              <div class="form-group medium">
-                <div class="form-check form-check-inline">
-                  <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check1' }, 0, '' %>
-                  <%= f.label EndUser.genders_i18n[:male], class:'form-check-label', for: 'gender-check1' %>
+
+              <div class="row">
+                <div class="col-md-4">
+                  <p class="font-weight-bold mb-1">価格</p>
+                  <div class="form-group row no-gutters mb-1">
+                    <div class="col-7">
+                      <%= f.number_field :price_gteq, class:'form-control medium' %>
+                    </div>
+                    <label class="col-5 col-form-label pl-1">円以上～</label>
+                  </div>
+                  <div class="form-group row no-gutters">
+                    <div class="col-7">
+                      <%= f.number_field :price_lteq, class:'form-control medium' %>
+                    </div>
+                    <label class="col-5 col-form-label pl-1">円以下</label>
+                  </div>
                 </div>
-                <div class="form-check form-check-inline">
-                  <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check2' }, 1, '' %>
-                  <%= f.label EndUser.genders_i18n[:female], class:'form-check-label', for: 'gender-check2' %>
+                <div class="col-md-4">
+                  <p class="font-weight-bold mb-1">カテゴリー</p>
+                  <% @chart_want_items.each do |chart_want_item| %>
+                    <div class="form-check">
+                      <%= f.check_box :category_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input' }, chart_want_item.category, '' %>
+                      <%= f.label chart_want_item.category, class:'form-check-label' %>
+                    </div>
+                  <% end %>
                 </div>
-                <div class="form-check form-check-inline">
-                  <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check3' }, 2, '' %>
-                  <%= f.label EndUser.genders_i18n[:not_selected], class:'form-check-label', for: 'gender-check3' %>
+                <div class="col-md-4">
+                  <div class="d-flex flex-column h-100">
+                    <p class="font-weight-bold mb-1">追加した日時</p>
+                    <div class="form-group row no-gutters mb-1">
+                      <div class="col-11">
+                        <%= f.date_field :created_at_gteq, include_blank: true, class:'form-control medium' %>
+                      </div>
+                      <label class="col-1 col-form-label pl-1">～</label>
+                    </div>
+                    <div class="form-group row no-gutters">
+                      <div class="col-11">
+                        <%= f.date_field :created_at_lteq_end_of_day, include_blank: true, class:'form-control medium' %>
+                      </div>
+                    </div>
+                    <div class="text-right">
+                      <%= f.submit '検索する', class: "btn btn-secondary btn-sm" %>
+                    </div>
+                  </div>
                 </div>
               </div>
-        <div class="form-group row no-gutters medium">
-          <div class="col-3">
-            <%= f.select :end_user_birth_day_to_age_gteq, *[10..100] , { include_blank: "" }, { class: "form-control small" } %>
+            <% end %>
           </div>
-          <label for="staticEmail" class="col-3 col-form-label pl-1">歳以上</label>
-            <div class="col-3">
-            <%= f.select :end_user_birth_day_to_age_lteq, *[10..100] , { include_blank: "" }, { class: "form-control small" } %>
-          </div>
-          <label for="staticEmail" class="col-3 col-form-label pl-1">歳以下</label>
-        </div>
-
-              <%= f.label :price, '価格' %>
-                <%= f.number_field :price_gteq %>円以上～
-                <%= f.number_field :price_lteq %>円以下
-              <br>
-             <% @chart_want_items.each do |chart_want_item| %>
-                <%= f.check_box :category_eq_any, { multiple: true, include_hidden: false }, chart_want_item.category, '' %>
-                "<%= chart_want_item.category %>",
-              <% end %>
-              <br>
-              <%= f.date_field :created_at_gteq, include_blank: true, class: 'form-control'%> ～
-              <%= f.date_field :created_at_lteq_end_of_day, include_blank: true, class: 'form-control'%>
-              <%= f.submit '検索する' %>
-              <% end %>
-            </div>
         </div>
 
         <div class="row no-gutters mx-2 px-2">
@@ -121,8 +131,10 @@
                     欲しいものに追加した日時 : <%= search_item.created_at.strftime('%Y/%m/%d') %>
                     </p>
                     <div>
-                      <%= link_to want_items_path(id: search_item.id), method: :delete, class:"text-dark" do %>
-                        <i class="fa-solid fa-trash-can"></i>
+                      <% if end_user_signed_in? && current_end_user.screen_name == params[:screen_name] %>
+                        <%= link_to want_items_path(id: search_item.id), method: :delete, class:"text-dark" do %>
+                          <i class="fa-solid fa-trash-can"></i>
+                        <% end %>
                       <% end %>
                     </div>
                   </p>
@@ -153,8 +165,10 @@
                     欲しいものに追加した日時 : <%= want_item.created_at.strftime('%Y/%m/%d') %>
                     </p>
                     <div>
-                      <%= link_to want_items_path(id: want_item.id), method: :delete, class:"text-dark" do %>
-                        <i class="fa-solid fa-trash-can"></i>
+                      <% if end_user_signed_in? && current_end_user.screen_name == params[:screen_name] %>
+                        <%= link_to want_items_path(id: want_item.id), method: :delete, class:"text-dark" do %>
+                          <i class="fa-solid fa-trash-can"></i>
+                        <% end %>
                       <% end %>
                     </div>
                   </p>
@@ -186,4 +200,15 @@
 
       </div>
     </div>
-</div>
+  </div>
+<% else %>
+  <div class="container-fluid bg-yellow text-center p-5">
+    <div class="my-5 py-4">
+      <span class="display-2"><i class="fa-solid fa-user-slash"></i></span>
+      <h1 class="sign_in font-weight-bold">Not Found.</h1>
+      <p class="mb-5 py-5">
+        お探しページは退会済みユーザーのものです。
+      </p>
+    </div>
+  </div>
+<% end %>

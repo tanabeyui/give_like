@@ -5,8 +5,6 @@ class Public::WantItemsController < ApplicationController
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
     @chart_want_items = WantItem.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
     @want_items = @end_user.want_items.order(created_at: :desc).page(params[:page])
-    @categorys = Review.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
-    @chartlabels = @end_user.want_items.map(&:category).uniq.to_json.html_safe
   end
 
   def create
@@ -28,7 +26,7 @@ class Public::WantItemsController < ApplicationController
   def destroy
     want_item = WantItem.find(params[:id])
     want_item.destroy
-    redirect_to items_path
+    redirect_to end_user_want_items_path(want_item.end_user.screen_name)
   end
 
 

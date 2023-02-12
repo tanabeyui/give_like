@@ -145,11 +145,11 @@
           <div class="col-3">
             <%= f.select :end_user_birth_day_to_age_gteq, *[10..100] , { include_blank: "" }, { class: "form-control small" } %>
           </div>
-          <label for="staticEmail" class="col-3 col-form-label pl-1">歳以上</label>
+          <label class="col-3 col-form-label pl-1">歳以上</label>
             <div class="col-3">
             <%= f.select :end_user_birth_day_to_age_lteq, *[10..100] , { include_blank: "" }, { class: "form-control small" } %>
           </div>
-          <label for="staticEmail" class="col-3 col-form-label pl-1">歳以下</label>
+          <label class="col-3 col-form-label pl-1">歳以下</label>
         </div>
       <%= f.submit '検索する', class: "btn btn-secondary btn-sm btn-block" %>
     <% end %>
