@@ -1,5 +1,7 @@
 <div class="profile_image text-center">
-  <%= image_tag end_user.get_profile_image(200,200), class: "rounded-circle img-fluid" %>
+  <%= link_to end_user_path(params[:screen_name]), class: "text-dark" do %>
+    <%= image_tag end_user.get_profile_image(200,200), class: "rounded-circle img-fluid" %>
+  <% end %>
 </div>
 <div class="profile p-3">
   <h5 class="font-weight-bold m-0"><%= end_user.name %></h5>
