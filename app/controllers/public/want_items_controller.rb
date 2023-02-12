@@ -8,16 +8,22 @@ class Public::WantItemsController < ApplicationController
   end
 
   def create
-    @want_item = WantItem.new(want_item_params)
-    @want_item.end_user_id = current_end_user.id
-    wanted_item = current_end_user.want_items.find_by(code: @want_item.code)
-    if wanted_item != nil
-      wanted_item.destroy
-      @want_item.save
-      redirect_to end_user_want_items_path(screen_name: current_end_user.screen_name)
+    if end_user_signed_in?
+      @want_item = WantItem.new(want_item_params)
+      @want_item.end_user_id = current_end_user.id
+      wanted_item = current_end_user.want_items.find_by(code: @want_item.code)
+      if wanted_item != nil
+        wanted_item.destroy
+        @want_item.save
+        redirect_to end_user_want_items_path(screen_name: current_end_user.screen_name)
+      else
+        @want_item.save
+        redirect_to end_user_want_items_path(screen_name: current_end_user.screen_name)
+      end
     else
-      @want_item.save
-      redirect_to end_user_want_items_path(screen_name: current_end_user.screen_name)
+      flash[:danger] = "ログインしてください！"
+      redirect_to item_path(params[:want_item][:code], name: params[:want_item][:name], code: params[:want_item][:code],
+            genre: params[:want_item][:genre], price: params[:want_item][:price], image: params[:want_item][:image], url: params[:want_item][:url])
     end
   end
 
