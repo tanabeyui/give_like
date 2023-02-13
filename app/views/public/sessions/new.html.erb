@@ -1,7 +1,10 @@
 <div class="container-fluid bg-yellow">
-  
-  <%= render 'layouts/alert' %>
-  
+  <% if alert %>
+    <div class="container alert alert-danger pt-3 px-5 pb-0">
+      <p><%= alert %></p>
+    </div>
+  <% end %>
+
   <div class="row no-gutters">
     <div class="col-lg-4 col-sm-7 py-5 my-5 mx-auto">
       <h2 class="sign_in mb-n2">Login</h2>

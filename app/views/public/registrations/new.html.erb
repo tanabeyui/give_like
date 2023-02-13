@@ -1,9 +1,16 @@
 <div class="container-fluid bg-yellow">
-  
-  <%= render 'layouts/alert' %>
-    
+  <% if @end_user.errors.any? %>
+    <div class="container alert alert-danger pt-3 px-5 pb-0">
+      <ol>
+        <% @end_user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ol>
+    </div>
+  <% end %>
+
   <div class="row pb-5">
-    <div class="col-lg-5 col-md-8 py-5 mt-4 mb-5 mx-auto">
+    <div class="col-lg-5 col-md-10 py-5 mt-4 mb-5 mx-auto">
       <h2 class="sign_in mb-n2">SignUp</h2>
 
       <div class="form-body shadow bg-white p-5">
