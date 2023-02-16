@@ -39,7 +39,7 @@ class Public::FavoritesController < ApplicationController
 
   def set_search
     @q = Favorite.ransack(params[:q])
-    @search_items = @q.result(distinct: true).order(created_at: :desc).page(params[:page])
+    @search_items = @q.result(distinct: true).order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def favorite_params

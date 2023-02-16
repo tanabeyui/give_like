@@ -39,7 +39,7 @@ class Public::WantItemsController < ApplicationController
 
   def set_search
     @q = WantItem.ransack(params[:q])
-    @search_items = @q.result(distinct: true).order(created_at: :desc).page(params[:page])
+    @search_want_items = @q.result(distinct: true).order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def want_item_params

@@ -112,34 +112,33 @@
         </div>
 
         <% if @q.end_user_id_eq != nil %>
-          <% @search_items.each do |search_item| %>
+          <% @search_favoritess.each do |search_favorites| %>
             <div class="card mb-3 mx-3">
               <div class="card-header bg-gray d-flex">
                 <p class="flex-grow-1 medium m-0">
-                好きなものに追加した日時 : <%= search_item.created_at.strftime('%Y/%m/%d') %>
+                  好きなものに追加した日時 : <%= search_favorites.created_at.strftime('%Y/%m/%d') %>
                 </p>
                 <div>
                   <% if end_user_signed_in? && current_end_user.screen_name == params[:screen_name] %>
-                    <%= link_to favorites_path(id: search_item.id), method: :delete, class:"text-dark" do %>
+                    <%= link_to favorites_path(id: search_favorites.id), method: :delete, class:"text-dark" do %>
                       <i class="fa-solid fa-trash-can"></i>
                     <% end %>
                   <% end %>
                 </div>
-              </p>
               </div>
               <div class="row no-gutters">
                 <div class="col-2">
-                  <%= image_tag (search_item.image), class: "card-img" %>
+                  <%= image_tag (search_favorites.image), class: "card-img" %>
                 </div>
                 <div class="col-10 card-body d-flex flex-column p-2">
-                  <h6 class="card-title font-weight-bold text-limit m-0"><%= search_item.name %></h6>
+                  <h6 class="card-title font-weight-bold text-limit m-0"><%= search_favorites.name %></h6>
                   <div class="row no-gutters flex-grow-1">
                     <div class="col-7">
-                      <p class="card-text medium text-secondary"><%= search_item.category %></p>
-                      <h5 class="card-text m-0"><%= number_with_delimiter(search_item.price) %>円</h5>
+                      <p class="card-text medium text-secondary"><%= search_favorites.category %></p>
+                      <h5 class="card-text m-0"><%= number_with_delimiter(search_favorites.price) %>円</h5>
                     </div>
                     <div class="col-5 d-flex flex-column justify-content-end h-100 ">
-                      <%= link_to search_item.url, target: :_blank, class:"btn btn-danger btn-sm btn-block" do %>
+                      <%= link_to search_favorites.url, target: :_blank, class:"btn btn-danger btn-sm btn-block" do %>
                         <i class="fa-solid fa-cart-shopping"></i> 楽天市場で見る <i class="fa-solid fa-angles-right"></i>
                       <% end %>
                     </div>
@@ -153,7 +152,7 @@
             <div class="card mb-3 mx-3">
               <div class="card-header bg-gray d-flex">
                 <p class="flex-grow-1 medium m-0">
-                好きなものに追加した日時 : <%= favorite.created_at.strftime('%Y/%m/%d') %>
+                  好きなものに追加した日時 : <%= favorite.created_at.strftime('%Y/%m/%d') %>
                 </p>
                 <div>
                   <% if end_user_signed_in? && current_end_user.screen_name == params[:screen_name] %>
@@ -162,7 +161,6 @@
                     <% end %>
                   <% end %>
                 </div>
-              </p>
               </div>
               <div class="row no-gutters">
                 <div class="col-2">
@@ -188,10 +186,13 @@
         <% end %>
       </div>
     </div>
-    <div class="row justify-content-center medium mt-4">
-      <%= paginate @favorites, class: "medium" %>
+    <div class="d-flex justify-content-center medium mt-4">
+      <% if @q.end_user_id_eq != nil %>
+        <%= paginate @search_favorites, class: "medium" %>
+      <% else %>
+        <%= paginate @favorites, class: "medium" %>
+      <% end %>
     </div>
-
   </div>
 <% else %>
   <div class="container-fluid bg-yellow text-center p-5">
