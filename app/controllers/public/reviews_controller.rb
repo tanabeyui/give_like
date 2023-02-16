@@ -3,30 +3,23 @@ class Public::ReviewsController < ApplicationController
 
   def ranking
     @reviews = Review.group(:code).order("avg(evaluation) desc")
-    if params[:keyword] == "new"
-      @sort_reviews = @end_user.reviews.order(created_at: "DESC")
-    elsif params[:keyword] == "old"
-      @sort_reviews = @end_user.reviews.order(created_at: "ASC")
-    elsif params[:keyword] == "high_rated"
-      @sort_reviews = @end_user.reviews.order(evaluation: "DESC")
-    elsif params[:keyword] == "low_rated"
-      @sort_reviews = @end_user.reviews.order(evaluation: "ASC")
-    end
   end
 
   def index
+    @rank_colors = ['gold', 'silver', 'bronze']
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
-    @reviews = @end_user.reviews.order(evaluation: "DESC")
-    @categorys = @end_user.reviews.map(&:category).uniq
-    @chartlabels = @end_user.reviews.map(&:category).uniq.to_json.html_safe
-    if params[:keyword] == "new"
-      @sort_reviews = @end_user.reviews.order(created_at: "DESC")
-    elsif params[:keyword] == "old"
-      @sort_reviews = @end_user.reviews.order(created_at: "ASC")
-    elsif params[:keyword] == "high_rated"
-      @sort_reviews = @end_user.reviews.order(evaluation: "DESC")
-    elsif params[:keyword] == "low_rated"
-      @sort_reviews = @end_user.reviews.order(evaluation: "ASC")
+    @review_categorys = Review.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
+    @reviews = @end_user.reviews.order(evaluation: "DESC").page(params[:page]).per(10)
+    @start = ((params[:page] || 1 ).to_i - 1) * 10
+
+    if params[:sort] == "new"
+      @sort_reviews = @end_user.reviews.order(created_at: "DESC").page(params[:page]).per(10)
+    elsif params[:sort] == "old"
+      @sort_reviews = @end_user.reviews.order(created_at: "ASC").page(params[:page]).per(10)
+    elsif params[:sort] == "high_rated"
+      @reviews = @end_user.reviews.order(evaluation: "DESC").page(params[:page]).per(10)
+    elsif params[:sort] == "low_rated"
+      @sort_reviews = @end_user.reviews.order(evaluation: "ASC").page(params[:page]).per(10)
     end
   end
 
@@ -73,7 +66,7 @@ class Public::ReviewsController < ApplicationController
 
   def set_search
     @q = Review.ransack(params[:q])
-    @search_reviews = @q.result(distinct: true)
+    @search_reviews = @q.result(distinct: true).order(created_at: "DESC").page(params[:page]).per(10)
     @ranking_searchs = @q.result(distinct: true).group(:code).order("avg(evaluation) desc")
   end
 
