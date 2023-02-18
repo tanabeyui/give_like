@@ -6,27 +6,38 @@ class Public::ReviewsController < ApplicationController
   end
 
   def index
-    @rank_colors = ['gold', 'silver', 'bronze']
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
+    @rank_colors = ['gold', 'silver', 'bronze']
+    @start = ((params[:page] || 1 ).to_i - 1) * 10
     if @end_user.is_deleted == "unsubscribe"
       redirect_to not_found_path
     end
-    @review_categorys = Review.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
     if end_user_signed_in? && current_end_user.screen_name == params[:screen_name]
+      @review_categorys = @end_user.reviews.disclosed.group(:category).order('count(id) desc')
+      @review_counts = @end_user.reviews.disclosed
       @reviews = @end_user.reviews.disclosed.order(evaluation: "DESC").page(params[:page]).per(10)
+      if params[:sort] == "new"
+        @sort_reviews = @end_user.reviews.disclosed.order(created_at: "DESC").page(params[:page]).per(10)
+      elsif params[:sort] == "old"
+        @sort_reviews = @end_user.reviews.disclosed.order(created_at: "ASC").page(params[:page]).per(10)
+      elsif params[:sort] == "high_rated"
+        @reviews = @end_user.reviews.disclosed.order(evaluation: "DESC").page(params[:page]).per(10)
+      elsif params[:sort] == "low_rated"
+        @sort_reviews = @end_user.reviews.disclosed.order(evaluation: "ASC").page(params[:page]).per(10)
+      end
     else
+      @review_categorys = @end_user.reviews.disclosed.display.group(:category).order('count(id) desc')
+      @review_counts = @end_user.reviews.disclosed.display
       @reviews = @end_user.reviews.disclosed.display.order(evaluation: "DESC").page(params[:page]).per(10)
-    end
-    @start = ((params[:page] || 1 ).to_i - 1) * 10
-
-    if params[:sort] == "new"
-      @sort_reviews = @end_user.reviews.order(created_at: "DESC").page(params[:page]).per(10)
-    elsif params[:sort] == "old"
-      @sort_reviews = @end_user.reviews.order(created_at: "ASC").page(params[:page]).per(10)
-    elsif params[:sort] == "high_rated"
-      @reviews = @end_user.reviews.order(evaluation: "DESC").page(params[:page]).per(10)
-    elsif params[:sort] == "low_rated"
-      @sort_reviews = @end_user.reviews.order(evaluation: "ASC").page(params[:page]).per(10)
+      if params[:sort] == "new"
+        @sort_reviews = @end_user.reviews.disclosed.display.order(created_at: "DESC").page(params[:page]).per(10)
+      elsif params[:sort] == "old"
+        @sort_reviews = @end_user.reviews.disclosed.display.order(created_at: "ASC").page(params[:page]).per(10)
+      elsif params[:sort] == "high_rated"
+        @reviews = @end_user.reviews.disclosed.display.order(evaluation: "DESC").page(params[:page]).per(10)
+      elsif params[:sort] == "low_rated"
+        @sort_reviews = @end_user.reviews.disclosed.display.order(evaluation: "ASC").page(params[:page]).per(10)
+      end
     end
   end
 
@@ -73,8 +84,12 @@ class Public::ReviewsController < ApplicationController
 
   def set_search
     @q = Review.ransack(params[:q])
-    @search_reviews = @q.result(distinct: true).order(created_at: "DESC").page(params[:page]).per(10)
-    @ranking_searchs = @q.result(distinct: true).group(:code).order("avg(evaluation) desc")
+    if end_user_signed_in? && current_end_user.screen_name == params[:screen_name]
+      @search_reviews = @q.result(distinct: true).disclosed.order(created_at: "DESC").page(params[:page]).per(10)
+    else
+      @search_reviews = @q.result(distinct: true).disclosed.display.order(created_at: "DESC").page(params[:page]).per(10)
+    end
+    # @ranking_searchs = @q.result(distinct: true).group(:code).order("avg(evaluation) desc")
   end
 
   def review_params
