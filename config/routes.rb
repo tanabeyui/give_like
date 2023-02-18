@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   root to: 'public/homes#top'
 
+  get '/not_found' => 'public/homes#not_found', as: 'not_found'
+
   get '/responses/thanks' => 'public/responses#thanks'
   get '/items/search' => 'public/items#search'
   get '/reviews/ranking' => 'public/reviews#ranking'

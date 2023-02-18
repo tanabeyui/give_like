@@ -117,14 +117,14 @@
         <div class="reviews">
           <h5 class="headline bg-blue font-weight-bold text-white py-3">
             <i class="fa-solid fa-file"></i> <%= @end_user.name %>さんのレビュー
-            <% if @end_user.reviews.count != 0 %>
+            <% if @review_categorys.present? %>
               <%= link_to  end_user_reviews_path(@end_user.screen_name), class: "text-white small float-right pt-1 pr-2" do %>
                 もっと見る <i class="fa-solid fa-angles-right"></i>
               <% end %>
             <% end %>
           </h5>
 
-          <% if @end_user.reviews.count != 0 %>
+          <% if @review_categorys.present? %>
             <div class="row no-gutters px-2">
               <div class="col-lg-4 mt-4">
                 <h6 class="subheading font-weight-bold">カテゴリー割合</h6>
@@ -145,7 +145,7 @@
                       datasets: [{
                         data: [
                           <% @review_categorys.each do |review_category| %>
-                            <%= Review.where(category: review_category.category, end_user_id: @end_user.id ).count.to_i %>,
+                            <%= Review.disclosed.display.where(category: review_category.category, end_user_id: @end_user.id ).count.to_i %>,
                           <% end %>
                           ],
                         borderWidth: 1
@@ -162,7 +162,7 @@
                   <dl class="row medium pl-3">
                     <% @review_categorys.each do |review_category| %>
                       <dt class="col-10 p-0"><%= review_category.category %></dt>
-                      <dd class="col-2 p-0 mb-1"><%= Review.where(category: review_category.category, end_user_id: @end_user.id ).count.to_i %>件</dd>
+                      <dd class="col-2 p-0 mb-1"><%= Review.disclosed.display.where(category: review_category.category, end_user_id: @end_user.id ).count.to_i %>件</dd>
                     <% end %>
                   </dl>
                 </div>

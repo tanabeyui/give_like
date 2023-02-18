@@ -284,6 +284,8 @@
             <% @reviews.each.with_index(@start) do |review, i| %>
               <div class="shadow-sm py-4 px-2">
                 <div class="row no-gutters">
+                  <%= review.is_disclose_i18n %>
+                  <%= review.is_displayed_i18n %>
                   <% if i < 3  %>
                     <%= content_tag :div, class: "col-auto rounded-circle bg-#{@rank_colors[i]} text-white", style: "width: 40px;height: 40px;" do %>
                       <h6 class="text-center", style="line-height: 40px;"><%= i + 1 %></h6>
@@ -370,14 +372,3 @@
       <% end %>
     </div>
   </div>
-<% else %>
-  <div class="container-fluid bg-yellow text-center p-5">
-    <div class="my-5 py-4">
-      <span class="display-2"><i class="fa-solid fa-user-slash"></i></span>
-      <h1 class="sign_in font-weight-bold">Not Found.</h1>
-      <p class="mb-5 py-5">
-        お探しページは退会済みユーザーのものです。
-      </p>
-    </div>
-  </div>
-<% end %>

@@ -11,6 +11,10 @@ class Public::HomesController < ApplicationController
     @reviews = Review.disclosed.group(:code).order("avg(evaluation) desc").first(5)
   end
 
+  def not_found
+
+  end
+
 
 
   private

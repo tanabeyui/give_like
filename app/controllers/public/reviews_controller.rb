@@ -8,8 +8,15 @@ class Public::ReviewsController < ApplicationController
   def index
     @rank_colors = ['gold', 'silver', 'bronze']
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
+    if @end_user.is_deleted == "unsubscribe"
+      redirect_to not_found_path
+    end
     @review_categorys = Review.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
-    @reviews = @end_user.reviews.order(evaluation: "DESC").page(params[:page]).per(10)
+    if end_user_signed_in? && current_end_user.screen_name == params[:screen_name]
+      @reviews = @end_user.reviews.disclosed.order(evaluation: "DESC").page(params[:page]).per(10)
+    else
+      @reviews = @end_user.reviews.disclosed.display.order(evaluation: "DESC").page(params[:page]).per(10)
+    end
     @start = ((params[:page] || 1 ).to_i - 1) * 10
 
     if params[:sort] == "new"
