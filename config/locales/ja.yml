@@ -237,10 +237,6 @@ ja:
         disclosed: "公開"
         closed: "非公開"
 
-      is_displayed:
-        display: "マイページに表示"
-        non_display: "マイページに表示してないレビューです"
-
     response:
       gender:
         male: "男性"

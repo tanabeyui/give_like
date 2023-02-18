@@ -2,12 +2,16 @@ class Public::EndUsersController < ApplicationController
 
   def show
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
+    if @end_user.is_deleted == "unsubscribe"
+      redirect_to not_found_path
+    end
     @favorites = @end_user.favorites.order(created_at: :desc).limit(5)
     @want_items = @end_user.want_items.order(created_at: :desc).limit(5)
-    @review_categorys = Review.disclosed.display.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
-    @latest_reviews = @end_user.reviews.disclosed.display.order(created_at: :desc).limit(1)
+    @rank_colors = ['gold', 'silver', 'bronze']
+    @review_categorys = @end_user.reviews.disclosed.display.group(:category).order('count(id) desc')
+    @review_counts = @end_user.reviews.disclosed.display
+    @latest_reviews = @end_user.reviews.disclosed.display.order(created_at: "DESC").limit(1)
     @high_reviews = @end_user.reviews.disclosed.display.order(evaluation: "DESC").limit(3)
-    @rank_colors = ['gold', 'silver', 'bronze', 'dark', 'dark']
   end
 
   def edit

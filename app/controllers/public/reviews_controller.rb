@@ -13,9 +13,11 @@ class Public::ReviewsController < ApplicationController
       redirect_to not_found_path
     end
     if end_user_signed_in? && current_end_user.screen_name == params[:screen_name]
-      @review_categorys = @end_user.reviews.disclosed.group(:category).order('count(id) desc')
-      @review_counts = @end_user.reviews.disclosed
+      # @review_categorys = @end_user.reviews.disclosed.group(:category).order('count(id) desc')
+      # @review_counts = @end_user.reviews.disclosed
       @reviews = @end_user.reviews.disclosed.order(evaluation: "DESC").page(params[:page]).per(10)
+      @review_categorys = Review.where(end_user_id: @end_user.id, is_disclose: true).group(:category).order('count(id) desc')
+      @review_counts = Review.where(end_user_id: @end_user.id, is_disclose: true)
       if params[:sort] == "new"
         @sort_reviews = @end_user.reviews.disclosed.order(created_at: "DESC").page(params[:page]).per(10)
       elsif params[:sort] == "old"
