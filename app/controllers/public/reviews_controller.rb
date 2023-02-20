@@ -42,6 +42,7 @@ class Public::ReviewsController < ApplicationController
   end
 
   def new
+    @item_params = params[:review] || params
     @review = Review.new
     @current_genre = RakutenWebService::Ichiba::Genre[(params[:genre])]
     unless end_user_signed_in?
@@ -54,14 +55,10 @@ class Public::ReviewsController < ApplicationController
   def confirm
     @review = Review.new(review_params)
     @end_user = current_end_user
-    # if params[:review][:getting_method] == "gift"
-    #   render :add_post
+    @current_genre = RakutenWebService::Ichiba::Genre[(params[:review][:genre])]
+    # if params[:review][:evaluation] == ""
+    #   render :new
     # end
-  end
-  
-  def add_post
-    @review = Review.new(review_params)
-    @end_user = current_end_user
   end
 
   def create
@@ -100,7 +97,7 @@ class Public::ReviewsController < ApplicationController
 
   def review_params
     params.require(:review).permit(:name, :image, :code, :price, :url, :category,
-    :body, :evaluation, :getting_method, :giver, :gifted_event, :is_anonymous, :is_displayed, :is_checked, :is_disclose,)
+            :body, :evaluation, :getting_method, :giver, :gifted_event, :is_anonymous, :is_displayed, :is_checked, :is_disclose,)
   end
 
 end

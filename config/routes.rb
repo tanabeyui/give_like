@@ -7,7 +7,6 @@ Rails.application.routes.draw do
   get '/responses/thanks' => 'public/responses#thanks'
   get '/items/search' => 'public/items#search'
   get '/reviews/ranking' => 'public/reviews#ranking'
-  post '/reviews/add_post' => 'public/reviews#add_post'
   post '/reviews/confirm' => 'public/reviews#confirm'
 
   get '/end_users/:screen_name', to: 'public/end_users#show', as: 'end_user'
