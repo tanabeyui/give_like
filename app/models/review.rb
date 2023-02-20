@@ -1,6 +1,23 @@
 class Review < ApplicationRecord
 
   belongs_to :end_user
+  
+  validates :code, {presence: true}
+  validates :name, {presence: true}
+  validates :url, {presence: true}
+  validates :category, {presence: true}
+  validates :price, {presence: true}
+  validates :image, {presence: true}
+  validates :getting_method, {presence: true}
+  validates :is_anonymous, {presence: true}
+  validates :evaluation, {presence: true}
+  validates :category, {presence: true}
+  validates :body, {presence: true}
+  validates :giver, {presence: true}
+  validates :gifted_event, {presence: true}
+  validates :is_displayed, {presence: true}
+  validates :is_checked, {presence: true}
+  validates :is_disclose, {presence: true}
 
   enum getting_method: { self_purchase: 0, gift: 1 }
   enum giver: { no_giver: 0, friend: 1, lover: 2, parents: 3, my_child: 4, sibling: 5, relatives: 6,

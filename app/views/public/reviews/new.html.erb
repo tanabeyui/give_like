@@ -1,61 +1,242 @@
-<p><%= image_tag (params[:image]), size: '200x200' %></p>
-<p><%= params[:name] %></p>
+<div class="bg-yellow">
+  <%# if @end_user.errors.any? %>
+  <!--  <div class="container alert alert-danger pt-3 px-5 pb-0">-->
+  <!--    <ol>-->
+        <%# @end_user.errors.full_messages.each do |message| %>
+          <%#= message %>
+        <%# end %>
+  <!--    </ol>-->
+  <!--  </div>-->
+  <%# end %>
+  <div class="container p-5">
+    <h4 class="subheading2">レビュー投稿</h4>
 
-
-<%= form_with model: @review, url: reviews_add_post_path, method: :post do |f| %>
-  <%= f.hidden_field :code, :value => params[:code] %>
-  <%= f.hidden_field :name, :value => params[:name] %>
-  <%= f.hidden_field :url, :value => params[:url] %>
-  <%= f.hidden_field :genre, :value => params[:genre] %>
-  <%= f.hidden_field :category, :value => params[:category] %>
-  <%= f.hidden_field :price, :value => params[:price] %>
-  <%= f.hidden_field :image, :value => params[:image] %>
-
-      <div class="form-group row">
-        <%= f.label :"入手方法", class: "col-md-3 col-form-label" %>
-          <%= f.radio_button :getting_method, Review.getting_methods.key(0), id: "item_on_sale" %>
-          <%= f.label :getting_method, Review.getting_methods_i18n[:self_purchase], for: "item_on_sale"  %>
-          <%= f.radio_button :getting_method, Review.getting_methods.key(1), id: "item_stop_sell"  %>
-          <%= f.label :getting_method, Review.getting_methods_i18n[:gift], for: "item_stop_sell" %>
-      </div>
-
-
-    <div class="form-group row position-static" id="star">
-      <%= f.label :evaluation,'評価 ', class:'col-md-3 col-form-label' %>
-      <%= f.hidden_field :evaluation, id: :evaluation %>
-    </div>
-
-    <!--<script>-->
-    <!--  $('#star').raty({-->
-    <!--    size     : 36,-->
-    <!--    starOff:  '<%#= asset_path('star-off.png') %>',-->
-    <!--    starOn : '<%#= asset_path('star-on.png') %>',-->
-    <!--    scoreName: 'review[evaluation]',-->
-    <!--    half: false,-->
-    <!--  });-->
-    <!--</script>-->
-
-    <script>
-        var elem = document.getElementById('star');
-        var opt = {
-        starOn: "<%= asset_path('star-on.png') %>",
-        starOff: "<%= asset_path('star-off.png') %>",
-        starHalf: "<%= asset_path('star-half.png') %>",
-        scoreName: 'review[evaluation]',
-        half: true
-      };
-      raty(elem,opt);
-    </script>
-
-
-      <div class="form-group row">
-        <%= f.label :"レビュー本文", class: "col-form-label", for: "item_introduction" %>
-        <div class="col-md-8">
-          <%= f.text_area :body, class: "form-control", id: "item_introduction", rows:"6", placeholder:"ここに説明文を記述します" %>
+    <div class="review border border-dark shadow bg-white p-5">
+      <div class="row">
+        <div class="col-md-3">
+          <%= image_tag (params[:image]), width: '100%', style: "max-height: 240px;" %>
+        </div>
+        <div class="col-md-9">
+          <p class="text-muted small mb-2">
+            <% @current_genre.parents.each do |parent| %>
+              <span><%= parent.name %></span>
+              <span class="px-2"><i class="fa-solid fa-chevron-right"></i></span>
+            <% end %>
+            <%= @current_genre.name %>
+          </p>
+          <h5><%= params[:name] %></h5>
+          <h4 class="m-0">￥<%= number_with_delimiter(params[:price]) %></h4>
         </div>
       </div>
+      <div class="form-body mt-5">
+        <%= form_with model: @review, url: reviews_confirm_path, method: :post do |f| %>
+          <%= f.hidden_field :code, :value => params[:code] %>
+          <%= f.hidden_field :name, :value => params[:name] %>
+          <%= f.hidden_field :url, :value => params[:url] %>
+          <%= f.hidden_field :genre, :value => params[:genre] %>
+          <%= f.hidden_field :category, :value => params[:category] %>
+          <%= f.hidden_field :price, :value => params[:price] %>
+          <%= f.hidden_field :image, :value => params[:image] %>
 
-      <div class="actions pt-3">
-        <%= f.submit '新規登録', class:"btn btn-light bg-gold btn-block" %>
+          <div class="form-group row mx-3">
+            <div class="col-sm-4 font-weight-bold pt-2">
+              <%= f.label :"入手方法" %>
+              <span class="text-danger small font-weight-bold">必須</span>
+            </div>
+            <div class="form-check form-check-inline ml-sm-0 mx-3">
+              <%= f.radio_button :getting_method, Review.getting_methods.key(0), id: "self_purchase", class: "form-check-input" %>
+              <%= f.label :getting_method, Review.getting_methods_i18n[:self_purchase], for: "self_purchase", class:"form-check-label" %>
+            </div>
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :getting_method, Review.getting_methods.key(1), id: "gift", class: "form-check-input" %>
+              <%= f.label :getting_method, Review.getting_methods_i18n[:gift], for: "gift", class:"form-check-label" %>
+            </div>
+          </div>
+          <div class="bg-gray rounded-lg pt-3 pb-1">
+            <p class="bg-danger text-white medium mx-3 mb-0 p-1">
+              <strong>「<%= Review.getting_methods_i18n[:gift] %>」</strong>を選択の方は以下の項目も入力してください
+            </p>
+
+            <div class="form-group row mx-3 mt-2">
+              <%= f.label :"プレゼント主", class: "col-sm-4 font-weight-bold pt-2" %>
+              <div class="col-sm-8 pt-1 px-0">
+                <div class="form-check form-check-inline ml-sm-0 mx-3">
+                  <%= f.radio_button :giver, Review.givers.key(1), id: "friend", class: "form-check-input", checked: "checked" %>
+                  <%= f.label :giver, Review.givers_i18n[:friend], for: "friend", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.givers.key(2), id: "lover", class: "form-check-input" %>
+                  <%= f.label :giver, Review.givers_i18n[:lover], for: "lover", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.givers.key(3), id: "parents", class: "form-check-input" %>
+                  <%= f.label :giver, Review.givers_i18n[:parents], for: "parents", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.givers.key(4), id: "my_child", class: "form-check-input" %>
+                  <%= f.label :giver, Review.givers_i18n[:my_child], for: "my_child", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.givers.key(5), id: "sibling", class: "form-check-input" %>
+                  <%= f.label :giver, Review.givers_i18n[:sibling], for: "sibling", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.givers.key(6), id: "relatives", class: "form-check-input" %>
+                  <%= f.label :giver, Review.givers_i18n[:relatives], for: "relatives", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.givers.key(7), id: "boss", class: "form-check-input" %>
+                  <%= f.label :giver, Review.givers_i18n[:boss], for: "boss", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.givers.key(8), id: "subordinate", class: "form-check-input" %>
+                  <%= f.label :giver, Review.givers_i18n[:subordinate], for: "subordinate", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.givers.key(9), id: "coworker", class: "form-check-input" %>
+                  <%= f.label :giver, Review.givers_i18n[:coworker], for: "coworker", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.givers.key(10), id: "business_people", class: "form-check-input" %>
+                  <%= f.label :giver, Review.givers_i18n[:business_people], for: "business_people", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.givers.key(11), id: "acquaintance", class: "form-check-input" %>
+                  <%= f.label :giver, Review.givers_i18n[:acquaintance], for: "acquaintance", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.givers.key(12), id: "other_people", class: "form-check-input" %>
+                  <%= f.label :giver, Review.givers_i18n[:other_people], for: "other_people", class: "form-check-label" %>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row mx-3 mt-2">
+              <%= f.label :"プレゼントシーン", class: "col-sm-4 font-weight-bold pt-2" %>
+              <div class="col-sm-8 pt-1 px-0">
+                <div class="form-check form-check-inline ml-sm-0 mx-3">
+                  <%= f.radio_button :giver, Review.gifted_events.key(1), id: "birthday", class: "form-check-input", checked: "checked" %>
+                  <%= f.label :giver, Review.gifted_events_i18n[:birthday], for: "birthday", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.gifted_events.key(2), id: "christmas", class: "form-check-input" %>
+                  <%= f.label :giver, Review.gifted_events_i18n[:christmas], for: "christmas", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.gifted_events.key(3), id: "father_day", class: "form-check-input" %>
+                  <%= f.label :giver, Review.gifted_events_i18n[:father_day], for: "father_day", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.gifted_events.key(4), id: "mother_day", class: "form-check-input" %>
+                  <%= f.label :giver, Review.gifted_events_i18n[:mother_day], for: "mother_day", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.gifted_events.key(5), id: "anniversary", class: "form-check-input" %>
+                  <%= f.label :giver, Review.gifted_events_i18n[:anniversary], for: "anniversary", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.gifted_events.key(6), id: "valentine", class: "form-check-input" %>
+                  <%= f.label :giver, Review.gifted_events_i18n[:valentine], for: "valentine", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.gifted_events.key(7), id: "white_day", class: "form-check-input" %>
+                  <%= f.label :giver, Review.gifted_events_i18n[:white_day], for: "white_day", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.gifted_events.key(8), id: "birthday_20th", class: "form-check-input" %>
+                  <%= f.label :giver, Review.gifted_events_i18n[:birthday_20th], for: "birthday_20th", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.gifted_events.key(9), id: "celebrate_job", class: "form-check-input" %>
+                  <%= f.label :giver, Review.gifted_events_i18n[:celebrate_job], for: "celebrate_job", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.gifted_events.key(10), id: "wedding_gift", class: "form-check-input" %>
+                  <%= f.label :giver, Review.gifted_events_i18n[:wedding_gift], for: "wedding_gift", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.gifted_events.key(11), id: "baby_gift", class: "form-check-input", checked: "checked" %>
+                  <%= f.label :giver, Review.gifted_events_i18n[:baby_gift], for: "baby_gift", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.gifted_events.key(12), id: "housewarming", class: "form-check-input" %>
+                  <%= f.label :giver, Review.gifted_events_i18n[:housewarming], for: "housewarming", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.gifted_events.key(13), id: "birthday_60th", class: "form-check-input" %>
+                  <%= f.label :giver, Review.gifted_events_i18n[:birthday_60th], for: "birthday_60th", class: "form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :giver, Review.gifted_events.key(14), id: "other_day", class: "form-check-input" %>
+                  <%= f.label :giver, Review.gifted_events_i18n[:other_day], for: "other_day", class: "form-check-label" %>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row mx-3">
+              <%= f.label :"マイページにレビューを表示", class: "col-sm-4 font-weight-bold pt-2" %>
+              <div class="form-check form-check-inline ml-sm-0 mx-3">
+                <%= f.radio_button :is_displayed, Review.is_displayeds.key(0), id: "display", class: "form-check-input" %>
+                <%= f.label :"する", for: "display", class:"form-check-label" %>
+              </div>
+              <div class="form-check form-check-inline">
+                <%= f.radio_button :is_displayed, Review.is_displayeds.key(1), id: "non_display", class: "form-check-input" %>
+                <%= f.label :"しない", for: "non_display", class:"form-check-label" %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row mx-3 mt-3">
+            <div class="col-sm-4 font-weight-bold pt-2">
+              <%= f.label :"ニックネーム" %>
+              <span class="text-danger small font-weight-bold">必須</span>
+            </div>
+            <div class="form-check form-check-inline ml-sm-0 mx-3">
+              <%= f.radio_button :is_anonymous, :onymous, id: "onymous", class: "form-check-input" %>
+              <%= f.label :"#{current_end_user.name}を使用", for: "onymous", class: "form-check-input mb-1" %>
+            </div>
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :is_anonymous, :anonymous, id: "anonymous", class: "form-check-input" %>
+              <%= f.label :"匿名で投稿する", for: "anonymous", class: "form-check-input mb-1" %>
+            </div>
+          </div>
+
+          <div class="form-group row mx-3">
+            <div class="col-sm-4 font-weight-bold">
+              <%= f.label :evaluation,'評価' %>
+              <span class="text-danger small font-weight-bold">必須</span>
+            </div>
+            <div id="star">
+              <%= f.hidden_field :evaluation, id: :evaluation %>
+            </div>
+            <script>
+              $('#star').empty();
+              var elem = document.getElementById('star');
+              var opt = {
+                starOn: "<%= asset_path('star-on.png') %>",
+                starOff: "<%= asset_path('star-off.png') %>",
+                starHalf: "<%= asset_path('star-half.png') %>",
+                scoreName: 'review[evaluation]',
+                half: true
+                };
+              raty(elem,opt);
+            </script>
+          </div>
+          <div class="form-group row mx-3">
+            <div class="col-sm-4 font-weight-bold">
+              <%= f.label :"レビュー本文" %>
+              <span class="text-danger small font-weight-bold">必須</span>
+            </div>
+            <div class="col-sm-8 pl-0 mx-sm-0 mx-3">
+              <%= f.text_area :body, class: "form-control", rows:"10", placeholder:"" %>
+            </div>
+          </div>
+          <div class="actions text-center mt-5">
+            <%= f.submit "入力を確認する", class:"btn btn-secondary w-50 medium" %>
+          </div>
+        <% end %>
       </div>
-    <% end %>
+    </div>
+
+  </div>
+</div>

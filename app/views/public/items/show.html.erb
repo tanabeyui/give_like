@@ -29,10 +29,10 @@
         <div class="row bg-yellow rounded-lg mx-md-0 mx-n3 py-3">
           <h6 class="col-auto pt-1 m-0">GiveLikeレビュー</h6>
           <div class="col-auto px-1">
-            <div id="star-rate<%= @item_params[:code] %>"></div>
+            <div id="star-rate"></div>
             <script>
-              $('#star-rate<%= @item_params[:code] %>').empty();
-              var elem = document.getElementById('star-rate<%= @item_params[:code] %>');
+              $('#star-rate').empty();
+              var elem = document.getElementById('star-rate');
               var opt = {
                 starOn: "<%= asset_path('star-on.png') %>",
                 starOff: "<%= asset_path('star-off.png') %>",

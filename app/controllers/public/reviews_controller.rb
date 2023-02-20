@@ -13,11 +13,9 @@ class Public::ReviewsController < ApplicationController
       redirect_to not_found_path
     end
     if end_user_signed_in? && current_end_user.screen_name == params[:screen_name]
-      # @review_categorys = @end_user.reviews.disclosed.group(:category).order('count(id) desc')
-      # @review_counts = @end_user.reviews.disclosed
+      @review_categorys = @end_user.reviews.disclosed.group(:category).order('count(id) desc')
+      @review_counts = @end_user.reviews.disclosed
       @reviews = @end_user.reviews.disclosed.order(evaluation: "DESC").page(params[:page]).per(10)
-      @review_categorys = Review.where(end_user_id: @end_user.id, is_disclose: true).group(:category).order('count(id) desc')
-      @review_counts = Review.where(end_user_id: @end_user.id, is_disclose: true)
       if params[:sort] == "new"
         @sort_reviews = @end_user.reviews.disclosed.order(created_at: "DESC").page(params[:page]).per(10)
       elsif params[:sort] == "old"
@@ -45,17 +43,23 @@ class Public::ReviewsController < ApplicationController
 
   def new
     @review = Review.new
-  end
-
-  def add_post
-    @review = Review.new(review_params)
-    @end_user = current_end_user
-    if params[:review][:getting_method] == "self_purchase"
-      render :confirm
+    @current_genre = RakutenWebService::Ichiba::Genre[(params[:genre])]
+    unless end_user_signed_in?
+      flash[:danger] = "ログインしてください！"
+      redirect_to item_path(params[:code], name: params[:name], code: params[:code],
+                                genre: params[:genre], price: params[:price], image: params[:image], url: params[:url])
     end
   end
 
   def confirm
+    @review = Review.new(review_params)
+    @end_user = current_end_user
+    # if params[:review][:getting_method] == "gift"
+    #   render :add_post
+    # end
+  end
+  
+  def add_post
     @review = Review.new(review_params)
     @end_user = current_end_user
   end
@@ -64,7 +68,7 @@ class Public::ReviewsController < ApplicationController
     @review = Review.new(review_params)
     @review.end_user_id = current_end_user.id
     if @review.save
-      redirect_to item_path(params[:review][:code], name: params[:review][:name], code: params[:review][:code], genre: params[:review][:genre], price: params[:review][:price], image: params[:review][:image], url: params[:review][:url])
+      redirect_to end_user_reviews_path(current_end_user.screen_name)
     else
       render :new
     end
@@ -77,7 +81,7 @@ class Public::ReviewsController < ApplicationController
   def destroy
     review = Review.find(params[:id])
     review.destroy
-    redirect_to items_path
+    redirect_to end_user_reviews_path(current_end_user.screen_name)
   end
 
 
