@@ -3,6 +3,9 @@ class Public::FavoritesController < ApplicationController
 
   def index
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
+    if @end_user.is_deleted == "unsubscribe"
+      redirect_to not_found_path
+    end
     @favorite_categorys = Favorite.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
     @favorites = @end_user.favorites.order(created_at: :desc).page(params[:page]).per(10)
   end
@@ -43,7 +46,7 @@ class Public::FavoritesController < ApplicationController
   end
 
   def favorite_params
-    params.require(:favorite).permit(:end_user_id, :name, :image, :code, :price, :url, :category)
+    params.require(:favorite).permit(:end_user_id, :name, :image, :code, :price, :url, :genre, :category)
   end
 
 end

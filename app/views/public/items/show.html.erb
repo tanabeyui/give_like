@@ -267,7 +267,7 @@
               <div class="review-header d-flex justify-content-between medium">
                 <div>
                   <% if review.is_anonymous == "anonymous" %>
-                    <%= image_tag 'no-image.png', :size => '30x30', class: "rounded-circle" %>
+                    <%= image_tag 'no-image.jpg', :size => '30x30', class: "rounded-circle" %>
                     <span class="px-1">ゲストさん ( <%= review.end_user.era %> / <%= review.end_user.gender_i18n %> )</span>
                   <% else %>
                     <%= image_tag review.end_user.get_profile_image(30,30), class: "rounded-circle" %>
@@ -306,10 +306,15 @@
             </div>
           <% end %>
         <% end %>
-        <% if @search_reviews.count == 0 && Review.exists? %>
-          <h5 class="text-center text-secondary my-5 py-5">該当するレビューがありません！</h5>
-        <% end %>
-
     </div>
+  </div>
+   <div class="d-flex justify-content-center medium mt-4">
+    <% if @q.code_eq != nil %>
+      <%= paginate @search_reviews, class: "medium" %>
+    <% elsif params[:sort] != nil %>
+        <%= paginate @sort_reviews, class: "medium" %>
+    <% else %>
+      <%= paginate @reviews, class: "medium" %>
+    <% end %>
   </div>
 </div>

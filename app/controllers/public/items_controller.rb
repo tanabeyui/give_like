@@ -35,15 +35,15 @@ class Public::ItemsController < ApplicationController
     end
     @favorite = Favorite.new
     @want_item = WantItem.new
-    @reviews = Review.where(code: @item_params[:code]).disclosed
+    @reviews = Review.where(code: @item_params[:code]).disclosed.page(params[:page]).per(20)
     if params[:sort] == "new"
-      @sort_reviews = @reviews.order(created_at: "DESC")
+      @sort_reviews = @reviews.order(created_at: "DESC").page(params[:page]).per(20)
     elsif params[:sort] == "old"
-      @sort_reviews = @reviews.order(created_at: "ASC")
+      @sort_reviews = @reviews.order(created_at: "ASC").page(params[:page]).per(20)
     elsif params[:sort] == "high_rated"
-      @sort_reviews = @reviews.order(evaluation: "DESC")
+      @sort_reviews = @reviews.order(evaluation: "DESC").page(params[:page]).per(20)
     elsif params[:sort] == "low_rated"
-      @sort_reviews = @reviews.order(evaluation: "ASC")
+      @sort_reviews = @reviews.order(evaluation: "ASC").page(params[:page]).per(20)
     end
   end
 
@@ -64,7 +64,7 @@ class Public::ItemsController < ApplicationController
 
   def set_search
     @q = Review.ransack(params[:q])
-    @search_reviews = @q.result(distinct: true).disclosed.order(created_at: "DESC")
+    @search_reviews = @q.result(distinct: true).disclosed.order(created_at: "DESC").page(params[:page]).per(20)
   end
 
 end

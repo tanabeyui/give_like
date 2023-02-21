@@ -170,7 +170,9 @@
                 <div class="row no-gutters mt-3 mb-4">
                   <% @latest_reviews.each do |latest_review| %>
                     <div class="col-3 pt-1">
-                      <%= image_tag (latest_review.image), width: '100%' %>
+                      <%= link_to item_path(latest_review.code, name: latest_review.name, code: latest_review.code, price: latest_review.price, genre: latest_review.genre, image: latest_review.image, url: latest_review.url) do %>
+                        <%= image_tag (latest_review.image), width: '100%' %>
+                      <% end %>
                     </div>
                     <div class="col-9">
                       <div class="shadow bg-white rounded-lg ml-3 p-3">
@@ -208,7 +210,9 @@
                       <%= content_tag :div, class: "card-rank position-absolute rounded-circle bg-#{@rank_colors[i]} text-white my-n3 mx-n2", style: "width: 40px;height: 40px;" do %>
                         <h6 class="text-center", style="line-height: 40px;"><%= i + 1 %></h6>
                       <% end %>
-                      <%= image_tag (high_review.image), class:"card-img-top" %>
+                      <%= link_to item_path(high_review.code, name: high_review.name, code: high_review.code, price: high_review.price, genre: high_review.genre, image: high_review.image, url: high_review.url) do %>
+                        <%= image_tag (high_review.image), class:"card-img-top" %>
+                      <% end %>
                       <div class="card-body p-2">
                         <p class="card-title text-limit medium mb-1"><%= high_review.name %></p>
                         <div id="star-rate<%= high_review.id %>"></div>

@@ -3,6 +3,9 @@ class Public::WantItemsController < ApplicationController
 
   def index
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
+    if @end_user.is_deleted == "unsubscribe"
+      redirect_to not_found_path
+    end
     @want_item_categorys = WantItem.where(end_user_id: @end_user.id).group(:category).order('count(id) desc')
     @want_items = @end_user.want_items.order(created_at: :desc).page(params[:page]).per(10)
   end
@@ -43,7 +46,7 @@ class Public::WantItemsController < ApplicationController
   end
 
   def want_item_params
-    params.require(:want_item).permit(:end_user_id, :name, :image, :code, :price, :url, :category)
+    params.require(:want_item).permit(:end_user_id, :name, :image, :code, :price, :url, :genre, :category)
   end
 
 end
