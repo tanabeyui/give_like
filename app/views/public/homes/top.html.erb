@@ -17,115 +17,117 @@
         <%= link_to " 投票する（全５問）", new_response_path, class: "btn btn-danger btn-sm font-weight-bold ml-2" %>
       </h5>
 
-      <div class="mx-auto" style="position:relative; width:90%; height:250px;">
+      <% if Response.exists? %>
+        <div class="mx-auto" style="position:relative; width:90%; height:250px;">
           <canvas id="responsesChart"></canvas>
-      </div>
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      <script>
-        const ctx = document.getElementById('responsesChart');
-
-        new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels:[
-                <% @responses.each do |response| %>
-                  "<%= response.present_genre_i18n %>",
-                <% end %>
-                ],
-            datasets: [{
-              data: [
-                <% @responses.each do |response| %>
-                  <%= Response.where(present_genre: response.present_genre ).count.to_i %>,
-                <% end %>
-                ],
-                barPercentgifted_event: 0.7,
-                backgroundColor: "#17a2b8"
-            }]
-          },
-          options: {
-              indexAxis: 'y',
-              maintainAspectRatio: false,
-              plugins: {
-                legend: false
-              },
-              scales: {
-                    x: {
-                        grid: {
-                            display: false,
-                        },
-                        ticks: {
-                            display: false
-                        },
-                        border: {
-                            display: false
-                        }
-                    }
-                }
-          }
-        });
-      </script>
-
-      <div class="row no-gutters bg-gray my-3 px-3 py-3">
-        <div class="col-sm-6">
-          <h6 class="subheading font-weight-bold">年齢別No.1</h6>
-
-          <dl class="row no-gutters medium p-2 mb-0">
-            <% @ages.each do |age| %>
-              <% by_age_response = Response.where(age: age).group(:present_genre).order('count(id) desc').first %>
-              <dd class="col-2 font-weight-bold medium mb-1"><%= by_age_response.age_i18n %></dd>
-              <dd class="col-10 medium mb-1">
-                <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
-                <%= by_age_response.present_genre_i18n %>
-              </dd>
-            <% end %>
-          </dl>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+          const ctx = document.getElementById('responsesChart');
 
-        <div class="col-sm-6 pl-1">
-          <h6 class="subheading font-weight-bold">男女別TOP3</h6>
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels:[
+                  <% @responses.each do |response| %>
+                    "<%= response.present_genre_i18n %>",
+                  <% end %>
+                  ],
+              datasets: [{
+                data: [
+                  <% @responses.each do |response| %>
+                    <%= Response.where(present_genre: response.present_genre ).count.to_i %>,
+                  <% end %>
+                  ],
+                  barPercentgifted_event: 0.7,
+                  backgroundColor: "#17a2b8"
+              }]
+            },
+            options: {
+                indexAxis: 'y',
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: false
+                },
+                scales: {
+                      x: {
+                          grid: {
+                              display: false,
+                          },
+                          ticks: {
+                              display: false
+                          },
+                          border: {
+                              display: false
+                          }
+                      }
+                  }
+            }
+          });
+        </script>
 
-          <div class="row no-gutters ml-2 mb-3">
-            <div class="col-1">
-              <p class="font-weight-bold">男性</p>
-            </div>
-            <div class="col-11 pl-2">
-              <ul class="list-unstyled medium m-0">
-                <% @male_responses.each_with_index do |male_response, i| %>
-                  <li>
-                    <%= content_tag :span, class: "text-#{@rank_colors[i]}" do %>
-                      <i class="fa-sharp fa-solid fa-crown"></i>
-                    <% end %>
-                    <%= male_response.present_genre_i18n %>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
+        <div class="row no-gutters bg-gray my-3 px-3 py-3">
+          <div class="col-sm-6">
+            <h6 class="subheading font-weight-bold">年齢別No.1</h6>
+
+            <dl class="row no-gutters medium p-2 mb-0">
+              <% @all_responses.each do |all_response| %>
+                <% by_age_response = Response.where(age: all_response.age).group(:present_genre).order('count(id) desc').first %>
+                <dd class="col-2 font-weight-bold medium mb-1"><%= by_age_response.age_i18n %></dd>
+                <dd class="col-10 medium mb-1">
+                  <span class="text-gold"><i class="fa-sharp fa-solid fa-crown"></i></span>
+                  <%= by_age_response.present_genre_i18n %>
+                </dd>
+              <% end %>
+            </dl>
           </div>
 
-          <div class="row no-gutters ml-2 mb-5">
-            <div class="col-1">
-              <p class="font-weight-bold">女性</p>
+          <div class="col-sm-6 pl-1">
+            <h6 class="subheading font-weight-bold">男女別TOP3</h6>
+
+            <div class="row no-gutters ml-2 mb-3">
+              <div class="col-1">
+                <p class="font-weight-bold">男性</p>
+              </div>
+              <div class="col-11 pl-2">
+                <ul class="list-unstyled medium m-0">
+                  <% @male_responses.each_with_index do |male_response, i| %>
+                    <li>
+                      <%= content_tag :span, class: "text-#{@rank_colors[i]}" do %>
+                        <i class="fa-sharp fa-solid fa-crown"></i>
+                      <% end %>
+                      <%= male_response.present_genre_i18n %>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
             </div>
-            <div class="col-11 pl-2">
-              <ul class="list-unstyled medium m-0">
-                <% @female_responses.each_with_index do |female_response, i| %>
-                  <li>
-                    <%= content_tag :span, class: "text-#{@rank_colors[i]}" do %>
-                      <i class="fa-sharp fa-solid fa-crown"></i>
-                    <% end %>
-                    <%= female_response.present_genre_i18n %>
-                  </li>
-                <% end %>
-              </ul>
+
+            <div class="row no-gutters ml-2 mb-5">
+              <div class="col-1">
+                <p class="font-weight-bold">女性</p>
+              </div>
+              <div class="col-11 pl-2">
+                <ul class="list-unstyled medium m-0">
+                  <% @female_responses.each_with_index do |female_response, i| %>
+                    <li>
+                      <%= content_tag :span, class: "text-#{@rank_colors[i]}" do %>
+                        <i class="fa-sharp fa-solid fa-crown"></i>
+                      <% end %>
+                      <%= female_response.present_genre_i18n %>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
             </div>
-          </div>
-          <div class="text-right mt-3">
-            <%= link_to responses_path, class: "bg-blue text-white rounded-lg small p-2" do %>
-              アンケート結果をもっと見る <i class="fa-solid fa-angles-right"></i>
-            <% end %>
+            <div class="text-right mt-3">
+              <%= link_to responses_path, class: "bg-blue text-white rounded-lg small p-2" do %>
+                アンケート結果をもっと見る <i class="fa-solid fa-angles-right"></i>
+              <% end %>
+            </div>
           </div>
         </div>
-      </div>
+      <% end %>
 
 
       <h5 class="headline bg-beige font-weight-bold py-3 mt-5">
@@ -159,11 +161,11 @@
       </h5>
       <div class="card-deck pt-3 px-3 mb-5">
         <% @reviews.each_with_index do |review, i| %>
-        <div class="card position-relative m-2">
+        <div class="card position-relative m-2" style="max-width: 150px;">
           <%= content_tag :div, class: "card-rank position-absolute rounded-circle bg-#{@rank_colors[i]} text-white my-n3 mx-n2", style: "width: 40px;height: 40px;" do %>
             <h6 class="text-center", style="line-height: 40px;"><%= i + 1 %></h6>
           <% end %>
-          <%= link_to item_path(review.code, name: review.name, code: review.code, price: review.price, image: review.image, url: review.url) do %>
+          <%= link_to item_path(review.code, name: review.name, code: review.code, price: review.price, genre: review.genre, image: review.image, url: review.url) do %>
             <%= image_tag (review.image), class:"card-img-top" %>
           <% end %>
           <div class="card-body p-2">

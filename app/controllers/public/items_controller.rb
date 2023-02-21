@@ -27,7 +27,7 @@ class Public::ItemsController < ApplicationController
   end
 
   def show
-    @item_params = params[:q] || params
+    @item_params = params[:q] || params[:review] || params
     current_genre_id = params[:genre] || params[:q][:genre]
     @current_genre = RakutenWebService::Ichiba::Genre[current_genre_id]
     @current_genre.parents.first(1).each do |parent|

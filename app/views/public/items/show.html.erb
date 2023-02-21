@@ -306,7 +306,7 @@
             </div>
           <% end %>
         <% end %>
-        <% if @search_reviews.count == 0 %>
+        <% if @search_reviews.count == 0 && Review.exists? %>
           <h5 class="text-center text-secondary my-5 py-5">該当するレビューがありません！</h5>
         <% end %>
 

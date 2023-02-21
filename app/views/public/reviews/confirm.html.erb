@@ -61,13 +61,14 @@
             <%= f.hidden_field :code %>
             <%= f.hidden_field :name %>
             <%= f.hidden_field :url %>
+            <%= f.hidden_field :genre %>
             <%= f.hidden_field :category %>
             <%= f.hidden_field :price %>
             <%= f.hidden_field :image %>
             <%= f.hidden_field :getting_method %>
             <%= f.hidden_field :evaluation %>
             <%= f.hidden_field :body %>
-            <%= f.hidden_field :is_anonymous %>
+            <%= f.hidden_field :is_anonymous, :value => "onymous" %>
             <%= f.hidden_field :is_displayed, :value => "display" %>
             <%= f.hidden_field :giver, :value => "no_giver" %>
             <%= f.hidden_field :gifted_event, :value => "no_date" %>

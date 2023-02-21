@@ -74,12 +74,13 @@ ActiveRecord::Schema.define(version: 2023_01_24_121841) do
 
   create_table "favorites", force: :cascade do |t|
     t.integer "end_user_id", null: false
-    t.string "code", default: "", null: false
-    t.string "image", default: "", null: false
-    t.string "name", default: "", null: false
-    t.string "category", default: "", null: false
+    t.string "code", null: false
+    t.string "image", null: false
+    t.string "name", null: false
+    t.integer "genre", null: false
+    t.string "category", null: false
     t.integer "price", null: false
-    t.string "url", default: "", null: false
+    t.string "url", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -100,16 +101,17 @@ ActiveRecord::Schema.define(version: 2023_01_24_121841) do
     t.string "code", null: false
     t.string "image", null: false
     t.string "name", null: false
+    t.integer "genre", null: false
     t.string "category", null: false
     t.integer "price", null: false
     t.string "url", null: false
     t.text "body", null: false
     t.float "evaluation"
-    t.integer "getting_method", default: 0, null: false
-    t.integer "giver", default: 0, null: false
-    t.integer "gifted_event", default: 0, null: false
-    t.boolean "is_anonymous", default: false, null: false
-    t.boolean "is_displayed", default: true, null: false
+    t.integer "getting_method", null: false
+    t.integer "giver", null: false
+    t.integer "gifted_event", null: false
+    t.boolean "is_anonymous", null: false
+    t.boolean "is_displayed", null: false
     t.boolean "is_checked", default: false, null: false
     t.boolean "is_disclose", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
@@ -118,12 +120,13 @@ ActiveRecord::Schema.define(version: 2023_01_24_121841) do
 
   create_table "want_items", force: :cascade do |t|
     t.integer "end_user_id", null: false
-    t.string "code", default: "", null: false
-    t.string "image", default: "", null: false
-    t.string "name", default: "", null: false
-    t.string "category", default: "", null: false
+    t.string "code", null: false
+    t.string "image", null: false
+    t.string "name", null: false
+    t.integer "genre", null: false
+    t.string "category", null: false
     t.integer "price", null: false
-    t.string "url", default: "", null: false
+    t.string "url", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

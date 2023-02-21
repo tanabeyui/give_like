@@ -2,7 +2,7 @@ class Public::HomesController < ApplicationController
   before_action :set_search
 
   def top
-    @ages = 1..7
+    @all_responses = Response.all
     @rank_colors = ['gold', 'silver', 'bronze', 'dark', 'dark']
     @responses = Response.group(:present_genre).order('count(id) desc').first(7)
     @male_responses = Response.where(gender: "0").group(:present_genre).order('count(id) desc').first(3)

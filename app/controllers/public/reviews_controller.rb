@@ -42,7 +42,7 @@ class Public::ReviewsController < ApplicationController
   end
 
   def new
-    @item_params = params[:review] || params
+    @item_params = params
     @review = Review.new
     @current_genre = RakutenWebService::Ichiba::Genre[(params[:genre])]
     unless end_user_signed_in?
@@ -56,9 +56,6 @@ class Public::ReviewsController < ApplicationController
     @review = Review.new(review_params)
     @end_user = current_end_user
     @current_genre = RakutenWebService::Ichiba::Genre[(params[:review][:genre])]
-    # if params[:review][:evaluation] == ""
-    #   render :new
-    # end
   end
 
   def create
@@ -67,17 +64,35 @@ class Public::ReviewsController < ApplicationController
     if @review.save
       redirect_to end_user_reviews_path(current_end_user.screen_name)
     else
+      flash[:danger] = "未入力の項目があるため、投稿できませんでした"
+      @item_params = params[:review]
+      @current_genre = RakutenWebService::Ichiba::Genre[(params[:review][:genre])]
       render :new
     end
   end
 
   def edit
     @review = Review.find(params[:id])
+    @current_genre = RakutenWebService::Ichiba::Genre[@review.genre]
+  end
+
+  def update
+    @review = Review.find(params[:id])
+    if @review.getting_method == "self_purchase"
+      @review.update(review_params)
+      @review.update(is_anonymous: false, is_displayed: true, giver: 0, gifted_event: 0 )
+      flash[:success] = "レビュー内容を変更しました"
+      redirect_to end_user_reviews_path(current_end_user.screen_name)
+    else
+      flash[:danger] = "未入力の項目があるため、投稿できませんでした"
+      render :edit
+    end
   end
 
   def destroy
     review = Review.find(params[:id])
     review.destroy
+    flash[:success] = "レビューを削除しました"
     redirect_to end_user_reviews_path(current_end_user.screen_name)
   end
 
@@ -96,7 +111,7 @@ class Public::ReviewsController < ApplicationController
   end
 
   def review_params
-    params.require(:review).permit(:name, :image, :code, :price, :url, :category,
+    params.require(:review).permit(:name, :image, :code, :price, :url, :category, :genre,
             :body, :evaluation, :getting_method, :giver, :gifted_event, :is_anonymous, :is_displayed, :is_checked, :is_disclose,)
   end
 

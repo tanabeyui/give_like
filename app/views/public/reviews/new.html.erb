@@ -1,4 +1,5 @@
 <div class="bg-yellow">
+  <%= render 'layouts/alert' %>
   <div class="container p-5">
     <h4 class="subheading2">レビュー投稿</h4>
 
@@ -47,7 +48,7 @@
           </div>
           <div class="bg-gray rounded-lg medium pt-3 pb-1">
             <p class="bg-danger text-white medium mx-3 mb-0 p-1">
-              <strong>「<%= Review.getting_methods_i18n[:gift] %>」</strong>を選択の方は以下の項目も選択してください
+              <strong>「<%= Review.getting_methods_i18n[:gift] %>」</strong>を選択された方は、以下の項目も選択してください。
             </p>
 
             <div class="form-group row border-bottom border-secondary mx-3 mb-0 py-3">
@@ -104,7 +105,7 @@
               </div>
             </div>
 
-            <div class="form-group row border-bottom border-secondary mx-3 py-3">
+            <div class="form-group row border-bottom border-secondary mx-3 mb-0 py-3">
               <%= f.label :"プレゼントシーン", class: "col-sm-4 font-weight-bold" %>
               <div class="col-sm-8 pl-sm-0 px-3">
                 <div class="form-check form-check-inline">
@@ -166,36 +167,32 @@
               </div>
             </div>
 
-            <div class="form-group row mx-3">
+            <div class="form-group row border-bottom border-secondary mx-3 py-3">
               <%= f.label :"マイページにレビューを表示", class: "col-sm-4 font-weight-bold" %>
-              <div class="form-check form-check-inline ml-sm-0 mx-3">
-                <%= f.radio_button :is_displayed, Review.is_displayeds.key(true), id: "display", class: "form-check-input" %>
-                <%= f.label :"する", for: "display", class:"form-check-label" %>
-              </div>
-              <div class="form-check form-check-inline">
-                <%= f.radio_button :is_displayed, Review.is_displayeds.key(false), id: "non_display", class: "form-check-input" %>
-                <%= f.label :"しない", for: "non_display", class:"form-check-label" %>
+              <div class="col-sm-8 pl-sm-0 px-3">
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :is_displayed, Review.is_displayeds.key(true), id: "display", class: "form-check-input" %>
+                  <%= f.label :"する", for: "display", class:"form-check-label" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :is_displayed, Review.is_displayeds.key(false), id: "non_display", class: "form-check-input" %>
+                  <%= f.label :"しない", for: "non_display", class:"form-check-label" %>
+                </div>
               </div>
             </div>
+            <div class="form-group row mx-3">
+              <%= f.label :"商品ページにニックネームを表示", class: "col-sm-4 font-weight-bold" %>
+              <div class="col-sm-8 pl-sm-0 px-3">
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :is_anonymous, :onymous, id: "onymous", class: "form-check-input" %>
+                  <%= f.label :"する", for: "onymous", class: "form-check-input mb-1" %>
+                </div>
+                <div class="form-check form-check-inline">
+                  <%= f.radio_button :is_anonymous, :anonymous, id: "anonymous", class: "form-check-input" %>
+                  <%= f.label :"しない", for: "anonymous", class: "form-check-input mb-1" %>
+                </div>
+              </div>
           </div>
-
-          <hr>
-
-          <div class="form-group row mx-3 mt-3">
-            <div class="col-sm-4 font-weight-bold">
-              <%= f.label :"ニックネーム" %>
-              <span class="text-danger small font-weight-bold">必須</span>
-            </div>
-            <div class="col-sm-8 pl-sm-0 px-3">
-              <div class="form-check form-check-inline">
-                <%= f.radio_button :is_anonymous, :onymous, id: "onymous", class: "form-check-input" %>
-                <%= f.label :"#{current_end_user.name}を使用", for: "onymous", class: "form-check-input mb-1" %>
-              </div>
-              <div class="form-check form-check-inline">
-                <%= f.radio_button :is_anonymous, :anonymous, id: "anonymous", class: "form-check-input" %>
-                <%= f.label :"匿名で投稿する", for: "anonymous", class: "form-check-input mb-1" %>
-              </div>
-            </div>
           </div>
 
           <hr>
