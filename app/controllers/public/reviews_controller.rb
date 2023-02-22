@@ -78,13 +78,15 @@ class Public::ReviewsController < ApplicationController
 
   def update
     @review = Review.find(params[:id])
-    if @review.getting_method == "self_purchase"
-      @review.update(review_params)
-      @review.update(is_anonymous: false, is_displayed: true, giver: 0, gifted_event: 0 )
+    if @review.update(review_params)
+      if @review.getting_method == "self_purchase"
+        @review.update(is_anonymous: false, is_displayed: true, giver: 0, gifted_event: 0 )
+      end
       flash[:success] = "レビュー内容を変更しました"
       redirect_to end_user_reviews_path(current_end_user.screen_name)
     else
       flash[:danger] = "未入力の項目があるため、投稿できませんでした"
+      @current_genre = RakutenWebService::Ichiba::Genre[@review.genre]
       render :edit
     end
   end
