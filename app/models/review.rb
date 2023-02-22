@@ -1,7 +1,7 @@
 class Review < ApplicationRecord
 
   belongs_to :end_user
-  
+
   validates :code, {presence: true}
   validates :name, {presence: true}
   validates :url, {presence: true}

@@ -1,5 +1,6 @@
 class Public::ReviewsController < ApplicationController
   before_action :set_search
+  before_action :is_matching_login_user, only: [:edit, :update]
 
   def ranking
     @reviews = Review.group(:code).order("avg(evaluation) desc")
@@ -115,6 +116,17 @@ class Public::ReviewsController < ApplicationController
   def review_params
     params.require(:review).permit(:name, :image, :code, :price, :url, :category, :genre,
             :body, :evaluation, :getting_method, :giver, :gifted_event, :is_anonymous, :is_displayed, :is_checked, :is_disclose,)
+  end
+
+  def is_matching_login_user
+    @review = Review.find(params[:id])
+    if end_user_signed_in?
+      if @review.end_user_id != current_end_user.id
+        redirect_to root_path
+      end
+    else
+      redirect_to root_path
+    end
   end
 
 end

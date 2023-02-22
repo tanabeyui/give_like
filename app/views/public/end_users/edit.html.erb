@@ -1,11 +1,11 @@
 <div class="container">
-    <div class="row no-gutters">
-      <div class="col-md-3 p-4">
-        <%= render 'public/shared/user_info', end_user: @end_user %>
-      </div>
-
+  <%= render 'layouts/alert' %>
+  <div class="row no-gutters">
+    <div class="col-md-3 p-4">
+      <%= render 'public/shared/user_info', end_user: @end_user %>
+    </div>
     <div class="col-md-9 py-4 mt-3 mb-5">
-      <h5 class="subheading2 font-weight-bold">プロフィール編集</h5>
+    <h5 class="subheading2 font-weight-bold">プロフィール編集</h5>
       <div class="bg-yellow medium p-5">
         <%= form_with model: @end_user, url: end_users_path, method: :patch do |f| %>
           <div class="form-group row">

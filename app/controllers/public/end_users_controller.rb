@@ -1,4 +1,5 @@
 class Public::EndUsersController < ApplicationController
+  before_action :is_matching_login_user, only: [:edit, :update]
 
   def show
     @end_user = EndUser.find_by(screen_name: params[:screen_name])
@@ -23,6 +24,7 @@ class Public::EndUsersController < ApplicationController
     if @end_user.update(end_user_params)
       redirect_to end_user_path(@end_user.screen_name)
     else
+      flash[:danger] = "未入力の項目があるため、更新できませんでした"
       render :edit
     end
   end
@@ -46,4 +48,11 @@ class Public::EndUsersController < ApplicationController
   def end_user_params
     params.require(:end_user).permit(:profile_image, :name, :email, :gender, :birth_day, :favorites_introduction, :want_items_introduction, :is_deleted)
   end
+
+  def is_matching_login_user
+    unless end_user_signed_in?
+      redirect_to root_path
+    end
+  end
+
 end

@@ -1,5 +1,12 @@
 class Response < ApplicationRecord
 
+  validates :age, {presence: true}
+  validates :gender, {presence: true}
+  validates :internet_protocol_address, {presence: true}
+  validates :present_genre, {presence: true}
+  validates :giver, {presence: true}
+  validates :gifted_event, {presence: true}
+
   enum gender: { male: 0, female: 1, not_selected: 2 }
   enum age: { kid:0, teens: 1, twenties: 2, thirties: 3, forties: 4, fifties: 5, sixties: 6, seventies: 7 }
   enum giver: { forgot_giver: 0, friend: 1, lover: 2, parents: 3, my_child: 4, sibling: 5, relatives: 6,

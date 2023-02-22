@@ -5,6 +5,10 @@ class EndUser < ApplicationRecord
          :recoverable, :rememberable, :validatable, authentication_keys: [:screen_name]
 
   validates :screen_name, presence: true, uniqueness: true
+  validates :name, presence: true
+  validates :birth_day, presence: true
+  validates :gender, presence: true
+  validates :is_deleted, presence: true
 
   has_many :reviews, dependent: :destroy
   has_many :favorites, dependent: :destroy
@@ -14,7 +18,7 @@ class EndUser < ApplicationRecord
   enum is_deleted: { unsubscribe: true, member: false }
 
   has_one_attached :profile_image
-  
+
   def get_profile_image(width, height)
     unless profile_image.attached?
       file_path = Rails.root.join('app/assets/images/no-image.jpg')
