@@ -1,19 +1,29 @@
-<h2>Log in</h2>
-
-<%= form_with model: @admin, url: admin_session_path do |f| %>
-    <div class="form-group row justify-content-center pt-5">
-      <%= f.label :"メールアドレス", class: "col-lg-2 col-form-label", for: "email" %>
-      <div class="col-lg-7">
-        <%= f.email_field :email, class: "form-control", autocomplete: "email", autofocus: true, placeholder: "email@example.com", id: "email" %>
-      </div>
-    </div>
-    <div class="form-group row justify-content-center">
-      <%= f.label :"パスワード", class: "col-lg-2 col-form-label", id: "password" %>
-      <div class="col-lg-7">
-        <%= f.password_field :password, class: "form-control", autocomplete: "current-password", id: "password" %>
-      </div>
-    </div>
-    <div class="actions row py-2">
-        <%= f.submit " ログイン", class: "btn btn-primary btn-block w-25 mx-auto" %>
+<div class="container-fluid bg-gray">
+  <% if alert %>
+    <div class="container alert alert-danger pt-3 px-5 pb-0">
+      <p><%= alert %></p>
     </div>
   <% end %>
+
+  <div class="row no-gutters">
+    <div class="col-lg-4 col-sm-7 py-5 my-5 mx-auto">
+      <h2 class="sign_in mb-n2">Admin Login</h2>
+
+      <div class="form-body bg-yellow shadow bg-white p-5">
+        <%= form_with model: @admin, url: admin_session_path do |f| %>
+          <div class="form-group">
+            <%= f.label :"Email", class: "" %>
+            <%= f.email_field :email, class: "form-control", autocomplete: "email", autofocus: true, placeholder: "email@example.com" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :password, class: "text-capitalize" %><br />
+            <%= f.password_field :password, class: "form-control", autocomplete: "current-password" %>
+          </div>
+          <div class="actions text-center my-5 py-3">
+            <%= f.submit "ログイン", class:"btn bg-blue w-50 medium text-white" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -12,7 +12,6 @@ Rails.application.routes.draw do
   get '/end_users/:screen_name/reviews', to: 'public/reviews#index', as: 'end_user_reviews'
   get '/end_users/:screen_name/favorites', to: 'public/favorites#index', as: 'end_user_favorites'
   get '/end_users/:screen_name/want_items', to: 'public/want_items#index', as: 'end_user_want_items'
-
   get '/end_users/:screen_name/edit' => 'public/end_users#edit', as: 'end_user_edit'
   patch '/end_users/:screen_name' => 'public/end_users#update', as: 'end_users'
   get '/end_users/unsubscribe/confirm' => 'public/end_users#confirm', as: 'end_user_confirm'
@@ -58,6 +57,7 @@ Rails.application.routes.draw do
     }
 
   devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
+    # registrations: "admin/registrations",
     sessions: "admin/sessions"
   }
 
