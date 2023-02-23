@@ -1,17 +1,53 @@
-<h2>新着レビュー</h2>
-<%= link_to "全て確認済みにする", reviews_confirmed_all_path, method: :patch, class: "btn btn-danger btn-block", style: "background-color:green" %>
-<% @reviews.each do |review| %>
-  <div style="background-color:#cccccc">
-    <%= review.created_at.strftime('%Y/%m/%d') %><br>
-    ユーザー名：<%= image_tag review.end_user.get_profile_image(30,30) %>
-    <%= review.end_user.name %>[@<%= review.end_user.screen_name %>]<br>
-    レビュー商品名：<%= review.name %>
+<div class="container p-5">
+  <div class="row no-gutters d-flex border-bottom">
+    <div class="col-5">
+      <h3 class="subheading2">新着レビュー</h3>
+    </div>
+    <div class="col-7 text-right">
+      <%= link_to "全て確認済みにする", reviews_confirmed_all_path, method: :patch, class: "btn btn-success w-50" %>
+    </div>
   </div>
-  <%= review.body %>
-  <br>
-  <%= review.is_checked %> || <%= review.is_disclose %>
-  <br>
-  <%= link_to "確認する", review_confirmed_path(id: review.id), method: :patch, class: "btn btn-danger btn-block" %>
-  <%= link_to "非公開にする", review_closed_path(id: review.id), method: :patch, class: "btn btn-danger btn-block" %>
-  <hr>
-<% end %>
+  <% if @reviews.present? %>
+    <% @reviews.each do |review| %>
+      <div class="border border-secondary mb-3 py-2 px-3">
+        <div class="row no-gutters d-flex border-bottom">
+          <div class="col-auto">
+            <%= image_tag review.end_user.get_profile_image(40,40), class: "rounded-circle" %>
+          </div>
+          <div class="col-7 pl-2 pt-2">
+            <p>
+              <%= review.end_user.name %>
+              <span class="text-secondary">@<%= review.end_user.screen_name %></span>
+            </p>
+          </div>
+          <div class="col-3 ml-auto text-right medium">
+            <p>投稿日：<%= review.created_at.strftime('%Y/%m/%d') %><br></p>
+          </div>
+        </div>
+        <div class="row no-gutters my-2">
+          <div class="col-auto">
+            <%= image_tag review.image, class: "", width: '100px', height: '100px' %>
+          </div>
+          <div class="col-10 pl-2 pt-2">
+            <h6 class="font-weight-bold"><%= review.name %></h6>
+          </div>
+        </div>
+        <div class="bg-gray rounded-lg p-2">
+          <p><%= review.body %></p>
+        </div>
+        <div class="row my-2">
+          <div class="col-6">
+            <%= link_to "確認済みにする", review_confirmed_path(id: review.id), method: :patch, class: "btn btn-warning btn-block" %>
+          </div>
+          <div class="col-6">
+            <%= link_to "非公開にする", review_closed_path(id: review.id), method: :patch, class: "btn btn-danger btn-block" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+  <div class="text-center text-secondary my-5 py-5">
+    <h4>未確認のレビューはありません</h4>
+  </div>
+  <% end %>
+</div>
