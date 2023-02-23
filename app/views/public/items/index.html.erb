@@ -8,9 +8,9 @@
       <h4 class="headline bg-beige font-weight-bold py-3"><i class="fa-sharp fa-solid fa-crown"></i> 楽天<%= @title %>ランキング</h4>
       <% @items.each_with_index do |item, i| %>
         <div class="row no-gutters position-relative shadow-sm m-3 p-3">
-          <div class="col-md-2 col-4 text-center">
+          <div class="col-md-3 col-4 text-center">
             <%= link_to item_path(item.code, name: item.name, code: item.code, genre: item.genre.id, price: item.price, image: item.medium_image_urls[0], url: item.url) do %>
-              <%= image_tag (item['medium_image_urls'][0]), class:"card-img", :height => '128' %>
+              <%= image_tag (item['medium_image_urls'][0]), class:"card-img", width: '100%', style: "max-height: 180px;"  %>
             <% end %>
           </div>
           <div class="col-md-9 col-8 pl-3">
@@ -26,7 +26,7 @@
                 <%= parent.name %>
               <% end %>
             </p>
-            <p class=""><%= number_with_delimiter(item.price) %>円</p>
+            <h5 class=""><%= number_with_delimiter(item.price) %>円</h5>
           </div>
           <% if i < 3  %>
             <%= content_tag :div, class: "card-rank position-absolute rounded-circle bg-#{@rank_colors[i]} text-white mt-n3 ml-n3", style: "width: 40px;height: 40px;" do %>

@@ -1,68 +1,203 @@
-<h1>レビューランキング</h1>
-<%= search_form_for @q, url: reviews_ranking_path do |f| %>
-    <div class="nav-title">詳細検索</div>
-
-    <%= f.search_field :name_cont, placeholder: 'キーワードから探す', class:'input-box' %>
-    <br>
-
-    <%= f.label :end_user_gender_eq_any, '性別' %>
-    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 0, '' %>
-      <%= f.label EndUser.genders_i18n[:male] %>
-    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 1, '' %>
-      <%= f.label EndUser.genders_i18n[:female] %>
-    <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false }, 2, '' %>
-      <%= f.label EndUser.genders_i18n[:not_selected] %>
-
-    <br>
-    <%= f.label :end_user_birth_day_to_age, '年齢' %>
-    <%= f.select :end_user_birth_day_to_age_gteq, *[10..100] , { include_blank: "" }, { class: "form-control" } %>歳以上～
-    <%= f.select :end_user_birth_day_to_age_lteq, *[10..100] , { include_blank: "" }, { class: "form-control" } %>歳以下
-
-    <br>
-      <%= f.submit '検索する' %>
+<div class="container">
+  <div class="row my-4">
+    <div class="col-lg-3 mt-2">
+      <h5 class="border-bottom border-secondary font-weight-bold">
+        <i class="fa-sharp fa-solid fa-crown"></i>GiveLike<span class="small font-weight-bold">レビューランキング</span>
+      </h5>
+      <ul class="list-unstyled medium">
+        <li>
+          <%= search_form_for @q, url: reviews_ranking_path do |f| %>
+            <%= f.hidden_field :end_user_gender_eq, :value => "0" %>
+            <%= f.submit '男性レビューランキング', class: "btn btn-link text-dark medium p-0" %>
+          <% end %>
+        </li>
+        <li>
+          <%= search_form_for @q, url: reviews_ranking_path do |f| %>
+            <%= f.hidden_field :end_user_gender_eq, :value => "1" %>
+            <%= f.submit '女性レビューランキング', class: "btn btn-link text-dark medium p-0" %>
+          <% end %>
+        </li>
+        <li>
+          <%= search_form_for @q, url: reviews_ranking_path do |f| %>
+            <%= f.hidden_field :end_user_birth_day_to_age_gteq, :value => "10" %>
+            <%= f.hidden_field :end_user_birth_day_to_age_lteq, :value => "19" %>
+            <%= f.submit '10代レビューランキング', class: "btn btn-link text-dark medium p-0" %>
+          <% end %>
+        </li>
+        <li>
+          <%= search_form_for @q, url: reviews_ranking_path do |f| %>
+            <%= f.hidden_field :end_user_birth_day_to_age_gteq, :value => "20" %>
+            <%= f.hidden_field :end_user_birth_day_to_age_lteq, :value => "29" %>
+            <%= f.submit '20代レビューランキング', class: "btn btn-link text-dark medium p-0" %>
+          <% end %>
+        </li>
+        <li>
+          <%= search_form_for @q, url: reviews_ranking_path do |f| %>
+            <%= f.hidden_field :end_user_birth_day_to_age_gteq, :value => "30" %>
+            <%= f.hidden_field :end_user_birth_day_to_age_lteq, :value => "39" %>
+            <%= f.submit '30代レビューランキング', class: "btn btn-link text-dark medium p-0" %>
+          <% end %>
+        </li>
+        <li>
+          <%= search_form_for @q, url: reviews_ranking_path do |f| %>
+            <%= f.hidden_field :end_user_birth_day_to_age_gteq, :value => "40" %>
+            <%= f.hidden_field :end_user_birth_day_to_age_lteq, :value => "49" %>
+            <%= f.submit '40代レビューランキング', class: "btn btn-link text-dark medium p-0" %>
+          <% end %>
+        </li>
+        <li>
+          <%= search_form_for @q, url: reviews_ranking_path do |f| %>
+            <%= f.hidden_field :end_user_birth_day_to_age_gteq, :value => "50" %>
+            <%= f.hidden_field :end_user_birth_day_to_age_lteq, :value => "59" %>
+            <%= f.submit '50代レビューランキング', class: "btn btn-link text-dark medium p-0" %>
+          <% end %>
+        </li>
       </ul>
-    <% end %>
 
-    <% if params[:q] != nil %>
-      <% @ranking_searchs.each do |ranking_search| %>
-        <%= image_tag (ranking_search.image) %>
-        <%= ranking_search.name %><br>
-        <div id="star-rate<%= ranking_search.id %>"></div>
-        <script>
-        var elem = document.getElementById('star-rate<%= ranking_search.id %>');
-        var opt = {
-        starOn: "<%= asset_path('star-on.png') %>",
-        starOff: "<%= asset_path('star-off.png') %>",
-        starHalf: "<%= asset_path('star-half.png') %>",
-        half: true,
-        readOnly: true,
-        score: <%= (@search_reviews.where(code: ranking_search.code).sum  {|ranking_search| ranking_search.evaluation} / @search_reviews.where(code: ranking_search.code).length).round(1) %>,
-          };
-          raty(elem,opt);
-        </script>
-        評価：<%= (@search_reviews.where(code: ranking_search.code).sum  {|ranking_search| ranking_search.evaluation} / @search_reviews.where(code: ranking_search.code).length).round(1) %><br>
-      <hr>
+      <p class="font-weight-bold pt-3 mb-0"><i class="fa-solid fa-magnifying-glass"></i> 検索</p>
+      <%= search_form_for @q, url: reviews_ranking_path do |f| %>
+        <div class="form-group">
+          <%= f.search_field :name_cont, placeholder: '商品名でランキングを絞り込む', class:'form-control medium' %>
+        </div>
+        <div class="form-group medium">
+          <div class="form-check form-check-inline">
+            <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check1' }, 0, '' %>
+            <%= f.label EndUser.genders_i18n[:male], class:'form-check-label', for: 'gender-check1' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check2' }, 1, '' %>
+            <%= f.label EndUser.genders_i18n[:female], class:'form-check-label', for: 'gender-check2' %>
+          </div>
+          <div class="form-check form-check-inline">
+            <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check3' }, 2, '' %>
+            <%= f.label EndUser.genders_i18n[:not_selected], class:'form-check-label', for: 'gender-check3' %>
+          </div>
+        </div>
+        <div class="form-group row no-gutters medium">
+          <div class="col-3">
+            <%= f.select :end_user_birth_day_to_age_gteq, *[10..100] , { include_blank: "" }, { class: "form-control small px-2" } %>
+          </div>
+          <label class="col-3 col-form-label pl-1">歳以上</label>
+            <div class="col-3">
+            <%= f.select :end_user_birth_day_to_age_lteq, *[10..100] , { include_blank: "" }, { class: "form-control small px-2" } %>
+          </div>
+          <label class="col-3 col-form-label pl-1">歳以下</label>
+        </div>
+        <%= f.submit '検索する', class: "btn btn-secondary btn-sm btn-block" %>
       <% end %>
-    <% else %>
-    <% @reviews.each_with_index do |review, i| %>
-      <%= i + 1 %><br>
-      <%= image_tag (review.image) %>
-      <%= review.name %><br>
-      評価：<%=  (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %><br>
-      <%= number_with_delimiter(review.price) %>円
-      <div id="star-rate<%= review.id %>"></div>
-        <script>
-        var elem = document.getElementById('star-rate<%= review.id %>');
-        var opt = {
-        starOn: "<%= asset_path('star-on.png') %>",
-        starOff: "<%= asset_path('star-off.png') %>",
-        starHalf: "<%= asset_path('star-half.png') %>",
-        half: true,
-        readOnly: true,
-        score: <%= (Review.where(code: review.code).sum  {|review| review.evaluation} / Review.where(code: review.code).length).round(1) %>,
-          };
-          raty(elem,opt);
-        </script>
-      <hr>
-    <% end %>
-<% end %>
+    </div>
+
+    <div class="col-lg-9">
+      <h4 class="headline bg-beige font-weight-bold py-3"><i class="fa-sharp fa-solid fa-crown"></i> GiveLikeレビューランキング</h4>
+      <% if params[:q] != nil %>
+        <% @ranking_searchs.each_with_index do |ranking_search, i| %>
+          <div class="row no-gutters position-relative shadow-sm m-3 p-3">
+            <div class="col-md-3 col-4 text-center">
+              <%= link_to item_path(ranking_search.code, name: ranking_search.name, code: ranking_search.code, genre: ranking_search.genre, price: ranking_search.price, image: ranking_search.image, url: ranking_search.url) do %>
+                <%= image_tag (ranking_search.image), class:"card-img", width: '100%', style: "max-height: 180px;" %>
+              <% end %>
+            </div>
+            <div class="col-md-9 col-8 pl-3">
+              <h6 class="font-weight-bold text-limit mb-1">
+                <%= link_to item_path(ranking_search.code, name: ranking_search.name, code: ranking_search.code, genre: ranking_search.genre, price: ranking_search.price, image: ranking_search.image, url: ranking_search.url), class:"text-dark" do %>
+                  <%= ranking_search.name %>
+                <% end %>
+              </h6>
+              <p class="text-muted small mb-2">
+                <% @current_genre = ranking_search.genre %>
+                <% @root = RakutenWebService::Ichiba::Genre[@current_genre] %>
+                <% @root.parents.first(1).each do |parent| %>
+                  <%= parent.name %>
+                <% end %>
+              </p>
+              <div class="rate row">
+                <div class="col-auto pr-1">
+                  <div id="star-rate<%= ranking_search.id %>"></div>
+                  <script>
+                    $('#star-rate<%= ranking_search.id %>').empty();
+                    var elem = document.getElementById('star-rate<%= ranking_search.id %>');
+                    var opt = {
+                    starOn: "<%= asset_path('star-on.png') %>",
+                    starOff: "<%= asset_path('star-off.png') %>",
+                    starHalf: "<%= asset_path('star-half.png') %>",
+                    half: true,
+                    readOnly: true,
+                    score: <%= @ranking_search_evaluations.where(code: ranking_search.code).average(:evaluation) %>,
+                      };
+                      raty(elem,opt);
+                  </script>
+                  </div>
+                <p class="col-2 medium text-secondary py-1 px-0 m-0">(<%= @ranking_search_evaluations.where(code: ranking_search.code).count %>)</p>
+              </div>
+              <h5 class="pt-2"><%= number_with_delimiter(ranking_search.price) %>円</h5>
+            </div>
+            <% if i < 3  %>
+              <%= content_tag :div, class: "card-rank position-absolute rounded-circle bg-#{@rank_colors[i]} text-white mt-n3 ml-n3", style: "width: 40px;height: 40px;" do %>
+                <h6 class="text-center", style="line-height: 40px;"><%= i + 1 %></h6>
+              <% end %>
+            <% else %>
+              <%= content_tag :div, class: "card-rank position-absolute rounded-circle bg-dark text-white mt-n3 ml-n3", style: "width: 40px;height: 40px;" do %>
+                <h6 class="text-center", style="line-height: 40px;"><%= i + 1 %></h6>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+        
+      <% else %>
+
+        <% @rankings.each_with_index do |ranking, i| %>
+          <div class="row no-gutters position-relative shadow-sm m-3 p-3">
+            <div class="col-md-3 col-4 text-center">
+              <%= link_to item_path(ranking.code, name: ranking.name, code: ranking.code, genre: ranking.genre, price: ranking.price, image: ranking.image, url: ranking.url) do %>
+                <%= image_tag (ranking.image), class:"card-img", width: '100%', style: "max-height: 180px;" %>
+              <% end %>
+            </div>
+            <div class="col-md-9 col-8 pl-3">
+              <h6 class="font-weight-bold text-limit mb-1">
+                <%= link_to item_path(ranking.code, name: ranking.name, code: ranking.code, genre: ranking.genre, price: ranking.price, image: ranking.image, url: ranking.url), class:"text-dark" do %>
+                  <%= ranking.name %>
+                <% end %>
+              </h6>
+              <p class="text-muted small mb-2">
+                <% @current_genre = ranking.genre %>
+                <% @root = RakutenWebService::Ichiba::Genre[@current_genre] %>
+                <% @root.parents.first(1).each do |parent| %>
+                  <%= parent.name %>
+                <% end %>
+              </p>
+              <div class="rate row">
+                <div class="col-auto pr-1">
+                  <div id="star-rate<%= ranking.id %>"></div>
+                  <script>
+                    $('#star-rate<%= ranking.id %>').empty();
+                    var elem = document.getElementById('star-rate<%= ranking.id %>');
+                    var opt = {
+                    starOn: "<%= asset_path('star-on.png') %>",
+                    starOff: "<%= asset_path('star-off.png') %>",
+                    starHalf: "<%= asset_path('star-half.png') %>",
+                    half: true,
+                    readOnly: true,
+                    score: <%= Review.where(code: ranking.code).disclosed.average(:evaluation) %>,
+                      };
+                      raty(elem,opt);
+                  </script>
+                  </div>
+                <p class="col-2 medium text-secondary py-1 px-0 m-0">(<%= Review.where(code: ranking.code).disclosed.count %>)</p>
+              </div>
+              <h5 class="pt-2"><%= number_with_delimiter(ranking.price) %>円</h5>
+            </div>
+            <% if i < 3  %>
+              <%= content_tag :div, class: "card-rank position-absolute rounded-circle bg-#{@rank_colors[i]} text-white mt-n3 ml-n3", style: "width: 40px;height: 40px;" do %>
+                <h6 class="text-center", style="line-height: 40px;"><%= i + 1 %></h6>
+              <% end %>
+            <% else %>
+              <%= content_tag :div, class: "card-rank position-absolute rounded-circle bg-dark text-white mt-n3 ml-n3", style: "width: 40px;height: 40px;" do %>
+                <h6 class="text-center", style="line-height: 40px;"><%= i + 1 %></h6>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

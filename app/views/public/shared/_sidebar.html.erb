@@ -1,155 +1,155 @@
 <h5 class="border-bottom border-secondary font-weight-bold">
-        <i class="fa-sharp fa-solid fa-crown"></i> 楽天売れ筋<span class="small font-weight-bold">ランキング</span>
-      </h5>
-      <ul class="list-unstyled medium">
-        <li>
-          <%= link_to "プレゼントランキング", items_path, class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "男性ランキング", items_path(sex: 0, title: "男性" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "女性ランキング", items_path(sex: 1, title: "女性" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "10代ランキング", items_path(age: 10, title: "10代" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "20代ランキング", items_path(age: 20, title: "20代" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "30代ランキング", items_path(age: 30, title: "30代" ), class: "text-dark" %>
-          </li>
-        <li>
-          <%= link_to "40代ランキング", items_path(age: 40, title: "40代" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "50代ランキング", items_path(age: 50, title: "50代" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "レディースファッション", items_path(genre: 100371, title: "レディースファッション" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "メンズファッション", items_path(genre: 551177, title: "メンズファッション" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "ジュエリー・アクセサリー", items_path(genre: 216129, title: "ジュエリー・アクセサリー" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "バッグ・小物・ブランド雑貨", items_path(genre: 216131, title: "バッグ・小物・ブランド雑貨" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "靴", items_path(genre: 558885, title: "靴" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "腕時計", items_path(genre: 558929, title: "腕時計" ), class: "text-dark" %>
-        </li>
-        <li>
-            <%= link_to "食品", items_path(genre: 100227, title: "食品" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "スイーツ・お菓子", items_path(genre: 551167, title: "スイーツ・お菓子" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "ビール・洋酒", items_path(genre: 510915, title: "ビール・洋酒" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "日本酒・焼酎", items_path(genre: 510901, title: "日本酒・焼酎" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "美容・コスメ・香水", items_path(genre: 100939, title: "美容・コスメ・香水" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "花・ガーデン・DIY", items_path(genre: 100005, title: "花・ガーデン・DIY" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "キッズ・ベビー・マタニティ", items_path(genre: 100533, title: "キッズ・ベビー・マタニティ" ), class: "text-dark" %>
-        </li>
-        <li>
-          <%= link_to "カタログギフト・チケット", items_path(genre: 101381, title: "カタログギフト・チケット" ), class: "text-dark" %>
-        </li>
-      </ul>
-      <h5 class="border-bottom border-secondary font-weight-bold pt-4">
-        <i class="fa-sharp fa-solid fa-crown"></i>GiveLike<span class="small font-weight-bold">レビューランキング</span>
-      </h5>
-      <ul class="list-unstyled medium">
-        <li>
-          <%= search_form_for q, url: reviews_ranking_path do |f| %>
-            <%= f.hidden_field :end_user_gender_eq, :value => "0" %>
-            <%= f.submit '男性レビューランキング', class: "btn btn-link text-dark medium p-0" %>
-          <% end %>
-        </li>
-        <li>
-          <%= search_form_for q, url: reviews_ranking_path do |f| %>
-            <%= f.hidden_field :end_user_gender_eq, :value => "1" %>
-            <%= f.submit '女性レビューランキング', class: "btn btn-link text-dark medium p-0" %>
-          <% end %>
-        </li>
-        <li>
-          <%= search_form_for q, url: reviews_ranking_path do |f| %>
-            <%= f.hidden_field :end_user_birth_day_to_age_gteq, :value => "10" %>
-            <%= f.hidden_field :end_user_birth_day_to_age_lteq, :value => "19" %>
-            <%= f.submit '10代レビューランキング', class: "btn btn-link text-dark medium p-0" %>
-          <% end %>
-        </li>
-        <li>
-          <%= search_form_for q, url: reviews_ranking_path do |f| %>
-            <%= f.hidden_field :end_user_birth_day_to_age_gteq, :value => "20" %>
-            <%= f.hidden_field :end_user_birth_day_to_age_lteq, :value => "29" %>
-            <%= f.submit '20代レビューランキング', class: "btn btn-link text-dark medium p-0" %>
-          <% end %>
-        </li>
-        <li>
-          <%= search_form_for q, url: reviews_ranking_path do |f| %>
-            <%= f.hidden_field :end_user_birth_day_to_age_gteq, :value => "30" %>
-            <%= f.hidden_field :end_user_birth_day_to_age_lteq, :value => "39" %>
-            <%= f.submit '30代レビューランキング', class: "btn btn-link text-dark medium p-0" %>
-          <% end %>
-        </li>
-        <li>
-          <%= search_form_for q, url: reviews_ranking_path do |f| %>
-            <%= f.hidden_field :end_user_birth_day_to_age_gteq, :value => "40" %>
-            <%= f.hidden_field :end_user_birth_day_to_age_lteq, :value => "49" %>
-            <%= f.submit '40代レビューランキング', class: "btn btn-link text-dark medium p-0" %>
-          <% end %>
-        </li>
-        <li>
-          <%= search_form_for q, url: reviews_ranking_path do |f| %>
-            <%= f.hidden_field :end_user_birth_day_to_age_gteq, :value => "50" %>
-            <%= f.hidden_field :end_user_birth_day_to_age_lteq, :value => "59" %>
-            <%= f.submit '50代レビューランキング', class: "btn btn-link text-dark medium p-0" %>
-          <% end %>
-        </li>
-      </ul>
-
-      <p class="font-weight-bold pt-3 mb-0"><i class="fa-solid fa-magnifying-glass"></i> 検索</p>
-      <%= search_form_for q, url: reviews_ranking_path do |f| %>
-        <div class="form-group">
-          <%= f.search_field :name_cont, placeholder: '商品名でランキングを絞り込む', class:'form-control medium' %>
-        </div>
-        <div class="form-group medium">
-          <div class="form-check form-check-inline">
-            <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check1' }, 0, '' %>
-            <%= f.label EndUser.genders_i18n[:male], class:'form-check-label', for: 'gender-check1' %>
-          </div>
-          <div class="form-check form-check-inline">
-            <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check2' }, 1, '' %>
-            <%= f.label EndUser.genders_i18n[:female], class:'form-check-label', for: 'gender-check2' %>
-          </div>
-          <div class="form-check form-check-inline">
-            <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check3' }, 2, '' %>
-            <%= f.label EndUser.genders_i18n[:not_selected], class:'form-check-label', for: 'gender-check3' %>
-          </div>
-        </div>
-        <div class="form-group row no-gutters medium">
-          <div class="col-3">
-            <%= f.select :end_user_birth_day_to_age_gteq, *[10..100] , { include_blank: "" }, { class: "form-control small px-2" } %>
-          </div>
-          <label class="col-3 col-form-label pl-1">歳以上</label>
-            <div class="col-3">
-            <%= f.select :end_user_birth_day_to_age_lteq, *[10..100] , { include_blank: "" }, { class: "form-control small px-2" } %>
-          </div>
-          <label class="col-3 col-form-label pl-1">歳以下</label>
-        </div>
-      <%= f.submit '検索する', class: "btn btn-secondary btn-sm btn-block" %>
+  <i class="fa-sharp fa-solid fa-crown"></i> 楽天売れ筋<span class="small font-weight-bold">ランキング</span>
+</h5>
+<ul class="list-unstyled medium">
+  <li>
+    <%= link_to "プレゼントランキング", items_path, class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "男性ランキング", items_path(sex: 0, title: "男性" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "女性ランキング", items_path(sex: 1, title: "女性" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "10代ランキング", items_path(age: 10, title: "10代" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "20代ランキング", items_path(age: 20, title: "20代" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "30代ランキング", items_path(age: 30, title: "30代" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "40代ランキング", items_path(age: 40, title: "40代" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "50代ランキング", items_path(age: 50, title: "50代" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "レディースファッション", items_path(genre: 100371, title: "レディースファッション" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "メンズファッション", items_path(genre: 551177, title: "メンズファッション" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "ジュエリー・アクセサリー", items_path(genre: 216129, title: "ジュエリー・アクセサリー" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "バッグ・小物・ブランド雑貨", items_path(genre: 216131, title: "バッグ・小物・ブランド雑貨" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "靴", items_path(genre: 558885, title: "靴" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "腕時計", items_path(genre: 558929, title: "腕時計" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "食品", items_path(genre: 100227, title: "食品" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "スイーツ・お菓子", items_path(genre: 551167, title: "スイーツ・お菓子" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "ビール・洋酒", items_path(genre: 510915, title: "ビール・洋酒" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "日本酒・焼酎", items_path(genre: 510901, title: "日本酒・焼酎" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "美容・コスメ・香水", items_path(genre: 100939, title: "美容・コスメ・香水" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "花・ガーデン・DIY", items_path(genre: 100005, title: "花・ガーデン・DIY" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "キッズ・ベビー・マタニティ", items_path(genre: 100533, title: "キッズ・ベビー・マタニティ" ), class: "text-dark" %>
+  </li>
+  <li>
+    <%= link_to "カタログギフト・チケット", items_path(genre: 101381, title: "カタログギフト・チケット" ), class: "text-dark" %>
+  </li>
+</ul>
+<h5 class="border-bottom border-secondary font-weight-bold pt-4">
+  <i class="fa-sharp fa-solid fa-crown"></i>GiveLike<span class="small font-weight-bold">レビューランキング</span>
+</h5>
+<ul class="list-unstyled medium">
+  <li>
+    <%= search_form_for q, url: reviews_ranking_path do |f| %>
+      <%= f.hidden_field :end_user_gender_eq, :value => "0" %>
+      <%= f.submit '男性レビューランキング', class: "btn btn-link text-dark medium p-0" %>
     <% end %>
+  </li>
+  <li>
+    <%= search_form_for q, url: reviews_ranking_path do |f| %>
+      <%= f.hidden_field :end_user_gender_eq, :value => "1" %>
+      <%= f.submit '女性レビューランキング', class: "btn btn-link text-dark medium p-0" %>
+    <% end %>
+  </li>
+  <li>
+    <%= search_form_for q, url: reviews_ranking_path do |f| %>
+      <%= f.hidden_field :end_user_birth_day_to_age_gteq, :value => "10" %>
+      <%= f.hidden_field :end_user_birth_day_to_age_lteq, :value => "19" %>
+      <%= f.submit '10代レビューランキング', class: "btn btn-link text-dark medium p-0" %>
+    <% end %>
+  </li>
+  <li>
+    <%= search_form_for q, url: reviews_ranking_path do |f| %>
+      <%= f.hidden_field :end_user_birth_day_to_age_gteq, :value => "20" %>
+      <%= f.hidden_field :end_user_birth_day_to_age_lteq, :value => "29" %>
+      <%= f.submit '20代レビューランキング', class: "btn btn-link text-dark medium p-0" %>
+    <% end %>
+  </li>
+  <li>
+    <%= search_form_for q, url: reviews_ranking_path do |f| %>
+      <%= f.hidden_field :end_user_birth_day_to_age_gteq, :value => "30" %>
+      <%= f.hidden_field :end_user_birth_day_to_age_lteq, :value => "39" %>
+      <%= f.submit '30代レビューランキング', class: "btn btn-link text-dark medium p-0" %>
+    <% end %>
+  </li>
+  <li>
+    <%= search_form_for q, url: reviews_ranking_path do |f| %>
+      <%= f.hidden_field :end_user_birth_day_to_age_gteq, :value => "40" %>
+      <%= f.hidden_field :end_user_birth_day_to_age_lteq, :value => "49" %>
+      <%= f.submit '40代レビューランキング', class: "btn btn-link text-dark medium p-0" %>
+    <% end %>
+  </li>
+  <li>
+    <%= search_form_for q, url: reviews_ranking_path do |f| %>
+      <%= f.hidden_field :end_user_birth_day_to_age_gteq, :value => "50" %>
+      <%= f.hidden_field :end_user_birth_day_to_age_lteq, :value => "59" %>
+      <%= f.submit '50代レビューランキング', class: "btn btn-link text-dark medium p-0" %>
+    <% end %>
+  </li>
+</ul>
+
+<p class="font-weight-bold pt-3 mb-0"><i class="fa-solid fa-magnifying-glass"></i> 検索</p>
+<%= search_form_for q, url: reviews_ranking_path do |f| %>
+  <div class="form-group">
+    <%= f.search_field :name_cont, placeholder: '商品名でランキングを絞り込む', class:'form-control medium' %>
+  </div>
+  <div class="form-group medium">
+    <div class="form-check form-check-inline">
+      <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check1' }, 0, '' %>
+      <%= f.label EndUser.genders_i18n[:male], class:'form-check-label', for: 'gender-check1' %>
+    </div>
+    <div class="form-check form-check-inline">
+      <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check2' }, 1, '' %>
+      <%= f.label EndUser.genders_i18n[:female], class:'form-check-label', for: 'gender-check2' %>
+    </div>
+    <div class="form-check form-check-inline">
+      <%= f.check_box :end_user_gender_eq_any, { multiple: true, include_hidden: false, class: 'form-check-input', id: 'gender-check3' }, 2, '' %>
+      <%= f.label EndUser.genders_i18n[:not_selected], class:'form-check-label', for: 'gender-check3' %>
+    </div>
+  </div>
+  <div class="form-group row no-gutters medium">
+    <div class="col-3">
+      <%= f.select :end_user_birth_day_to_age_gteq, *[10..100] , { include_blank: "" }, { class: "form-control small px-2" } %>
+    </div>
+    <label class="col-3 col-form-label pl-1">歳以上</label>
+      <div class="col-3">
+      <%= f.select :end_user_birth_day_to_age_lteq, *[10..100] , { include_blank: "" }, { class: "form-control small px-2" } %>
+    </div>
+    <label class="col-3 col-form-label pl-1">歳以下</label>
+  </div>
+  <%= f.submit '検索する', class: "btn btn-secondary btn-sm btn-block" %>
+<% end %>

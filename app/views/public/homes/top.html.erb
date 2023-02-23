@@ -143,7 +143,7 @@
             <h6 class="text-center", style="line-height: 40px;"><%= i + 1 %></h6>
           <% end %>
           <%= link_to item_path(item.code, name: item.name, code: item.code, genre: item.genre.id, price: item.price, image: item.medium_image_urls[0], url: item.url) do %>
-            <%= image_tag (item['mediumImageUrls'][0]), class:"card-img-top" %>
+            <%= image_tag (item['mediumImageUrls'][0]), class:"card-img-top", height: '150px' %>
           <% end %>
           <div class="card-body p-2">
             <h6 class="card-title text-limit mb-1"><%= item.name %></h5>
@@ -166,7 +166,7 @@
             <h6 class="text-center", style="line-height: 40px;"><%= i + 1 %></h6>
           <% end %>
           <%= link_to item_path(review.code, name: review.name, code: review.code, price: review.price, genre: review.genre, image: review.image, url: review.url) do %>
-            <%= image_tag (review.image), class:"card-img-top" %>
+            <%= image_tag (review.image), class:"card-img-top", height: '150px' %>
           <% end %>
           <div class="card-body p-2">
             <h6 class="card-title text-limit mb-1"><%= review.name %></h5>

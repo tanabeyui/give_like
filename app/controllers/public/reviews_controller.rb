@@ -3,7 +3,10 @@ class Public::ReviewsController < ApplicationController
   before_action :is_matching_login_user, only: [:edit, :update]
 
   def ranking
-    @reviews = Review.group(:code).order("avg(evaluation) desc")
+    @rank_colors = ['gold', 'silver', 'bronze']
+    @rankings = Review.disclosed.group(:code).order("avg(evaluation) desc")
+    # @latest_reviews = Review.disclosed
+    # Review.where(code: review.code).disclosed.average(:evaluation)
   end
 
   def index
@@ -110,7 +113,8 @@ class Public::ReviewsController < ApplicationController
     else
       @search_reviews = @q.result(distinct: true).disclosed.display.order(created_at: "DESC").page(params[:page]).per(10)
     end
-    # @ranking_searchs = @q.result(distinct: true).group(:code).order("avg(evaluation) desc")
+    @ranking_searchs = @q.result(distinct: true).disclosed.group(:code).order("avg(evaluation) desc")
+    @ranking_search_evaluations = @q.result(distinct: true).disclosed
   end
 
   def review_params
