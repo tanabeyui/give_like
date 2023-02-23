@@ -1,8 +1,8 @@
 class Admin::ReviewsController < ApplicationController
   before_action :set_search
-  
+
   def index
-    @reviews = Review.all.order(created_at: "DESC")
+    @reviews = Review.order(created_at: "DESC").page(params[:page]).per(20)
   end
 
   def confirmed
@@ -24,7 +24,7 @@ class Admin::ReviewsController < ApplicationController
     @review.update(is_checked: true, is_disclose: true)
     redirect_back(fallback_location: root_path)
   end
-  
+
   def closed
     @review = Review.find(params[:id])
     @review.update(is_checked: true, is_disclose: false)
@@ -32,12 +32,12 @@ class Admin::ReviewsController < ApplicationController
   end
 
 
-  
+
   private
 
   def set_search
     @q = Review.ransack(params[:q])
-    @search_reviews = @q.result(distinct: true).order(created_at: "DESC")
+    @search_reviews = @q.result(distinct: true).order(created_at: "DESC").page(params[:page]).per(20)
   end
-  
+
 end
