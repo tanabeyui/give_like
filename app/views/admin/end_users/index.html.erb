@@ -1,100 +1,113 @@
-<h2>会員一覧</h2>
+<div class="container p-5">
+  <h3 class="subheading2">会員一覧</h3>
 
-<div class="search-bar">
-  <%= search_form_for @q, url: admin_end_users_path do |f| %>
-    <div class="nav-title">詳細検索</div>
-    <%= f.search_field :name_cont, placeholder: '名前から探す', class:'input-box' %>
-    <%= f.search_field :screen_name_cont, placeholder: 'IDから探す', class:'input-box' %>
-    <%= f.search_field :internet_protocol_address_eq, placeholder: 'IPアドレスから探す', class:'input-box' %>
-    <br>
-    <%= f.label :gender_eq_any, '性別' %>
-    <%= f.check_box :gender_eq_any, { multiple: true, include_hidden: false }, 0, '' %>
-      <%= f.label EndUser.genders_i18n[:male] %>
-    <%= f.check_box :gender_eq_any, { multiple: true, include_hidden: false }, 1, '' %>
-      <%= f.label EndUser.genders_i18n[:female] %>
-    <%= f.check_box :gender_eq_any, { multiple: true, include_hidden: false }, 2, '' %>
-      <%= f.label EndUser.genders_i18n[:not_selected] %>
-    <br>
-    <%= f.label :birth_day_to_age, '年齢' %>
-    <%= f.select :birth_day_to_age_gteq, *[10..100] , { include_blank: "" }, { class: "form-control" } %>歳以上～
-    <%= f.select :birth_day_to_age_lteq, *[10..100] , { include_blank: "" }, { class: "form-control" } %>歳以下
-    <br>
-    <%= f.date_field :created_at_gteq, include_blank: true, class: 'form-control'%> ～
-    <%= f.date_field :created_at_lteq_end_of_day, include_blank: true, class: 'form-control'%>
-    <%= f.submit '検索する' %>
+  <div class="search-area mb-4 d-flex justify-content-end">
+    <%= search_form_for @q, url: admin_end_users_path do |f| %>
+      <div class="input-group">
+        <%= f.search_field :name_cont, placeholder: '名前から探す', class:'form-control medium' %>
+        <%= f.search_field :screen_name_cont, placeholder: 'IDから探す', class:'form-control medium' %>
+        <%= f.search_field :internet_protocol_address_eq, placeholder: 'IPアドレスから探す', class:'form-control medium' %>
+        <div class="input-group-append">
+          <%= f.submit '検索', class: "btn btn-secondary btn-sm px-3" %>
+        </div>
+      </div>
     <% end %>
   </div>
-  <hr>
 
-<% if params[:q] != nil %>
-  <% @search_end_users.each do |search_end_user| %>
-    <%= search_end_user.created_at.strftime('%Y/%m/%d') %>
-      <%= image_tag search_end_user.get_profile_image(30,30) %>
-      <%= search_end_user.name %>[@<%= search_end_user.screen_name %>] || <%= search_end_user.email %> ||
-      <%= link_to admin_end_users_path(internet_protocol_address: search_end_user.internet_protocol_address) do %>
-        <%= search_end_user.internet_protocol_address %>
-      <% end %>
-      <% if search_end_user.reviews.count != 0 %>
-        平均値：<%= (Review.where(end_user_id: search_end_user.id).average(:evaluation)).to_f.round(1) %>
-      <% else %>
-        未レビュー
-      <% end %>
-      <% if search_end_user.is_deleted == "member" %>
-        <span class="text-success"><%= search_end_user.is_deleted_i18n %></span>
-      <% else %>
-        <span class="text-black-50"><%= search_.is_deleted_i18n %></span>
-      <% end %>
-    <hr>
-  <% end %>
-<% elsif params[:internet_protocol_address] != nil %>
-      <% @same_end_users.each do |same_end_user| %>
-        <div style="background-color:#999">
-      <%= same_end_user.created_at.strftime('%Y/%m/%d') %>
-      <%= image_tag same_end_user.get_profile_image(30,30) %>
-      <%= same_end_user.name %>[@<%= same_end_user.screen_name %>] || <%= same_end_user.email %> ||
-
-      <%= link_to admin_end_users_path(internet_protocol_address: same_end_user.internet_protocol_address) do %>
-        <%= same_end_user.internet_protocol_address %>
-      <% end %>
-
-      <% if same_end_user.reviews.count != 0 %>
-        平均値：<%= (Review.where(end_user_id: same_end_user.id).average(:evaluation)).to_f.round(1) %>
-      <% else %>
-        未レビュー
-      <% end %>
-      <% if same_end_user.is_deleted == "member" %>
-        <span class="text-success"><%= same_end_user.is_deleted_i18n %></span>
-      <% else %>
-        <span class="text-black-50"><%= same_end_user.is_deleted_i18n %></span>
-      <% end %>
-    </div>
-    <hr>
-      <% end %>
-<% else %>
-  <% @end_users.each do |end_user| %>
-    <div style="background-color:#cccccc">
-      <%= end_user.created_at.strftime('%Y/%m/%d') %>
-      <%= image_tag end_user.get_profile_image(30,30) %>
-      <%= link_to admin_end_user_path(end_user) do %>
-        <%= end_user.name %>
-      <% end %>
-      [@<%= end_user.screen_name %>] || <%= end_user.email %> ||
-
-      <%= link_to admin_end_users_path(internet_protocol_address: end_user.internet_protocol_address) do %>
-        <%= end_user.internet_protocol_address %>
-      <% end %>
-
-      <% if end_user.reviews.count != 0 %>
-        平均値：<%= (Review.where(end_user_id: end_user.id).average(:evaluation)).to_f.round(1) %>
-      <% else %>
-        未レビュー
-      <% end %>
-      <% if end_user.is_deleted == "member" %>
-        <span class="text-success"><%= end_user.is_deleted_i18n %></span>
-      <% else %>
-        <span class="text-black-50"><%= end_user.is_deleted_i18n %></span>
-      <% end %>
-    </div>
-    <hr>
-  <% end %>
-<% end %>
+  <div class="end-user-table">
+    <% if params[:q] != nil %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>ユーザー</th>
+            <th>メールアドレス</th>
+            <th>IPアドレス</th>
+            <th>評価平均値</th>
+            <th>ステータス</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @search_end_users.each do |search_end_user| %>
+            <tr>
+              <td><%= search_end_user.id %></td>
+              <td>
+                <%= link_to admin_end_user_path(search_end_user) do %>
+                  <%= image_tag search_end_user.get_profile_image(30,30), class: "rounded-circle" %>
+                  <span class="font-weight-bold text-blue"><%= search_end_user.name %></span>
+                  <span class="text-secondary">[@<%= search_end_user.screen_name %>]</span>
+                <% end %>
+              </td>
+              <td><%= search_end_user.email %></td>
+              <td><%= search_end_user.internet_protocol_address %></td>
+              <td>
+                <% if search_end_user.reviews.count != 0 %>
+                  <%= (Review.where(end_user_id: search_end_user.id).average(:evaluation)).to_f.round(1) %>
+                <% else %>
+                  未レビュー
+                <% end %>
+              </td>
+              <th>
+                <% if search_end_user.is_deleted == "member" %>
+                  <span class="text-success"><%= search_end_user.is_deleted_i18n %></span>
+                <% else %>
+                  <span class="text-black-50"><%= search_end_user.is_deleted_i18n %></span>
+                <% end %>
+              </th>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>ユーザー</th>
+            <th>メールアドレス</th>
+            <th>IPアドレス</th>
+            <th>評価平均値</th>
+            <th>ステータス</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @end_users.each do |end_user| %>
+            <tr>
+              <td><%= end_user.id %></td>
+              <td>
+                <%= link_to admin_end_user_path(end_user) do %>
+                  <%= image_tag end_user.get_profile_image(30,30), class: "rounded-circle" %>
+                  <span class="font-weight-bold text-blue"><%= end_user.name %></span>
+                  <span class="text-secondary">[@<%= end_user.screen_name %>]</span>
+                <% end %>
+              </td>
+              <td><%= end_user.email %></td>
+              <td><%= end_user.internet_protocol_address %></td>
+              <td>
+                <% if end_user.reviews.count != 0 %>
+                  <%= (Review.where(end_user_id: end_user.id).average(:evaluation)).to_f.round(1) %>
+                <% else %>
+                  未レビュー
+                <% end %>
+              </td>
+              <th>
+                <% if end_user.is_deleted == "member" %>
+                  <span class="text-success"><%= end_user.is_deleted_i18n %></span>
+                <% else %>
+                  <span class="text-black-50"><%= end_user.is_deleted_i18n %></span>
+                <% end %>
+              </th>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+  <div class="d-flex justify-content-center medium mt-4">
+    <% if params[:q] != nil %>
+      <%= paginate @search_end_users, class: "medium" %>
+    <% else %>
+      <%= paginate @end_users, class: "medium" %>
+    <% end %>
+  </div>
+</div>
