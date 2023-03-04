@@ -7,6 +7,7 @@ class Admin::EndUsersController < ApplicationController
 
   def show
     @end_user = EndUser.find(params[:id])
+    @reviews = @end_user.reviews.order(created_at: "DESC").page(params[:page]).per(20)
   end
 
   def membership
@@ -26,7 +27,8 @@ class Admin::EndUsersController < ApplicationController
   private
 
   def set_search
-    if params[:id]
+    end_user_id = params[:id]
+    if  end_user_id != nil 
       @q = Review.ransack(params[:q])
       @search_reviews = @q.result(distinct: true).order(created_at: "DESC").page(params[:page]).per(20)
     else
