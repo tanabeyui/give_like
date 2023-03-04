@@ -1,4 +1,6 @@
-<div style="position:relative; width:950px; height:500px;">
+<div class="container px-5 py-4">
+  <h3 class="subheading2">アンケート結果</h3>
+  <div class="bg-yellow rounded-lg mt-3 mb-5 px-5 py-4" style="position:relative; width:100%; height:500px;">
     <canvas id="responsesChart"></canvas>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -19,7 +21,8 @@
               <%= Response.where(present_genre: chart_response.present_genre ).count.to_i %>,
             <% end %>
             ],
-            barPercentgifted_event: 0.7
+            barPercentgifted_event: 0.7,
+            backgroundColor: "#17a2b8"
         }]
       },
       options: {
@@ -44,29 +47,73 @@
       }
     });
   </script>
-
-  <hr>
-<% if params[:internet_protocol_address] != nil %>
-   <% @same_end_user_responses.each do |same_end_user_response| %>
-      <%= same_end_user_response.created_at.strftime('%Y/%m/%d') %> ||
-        <%= same_end_user_response.age_i18n %> || <%= same_end_user_response.gender_i18n %> || <%= same_end_user_response.present_genre_i18n %> || <%= same_end_user_response.giver_i18n %> || <%= same_end_user_response.gifted_event_i18n %>
-      <%= link_to admin_responses_path(internet_protocol_address: same_end_user_response.internet_protocol_address) do %>
-        <%= same_end_user_response.internet_protocol_address %>
-      <% end %>
-    <hr>
-      <% end %>
-<% else %>
-  <% @responses.each do |response| %>
-    <div style="background-color:#cccccc">
-      <%= response.created_at.strftime('%Y/%m/%d') %> ||
-        <%= response.age_i18n %> || <%= response.gender_i18n %> || <%= response.present_genre_i18n %> || <%= response.giver_i18n %> || <%= response.gifted_event_i18n %>
-      <%= link_to admin_responses_path(internet_protocol_address: response.internet_protocol_address) do %>
-        <%= response.internet_protocol_address %>
-      <% end %>
-      <%= link_to admin_response_path(id: response.id), method: :delete, class: "h5 text-dark text-decoration-none", "data-confirm" => "本当に消しますか？" do %>
-            <i class="fa-solid fa-trash-can"></i>削除
+  
+  <div class="responses">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>投票日</th>
+          <th>年代</th>
+          <th>性別</th>
+          <th>プレゼントジャンル</th>
+          <th>プレゼント主</th>
+          <th>プレゼントシーン</th>
+          <th>IPアドレス</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody class="medium">
+        <% if params[:internet_protocol_address] != nil %>
+          <% @same_end_user_responses.each do |same_end_user_response| %>
+            <tr>
+              <td><%= same_end_user_response.created_at.strftime('%Y/%m/%d %H:%M') %></td>
+              <td><%= same_end_user_response.age_i18n %></td>
+              <td><%= same_end_user_response.gender_i18n %></td>
+              <td><%= same_end_user_response.present_genre_i18n %></td>
+              <td><%= same_end_user_response.giver_i18n %></td>
+              <td><%= same_end_user_response.gifted_event_i18n %></td>
+              <td>
+                <%= link_to admin_responses_path(internet_protocol_address: same_end_user_response.internet_protocol_address) do %>
+                  <%= same_end_user_response.internet_protocol_address %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to admin_response_path(id: same_end_user_response.id), method: :delete, class: "h6 text-dark text-decoration-none", "data-confirm" => "本当に消しますか？" do %>
+                  <i class="fa-solid fa-trash-can"></i>
+                <% end %>
+              </td>
+            </tr>
           <% end %>
-    </div>
-    <hr>
-  <% end %>
-<% end %>
+        <% else %>
+          <% @responses.each do |response| %>
+            <tr>
+              <td><%= response.created_at.strftime('%Y/%m/%d %H:%M') %></td>
+              <td><%= response.age_i18n %></td>
+              <td><%= response.gender_i18n %></td>
+              <td><%= response.present_genre_i18n %></td>
+              <td><%= response.giver_i18n %></td>
+              <td><%= response.gifted_event_i18n %></td>
+              <td>
+                <%= link_to admin_responses_path(internet_protocol_address: response.internet_protocol_address) do %>
+                  <%= response.internet_protocol_address %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to admin_response_path(id: response.id), method: :delete, class: "h6 text-dark text-decoration-none", "data-confirm" => "本当に消しますか？" do %>
+                  <i class="fa-solid fa-trash-can"></i>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-center medium mt-4">
+    <% if params[:internet_protocol_address] != nil %>
+      <%= paginate @same_end_user_responses, class: "medium" %>
+    <% else %>
+      <%= paginate @responses, class: "medium" %>
+    <% end %>
+  </div>
