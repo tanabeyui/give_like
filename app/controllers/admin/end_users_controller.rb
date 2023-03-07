@@ -1,5 +1,6 @@
 class Admin::EndUsersController < ApplicationController
   before_action :set_search
+  before_action :authenticate_admin!
 
   def index
     @end_users = EndUser.order(created_at: "DESC").page(params[:page]).per(20)

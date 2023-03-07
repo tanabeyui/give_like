@@ -1,5 +1,6 @@
 class Admin::ReviewsController < ApplicationController
   before_action :set_search
+  before_action :authenticate_admin!
 
   def index
     @reviews = Review.order(created_at: "DESC").page(params[:page]).per(20)
