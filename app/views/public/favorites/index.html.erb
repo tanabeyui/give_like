@@ -110,7 +110,7 @@
         </div>
       </div>
 
-      <% if @q.end_user_id_eq != nil %>
+      <% if params[:q] != nil %>
         <% @search_favorites.each do |search_favorite| %>
           <div class="card mb-3 mx-3">
             <div class="card-header bg-gray d-flex">

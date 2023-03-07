@@ -26,15 +26,6 @@
             <p class="col-sm-9 mb-1 pl-sm-0 px-3"><%= @review.getting_method_i18n %></p>
           </div>
           <hr>
-          <div class="row mx-3 pt-2">
-            <p class="col-sm-3 font-weight-bold mb-1">ニックネーム</p>
-            <% if @review.is_anonymous == "anonymous" %>
-               <p class="col-sm-9 mb-1 pl-sm-0 px-3">匿名で投稿する</p>
-            <% else %>
-               <p class="col-sm-9 mb-1 pl-sm-0 px-3"><%= current_end_user.name %> で投稿する</p>
-            <% end %>
-          </div>
-          <hr>
           <div class="form-group row mx-3">
             <p class="col-sm-3 font-weight-bold mb-1">評価</p>
             <div id="star"></div>
