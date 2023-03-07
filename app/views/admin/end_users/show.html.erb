@@ -1,6 +1,6 @@
 <div class="container px-5 py-4">
   <h3 class="subheading2">会員情報</h3>
-  <div class="row bg-yellow mx-1 p-3">
+  <div class="row bg-gray rounded-lg mx-1 p-3">
     <div class="col-md-2 text-center p-0">
       <%= image_tag @end_user.get_profile_image(150,150), class: "rounded-circle img-fluid" %>
       <% if @end_user.is_deleted == "unsubscribe" %>
@@ -106,7 +106,7 @@
               <div class="col-10 pl-2">
                 <div id="star-rate<%= search_review.id %>"></div>
                   <script>
-                    $('#star-rate').empty();
+                    $('#star-rate<%= search_review.id %>').empty();
                     var elem = document.getElementById('star-rate<%= search_review.id %>');
                     var opt = {
                       starOn: "<%= asset_path('star-on.png') %>",
@@ -138,7 +138,7 @@
               <div class="col-10 pl-2">
                 <div id="star-rate<%= search_review.id %>"></div>
                   <script>
-                    $('#star-rate').empty();
+                    $('#star-rate<%= search_review.id %>').empty();
                     var elem = document.getElementById('star-rate<%= search_review.id %>');
                     var opt = {
                       starOn: "<%= asset_path('star-on.png') %>",
@@ -175,7 +175,7 @@
               <div class="col-10 pl-2">
                 <div id="star-rate<%= review.id %>"></div>
                   <script>
-                    $('#star-rate').empty();
+                    $('#star-rate<%= review.id %>').empty();
                     var elem = document.getElementById('star-rate<%= review.id %>');
                     var opt = {
                       starOn: "<%= asset_path('star-on.png') %>",
@@ -207,7 +207,7 @@
               <div class="col-10 pl-2">
                 <div id="star-rate<%= review.id %>"></div>
                   <script>
-                    $('#star-rate').empty();
+                    $('#star-rate<%= review.id %>').empty();
                     var elem = document.getElementById('star-rate<%= review.id %>');
                     var opt = {
                       starOn: "<%= asset_path('star-on.png') %>",

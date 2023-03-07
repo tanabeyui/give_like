@@ -16,7 +16,9 @@
           </div>
           <div class="col-7 pl-2 pt-2">
             <p>
-              <%= review.end_user.name %>
+              <%= link_to admin_end_user_path(review.end_user), class: "text-info" do %>
+                <strong><%= review.end_user.name %></strong>
+              <% end %>
               <span class="text-secondary">@<%= review.end_user.screen_name %></span>
             </p>
           </div>
@@ -28,8 +30,22 @@
           <div class="col-auto">
             <%= image_tag review.image, class: "", width: '100px', height: '100px' %>
           </div>
-          <div class="col-10 pl-2 pt-2">
-            <h6 class="font-weight-bold"><%= review.name %></h6>
+          <div class="col-10 pl-2">
+            <div id="star-rate<%= review.id %>"></div>
+            <script>
+              $('#star-rate<%= review.id %>').empty();
+              var elem = document.getElementById('star-rate<%= review.id %>');
+              var opt = {
+                starOn: "<%= asset_path('star-on.png') %>",
+                starOff: "<%= asset_path('star-off.png') %>",
+                starHalf: "<%= asset_path('star-half.png') %>",
+                half: true,
+                readOnly: true,
+                score: <%= review.evaluation %>,
+                };
+              raty(elem,opt);
+            </script>
+            <h6 class="font-weight-bold pt-2"><%= review.name %></h6>
           </div>
         </div>
         <div class="bg-gray rounded-lg p-2">

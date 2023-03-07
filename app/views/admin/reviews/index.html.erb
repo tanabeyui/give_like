@@ -104,7 +104,9 @@
           </div>
           <div class="col-7 pl-2 pt-2">
             <p>
-              <%= search_review.end_user.name %>
+              <%= link_to admin_end_user_path(search_review.end_user), class: "text-info" do %>
+                <strong><%= search_review.end_user.name %></strong>
+              <% end %>
               <span class="text-secondary">@<%= search_review.end_user.screen_name %></span>
               <span class="medium">（<%= search_review.end_user.era %> / <%= search_review.end_user.gender_i18n %>）</span>
             </p>
@@ -120,7 +122,7 @@
           <div class="col-10 pl-2">
             <div id="star-rate<%= search_review.id %>"></div>
               <script>
-                $('#star-rate').empty();
+                $('#star-rate<%= search_review.id %>').empty();
                 var elem = document.getElementById('star-rate<%= search_review.id %>');
                 var opt = {
                   starOn: "<%= asset_path('star-on.png') %>",
@@ -167,7 +169,9 @@
           </div>
           <div class="col-7 pl-2 pt-2">
             <p>
-              <%= review.end_user.name %>
+              <%= link_to admin_end_user_path(review.end_user), class: "text-info" do %>
+                <strong><%= review.end_user.name %></strong>
+              <% end %>
               <span class="text-secondary">@<%= review.end_user.screen_name %></span>
               <span class="medium">（<%= review.end_user.era %> / <%= review.end_user.gender_i18n %>）</span>
             </p>
@@ -183,7 +187,7 @@
           <div class="col-10 pl-2">
             <div id="star-rate<%= review.id %>"></div>
               <script>
-                $('#star-rate').empty();
+                $('#star-rate<%= review.id %>').empty();
                 var elem = document.getElementById('star-rate<%= review.id %>');
                 var opt = {
                   starOn: "<%= asset_path('star-on.png') %>",
