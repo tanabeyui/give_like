@@ -19,11 +19,6 @@ class Public::ItemsController < ApplicationController
       @title = "プレゼント"
       @items = RakutenWebService::Ichiba::Item.search(keyword: 'プレゼント', sort: '-reviewCount')
     end
-    # @rankingSearchItems = RakutenWebService::Ichiba::Item.search(keyword: 'プレゼント', sort: '-reviewCount')
-    # @items = []
-    # @items.concat(@rankingSearchItems.page(1).to_a)
-    # @items.concat(@rankingSearchItems.page(2).to_a)
-    # @items.pop(10)
   end
 
   def show
@@ -50,12 +45,12 @@ class Public::ItemsController < ApplicationController
   def search
     @keyword = params[:keyword]
     @SearchItems = RakutenWebService::Ichiba::Item.search(keyword: @keyword)
-    items_all = []
-    items_all.concat(@SearchItems.page(1).to_a)
-    items_all.concat(@SearchItems.page(2).to_a)
-    items_all.concat(@SearchItems.page(3).to_a)
-    @items_page = Kaminari.paginate_array(items_all).page(params[:page])
     @items = RakutenWebService::Ichiba::Item.search(keyword: @keyword).page(params[:page])
+    items_all = []
+    (1..10).each do |num|
+      items_all.concat(@SearchItems.page(num).to_a)
+    end
+    @items_page = Kaminari.paginate_array(items_all).page(params[:page])
   end
 
 
