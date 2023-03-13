@@ -57,7 +57,7 @@ Rails.application.routes.draw do
     }
 
   devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
-    # registrations: "admin/registrations",
+    registrations: "admin/registrations",
     sessions: "admin/sessions"
   }
 
