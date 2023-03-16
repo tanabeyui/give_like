@@ -641,3 +641,28 @@ WantItem.create!(
     }
   ]
 )
+
+Response.create!(
+  [
+    {gender: "female", age: "teens", internet_protocol_address: "14.13.9.97", giver: "friend", gifted_event: "birthday", present_genre: "cosmetic"},
+    {gender: "not_selected", age: "twenties", internet_protocol_address: "14.13.9.97", giver: "lover", gifted_event: "christmas", present_genre: "cosmetic"},
+    {gender: "female", age: "thirties", internet_protocol_address: "14.13.9.97", giver: "friend", gifted_event: "christmas", present_genre: "cosmetic"},
+    {gender: "female", age: "fifties", internet_protocol_address: "14.13.9.97", giver: "my_child", gifted_event: "birthday", present_genre: "cosmetic"},
+    {gender: "male", age: "teens", internet_protocol_address: "14.13.9.97", giver: "friend", gifted_event: "birthday", present_genre: "cosmetic"},
+    {gender: "female", age: "sixties", internet_protocol_address: "14.13.9.97", giver: "my_child", gifted_event: "birthday_60th", present_genre: "jewelry"},
+    {gender: "female", age: "fifties", internet_protocol_address: "14.13.9.97", giver: "lover", gifted_event: "birthday", present_genre: "jewelry"},
+    {gender: "female", age: "thirties", internet_protocol_address: "14.13.9.97", giver: "lover", gifted_event: "christmas", present_genre: "jewelry"},
+    {gender: "female", age: "forties", internet_protocol_address: "14.13.9.97", giver: "lover", gifted_event: "birthday", present_genre: "jewelry"},
+    {gender: "female", age: "thirties", internet_protocol_address: "14.13.9.97", giver: "friend", gifted_event: "birthday", present_genre: "jewelry"},
+    {gender: "female", age: "thirties", internet_protocol_address: "14.13.9.97", giver: "lover", gifted_event: "birthday", present_genre: "jewelry"},
+    {gender: "male", age: "fifties", internet_protocol_address: "14.13.9.97", giver: "subordinate", gifted_event: "other_day", present_genre: "foods"},
+    {gender: "male", age: "twenties", internet_protocol_address: "14.13.9.97", giver: "parents", gifted_event: "celebrate_job", present_genre: "small_appliance"},
+    {gender: "female", age: "teens", internet_protocol_address: "14.13.9.97", giver: "forgot_giver", gifted_event: "forgot_date", present_genre: "flower"},
+    {gender: "female", age: "teens", internet_protocol_address: "14.13.9.97", giver: "friend", gifted_event: "birthday", present_genre: "letter"},
+    {gender: "male", age: "forties", internet_protocol_address: "14.13.9.97", giver: "lover", gifted_event: "birthday", present_genre: "small_appliance"},
+    {gender: "male", age: "twenties", internet_protocol_address: "14.13.9.97", giver: "parents", gifted_event: "celebrate_job", present_genre: "small_appliance"},
+    {gender: "not_selected", age: "teens", internet_protocol_address: "14.13.9.97", giver: "friend", gifted_event: "valentine", present_genre: "cosmetic"},
+    {gender: "not_selected", age: "twenties", internet_protocol_address: "14.13.9.97", giver: "parents", gifted_event: "birthday_20th", present_genre: "catalog_gift"},
+    {gender: "not_selected", age: "seventies", internet_protocol_address: "14.13.9.97", giver: "friend", gifted_event: "birthday_60th", present_genre: "letter"}
+  ]
+)
