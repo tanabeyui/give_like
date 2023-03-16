@@ -204,7 +204,7 @@ ja:
       giver:
         no_giver: "なし"
         friend: "友人"
-        lover: "恋人"
+        lover: "恋人/配偶者"
         parents: "親/祖父母"
         my_child: "息子/娘/孫"
         sibling: "兄弟姉妹"
@@ -264,7 +264,7 @@ ja:
       giver:
         forgot_giver: "覚えていない"
         friend: "友人"
-        lover: "恋人"
+        lover: "恋人/配偶者"
         parents: "親/祖父母"
         my_child: "息子/娘/孫"
         sibling: "兄弟姉妹"

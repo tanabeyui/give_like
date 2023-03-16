@@ -187,10 +187,15 @@
           <% @search_reviews.each do |search_review| %>
             <div class="review border my-3 px-3 pt-3 pb-2">
               <div class="review-header d-flex justify-content-between medium">
-                <p class="m-0">
-                  <%= image_tag search_review.end_user.get_profile_image(30,30), class: "rounded-circle" %>
-                  <%= search_review.end_user.name %> ( <%= search_review.end_user.era %> / <%= search_review.end_user.gender_i18n %> )
-                </p>
+                <div>
+                  <% if search_review.is_anonymous == "anonymous" %>
+                    <%= image_tag 'no-image.jpg', :size => '30x30', class: "rounded-circle" %>
+                    <span class="px-1">ゲストさん ( <%= search_review.end_user.era %> / <%= search_review.end_user.gender_i18n %> )</span>
+                  <% else %>
+                    <%= image_tag search_review.end_user.get_profile_image(30,30), class: "rounded-circle" %>
+                    <span class="px-1"><%= search_review.end_user.name %> さん ( <%= search_review.end_user.era %> / <%= search_review.end_user.gender_i18n %> )</span>
+                  <% end %>
+                </div>
                 <div class="text-secondary">
                   <p class="m-0">投稿日：<%= search_review.created_at.strftime('%Y/%m/%d') %></p>
                 </div>
@@ -226,10 +231,15 @@
           <% @sort_reviews.each do |sort_review| %>
             <div class="review border my-3 px-3 pt-3 pb-2">
               <div class="review-header d-flex justify-content-between medium">
-                <p class="m-0">
-                  <%= image_tag sort_review.end_user.get_profile_image(30,30), class: "rounded-circle" %>
-                  <%= sort_review.end_user.name %> ( <%= sort_review.end_user.era %> / <%= sort_review.end_user.gender_i18n %> )
-                </p>
+                <div>
+                  <% if sort_review.is_anonymous == "anonymous" %>
+                    <%= image_tag 'no-image.jpg', :size => '30x30', class: "rounded-circle" %>
+                    <span class="px-1">ゲストさん ( <%= sort_review.end_user.era %> / <%= sort_review.end_user.gender_i18n %> )</span>
+                  <% else %>
+                    <%= image_tag sort_review.end_user.get_profile_image(30,30), class: "rounded-circle" %>
+                    <span class="px-1"><%= sort_review.end_user.name %> さん ( <%= sort_review.end_user.era %> / <%= sort_review.end_user.gender_i18n %> )</span>
+                  <% end %>
+                </div>
                 <div class="text-secondary">
                   <p class="m-0">投稿日：<%= sort_review.created_at.strftime('%Y/%m/%d') %></p>
                 </div>

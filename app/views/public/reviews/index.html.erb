@@ -224,9 +224,8 @@
               <div class="row no-gutters mt-2">
                 <div class="col-md-3 px-md-3 text-center">
                   <%= link_to item_path(sort_review.code, name: sort_review.name, code: sort_review.code, price: sort_review.price, genre: sort_review.genre, image: sort_review.image, url: sort_review.url) do %>
-                    <%= image_tag (review.image), class:"card-img-top" %>
+                    <%= image_tag (sort_review.image), class:"card-img-top" %>
                   <% end %>
-                  <%= image_tag (sort_review.image), width: '100%', style: "max-height: 240px;" %>
                   <h5 class="font-weight-bold"><%= number_with_delimiter(sort_review.price) %>円</h5>
                 </div>
                 <div class="col-md-9 bg-yellow px-3 pt-3">
