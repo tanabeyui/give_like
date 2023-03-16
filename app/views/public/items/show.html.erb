@@ -192,8 +192,10 @@
                     <%= image_tag 'no-image.jpg', :size => '30x30', class: "rounded-circle" %>
                     <span class="px-1">ゲストさん ( <%= search_review.end_user.era %> / <%= search_review.end_user.gender_i18n %> )</span>
                   <% else %>
-                    <%= image_tag search_review.end_user.get_profile_image(30,30), class: "rounded-circle" %>
-                    <span class="px-1"><%= search_review.end_user.name %> さん ( <%= search_review.end_user.era %> / <%= search_review.end_user.gender_i18n %> )</span>
+                    <%= link_to end_user_path(screen_name: search_review.end_user.screen_name), class:"text-dark" do %>
+                      <%= image_tag search_review.end_user.get_profile_image(30,30), class: "rounded-circle" %>
+                      <span class="px-1"><%= search_review.end_user.name %> さん ( <%= search_review.end_user.era %> / <%= search_review.end_user.gender_i18n %> )</span>
+                    <% end %>
                   <% end %>
                 </div>
                 <div class="text-secondary">
@@ -236,8 +238,10 @@
                     <%= image_tag 'no-image.jpg', :size => '30x30', class: "rounded-circle" %>
                     <span class="px-1">ゲストさん ( <%= sort_review.end_user.era %> / <%= sort_review.end_user.gender_i18n %> )</span>
                   <% else %>
-                    <%= image_tag sort_review.end_user.get_profile_image(30,30), class: "rounded-circle" %>
-                    <span class="px-1"><%= sort_review.end_user.name %> さん ( <%= sort_review.end_user.era %> / <%= sort_review.end_user.gender_i18n %> )</span>
+                    <%= link_to end_user_path(screen_name: sort_review.end_user.screen_name), class:"text-dark" do %>
+                      <%= image_tag sort_review.end_user.get_profile_image(30,30), class: "rounded-circle" %>
+                      <span class="px-1"><%= sort_review.end_user.name %> さん ( <%= sort_review.end_user.era %> / <%= sort_review.end_user.gender_i18n %> )</span>
+                    <% end %>
                   <% end %>
                 </div>
                 <div class="text-secondary">
@@ -280,8 +284,10 @@
                     <%= image_tag 'no-image.jpg', :size => '30x30', class: "rounded-circle" %>
                     <span class="px-1">ゲストさん ( <%= review.end_user.era %> / <%= review.end_user.gender_i18n %> )</span>
                   <% else %>
-                    <%= image_tag review.end_user.get_profile_image(30,30), class: "rounded-circle" %>
-                    <span class="px-1"><%= review.end_user.name %> さん ( <%= review.end_user.era %> / <%= review.end_user.gender_i18n %> )</span>
+                    <%= link_to end_user_path(screen_name: review.end_user.screen_name), class:"text-dark" do %>
+                      <%= image_tag review.end_user.get_profile_image(30,30), class: "rounded-circle" %>
+                      <span class="px-1"><%= review.end_user.name %> さん ( <%= review.end_user.era %> / <%= review.end_user.gender_i18n %> )</span>
+                    <% end %>
                   <% end %>
                 </div>
                 <div class="text-secondary">
