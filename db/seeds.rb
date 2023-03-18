@@ -669,6 +669,8 @@ Response.create!(
     {gender: "male", age: "twenties", internet_protocol_address: "14.13.9.97", giver: "parents", gifted_event: "celebrate_job", present_genre: "small_appliance"},
     {gender: "not_selected", age: "teens", internet_protocol_address: "14.13.9.97", giver: "friend", gifted_event: "valentine", present_genre: "cosmetic"},
     {gender: "not_selected", age: "twenties", internet_protocol_address: "14.13.9.97", giver: "parents", gifted_event: "birthday_20th", present_genre: "catalog_gift"},
-    {gender: "not_selected", age: "seventies", internet_protocol_address: "14.13.9.97", giver: "friend", gifted_event: "birthday_60th", present_genre: "letter"}
+    {gender: "not_selected", age: "seventies", internet_protocol_address: "14.13.9.97", giver: "friend", gifted_event: "birthday_60th", present_genre: "letter"},
+    {gender: "male", age: "fifties", internet_protocol_address: "14.13.9.97", giver: "subordinate", gifted_event: "other_day", present_genre: "foods"},
+    {gender: "male", age: "forties", internet_protocol_address: "14.13.9.97", giver: "lover", gifted_event: "birthday", present_genre: "small_appliance"}
   ]
 )
