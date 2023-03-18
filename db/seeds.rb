@@ -5,6 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Admin.create!(
+  [
+    {email: 'aaa@test.com', password: '060530'}
+  ]
+)
+
 end_users = EndUser.create!(
   [
     {email: 'aaa@test.com', screen_name: 'tuda0405', name: '津田雅史', password: '060530', birth_day: '1990-04-05', gender: 'male', is_deleted: 'member', internet_protocol_address: '14.13.9.97', profile_image: ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/sample-user1.jpg"), filename:"sample-user1.jpg")},
