@@ -46,10 +46,11 @@ class Public::ReviewsController < ApplicationController
   end
 
   def new
-    @item_params = params
-    @review = Review.new
-    @current_genre = RakutenWebService::Ichiba::Genre[(params[:genre])]
-    unless end_user_signed_in?
+    if end_user_signed_in?
+      @item_params = params
+      @review = Review.new
+      @current_genre = RakutenWebService::Ichiba::Genre[(params[:genre])]
+    else
       flash[:danger] = "ログインしてください！"
       redirect_to item_path(params[:code], name: params[:name], code: params[:code],
                                 genre: params[:genre], price: params[:price], image: params[:image], url: params[:url])
